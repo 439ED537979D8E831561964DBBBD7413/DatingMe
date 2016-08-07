@@ -15,7 +15,7 @@ public class LoginPresenter implements LoginContract.ILoginCallBack , LoginContr
 
 
     public LoginPresenter(LoginContract.ILoginView view) {
-        mView = view;
+        bind(view);
         mILoginModel = new LoginModel(this);
     }
 
