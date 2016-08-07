@@ -8,13 +8,13 @@ import com.acemurder.datingme.base.IBaseView;
  */
 
 public interface LoginContract {
-    interface ILoginView extends IBaseView{
+    interface ILoginView extends IBaseView<ILoginPresenter>{
         void showLoginError(int type);
         void showSignInError(int type);
-        void showLoginSucess();
-        void showSignInSucess();
+        void showLoginSuccess();
+        void showSignInSuccess();
     }
-    interface ILoginPresenter extends IBasePresenter{
+    interface ILoginPresenter extends IBasePresenter<ILoginView>{
         void startLogin(String id, String password);
         void startSignIn(String id, String password);
     }

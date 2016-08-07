@@ -2,6 +2,8 @@ package com.acemurder.datingme.login;
 
 import com.acemurder.datingme.base.IBaseView;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 /**
  * Created by zhengyuxuan on 16/8/7.
  */
@@ -10,14 +12,21 @@ public class LoginPresenter implements LoginContract.ILoginCallBack , LoginContr
 
     private LoginContract.ILoginView mView;
     private LoginContract.ILoginModel mILoginModel;
+
+
+    public LoginPresenter(LoginContract.ILoginView view) {
+        mView = view;
+        mILoginModel = new LoginModel(this);
+    }
+
     @Override
     public void onLoginSuccess() {
-        mView.showLoginSucess();
+        mView.showLoginSuccess();
     }
 
     @Override
     public void onSignInSuccess() {
-        mView.showSignInSucess();
+        mView.showSignInSuccess();
     }
 
     @Override
@@ -40,13 +49,14 @@ public class LoginPresenter implements LoginContract.ILoginCallBack , LoginContr
         mILoginModel.signIn(id,password);
     }
 
-    @Override
-    public void bind(IBaseView view) {
 
+    @Override
+    public void bind(LoginContract.ILoginView view) {
+        this.mView = view;
     }
 
     @Override
     public void unBind() {
-
+        this.mView = null;
     }
 }
