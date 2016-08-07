@@ -1,4 +1,4 @@
-package com.acemurder.datingme;
+package com.acemurder.datingme.base;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 

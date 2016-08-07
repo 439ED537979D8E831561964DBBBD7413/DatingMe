@@ -1,4 +1,4 @@
-package com.acemurder.datingme;
+package com.acemurder.datingme.base;
 
 import android.support.v7.app.AppCompatActivity;
 

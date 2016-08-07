@@ -1,6 +1,6 @@
 package com.acemurder.datingme.login;
 
-import com.acemurder.datingme.IBaseView;
+import com.acemurder.datingme.base.IBaseView;
 
 /**
  * Created by zhengyuxuan on 16/8/7.

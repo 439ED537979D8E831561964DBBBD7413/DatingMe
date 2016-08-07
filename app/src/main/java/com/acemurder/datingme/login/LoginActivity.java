@@ -1,9 +1,8 @@
 package com.acemurder.datingme.login;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.acemurder.datingme.BaseActivity;
+import com.acemurder.datingme.base.BaseActivity;
 import com.acemurder.datingme.R;
 
 public class LoginActivity extends BaseActivity {

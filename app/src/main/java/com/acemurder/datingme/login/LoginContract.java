@@ -1,9 +1,7 @@
 package com.acemurder.datingme.login;
 
-import android.view.ViewOutlineProvider;
-
-import com.acemurder.datingme.IBasePresenter;
-import com.acemurder.datingme.IBaseView;
+import com.acemurder.datingme.base.IBasePresenter;
+import com.acemurder.datingme.base.IBaseView;
 
 /**
  * Created by zhengyuxuan on 16/8/7.

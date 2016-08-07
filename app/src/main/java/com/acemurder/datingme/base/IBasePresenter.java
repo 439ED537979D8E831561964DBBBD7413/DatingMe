@@ -1,4 +1,4 @@
-package com.acemurder.datingme;
+package com.acemurder.datingme.base;
 
 /**
  * Created by zhengyuxuan on 16/8/7.
