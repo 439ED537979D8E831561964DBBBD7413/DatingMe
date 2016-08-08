@@ -20,7 +20,7 @@ public class LoginModel implements LoginContract.ILoginModel {
 
     @Override
     public void login(String id, String password) {
-        AVUser.loginByMobilePhoneNumberInBackground(id, password, new LogInCallback<AVUser>() {
+        AVUser.logInInBackground(id, password, new LogInCallback<AVUser>() {
             @Override
             public void done(AVUser avUser, AVException e) {
                 if (e == null)
