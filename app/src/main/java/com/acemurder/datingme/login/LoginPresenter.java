@@ -1,6 +1,8 @@
 package com.acemurder.datingme.login;
 
 import com.acemurder.datingme.base.IBaseView;
+import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.UpdatePasswordCallback;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
@@ -8,7 +10,7 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
  * Created by zhengyuxuan on 16/8/7.
  */
 
-public class LoginPresenter implements LoginContract.ILoginCallBack , LoginContract.ILoginPresenter {
+public class LoginPresenter implements LoginContract.ILoginCallBack, LoginContract.ILoginPresenter {
 
     private LoginContract.ILoginView mView;
     private LoginContract.ILoginModel mILoginModel;
@@ -20,13 +22,13 @@ public class LoginPresenter implements LoginContract.ILoginCallBack , LoginContr
     }
 
     @Override
-    public void onLoginSuccess() {
-        mView.showLoginSuccess();
+    public void onLoginSuccess(AVUser user) {
+        mView.showLoginSuccess(user);
     }
 
     @Override
-    public void onSignInSuccess() {
-        mView.showSignInSuccess();
+    public void onSignInSuccess(AVUser user) {
+        mView.showSignInSuccess(user);
     }
 
     @Override
@@ -41,12 +43,12 @@ public class LoginPresenter implements LoginContract.ILoginCallBack , LoginContr
 
     @Override
     public void startLogin(String id, String password) {
-        mILoginModel.login(id,password);
+        mILoginModel.login(id, password);
     }
 
     @Override
     public void startSignIn(String id, String password) {
-        mILoginModel.signIn(id,password);
+        mILoginModel.signIn(id, password);
     }
 
 

@@ -24,9 +24,9 @@ public class LoginModel implements LoginContract.ILoginModel {
             @Override
             public void done(AVUser avUser, AVException e) {
                 if (e == null)
-                    mCallBack.onLoginSuccess();
+                    mCallBack.onLoginSuccess(avUser);
                 else {
-                    switch (e.getCode()){
+                    switch (e.getCode()) {
                         case Const.PASSWORD_WRONG:
                             mCallBack.onLoginError(Const.PASSWORD_WRONG);
                             break;
@@ -34,7 +34,7 @@ public class LoginModel implements LoginContract.ILoginModel {
                             mCallBack.onLoginError(Const.USER_NOT_EXIST);
                             break;
                         default:
-                            mCallBack.onLoginError(Const.UNKONWN_WRONG);
+                            mCallBack.onLoginError(Const.UNKNOWN_WRONG);
                             break;
                     }
 
@@ -45,7 +45,7 @@ public class LoginModel implements LoginContract.ILoginModel {
 
     @Override
     public void signIn(String id, String password) {
-        AVUser user = new AVUser();// 新建 AVUser 对象实例
+        final AVUser user = new AVUser();// 新建 AVUser 对象实例
         user.setUsername(id);// 设置用户名
         user.setPassword(password);// 设置密码
         user.signUpInBackground(new SignUpCallback() {
@@ -53,15 +53,15 @@ public class LoginModel implements LoginContract.ILoginModel {
             public void done(AVException e) {
                 if (e == null) {
                     // 注册成功
-                    mCallBack.onSignInSuccess();
+                    mCallBack.onSignInSuccess(user);
                 } else {
                     // 失败的原因可能有多种，常见的是用户名已经存在。
-                    switch (e.getCode()){
+                    switch (e.getCode()) {
                         case Const.HAS_SAME_NAME:
                             mCallBack.onSignError(Const.HAS_SAME_NAME);
                             break;
                         default:
-                            mCallBack.onSignError(Const.UNKONWN_WRONG);
+                            mCallBack.onSignError(Const.UNKNOWN_WRONG);
                             break;
                     }
                 }

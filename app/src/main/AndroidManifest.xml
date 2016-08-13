@@ -10,15 +10,23 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+        <activity android:name=".MainActivity"
+            android:launchMode="singleTask">
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>>
         </activity>
-        <activity android:name=".login.LoginActivity">
+        <activity
+            android:name=".login.LoginActivity"
+            android:theme="@style/AppTheme.Dark">
         </activity>
+        <activity
+            android:name=".login.SignupActivity"
+            android:theme="@style/AppTheme.Dark"/>
     </application>
 
 </manifest>
