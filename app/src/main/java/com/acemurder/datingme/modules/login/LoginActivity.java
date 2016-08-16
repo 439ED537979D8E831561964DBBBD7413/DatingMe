@@ -1,4 +1,4 @@
-package com.acemurder.datingme.login;
+package com.acemurder.datingme.modules.login;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import com.acemurder.datingme.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.util.LogUtils;
-import com.acemurder.datingme.util.SPUtils;
 import com.avos.avoscloud.AVUser;
 
 import butterknife.BindView;

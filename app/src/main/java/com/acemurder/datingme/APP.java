@@ -22,6 +22,7 @@ public class APP extends Application {
         super.onCreate();
         sContext = getApplicationContext();
         AVOSCloud.initialize(this, Const.APP_ID, Const.APP_KEY);
+        AVOSCloud.useAVCloudCN();
     }
 
 
@@ -29,7 +30,6 @@ public class APP extends Application {
         mAVUser = user;
         SPUtils.set(getContext(), Const.SP_USER_NAME, user.getUsername());
         SPUtils.set(getContext(), Const.SP_USER_NAME, user.getObjectId());
-
     }
 
     public static AVUser getAVUser() {

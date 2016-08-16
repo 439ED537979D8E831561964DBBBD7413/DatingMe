@@ -8,6 +8,8 @@ public class Const {
     public static final String APP_ID = "vnRdeLMsUKJJFBOK4u4MtqBv-gzGzoHsz";
     public static final String APP_KEY = "9qxFgPgPvDiKfTdjloLJbJG5";
 
+    public static final String DATING_ITEM = "DatingItem";
+
     public static final String SP_USER_NAME = "user_name";
     public static final String SP_USER_OBJECT_ID = "user_id";
 

@@ -10,4 +10,6 @@
     <string name="repeat_password">重复密码</string>
     <string name="next">下一步</string>
     <string name="register">注册</string>
+    <string name="network_break">网络中断</string>
+    <string name="network_connect_error">连接错误</string>
 </resources>

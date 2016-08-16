@@ -21,11 +21,11 @@
         </intent-filter>>
         </activity>
         <activity
-            android:name=".login.LoginActivity"
+            android:name=".modules.login.LoginActivity"
             android:theme="@style/AppTheme.Dark">
         </activity>
         <activity
-            android:name=".login.SignupActivity"
+            android:name=".modules.login.SignupActivity"
             android:theme="@style/AppTheme.Dark"/>
     </application>
 
