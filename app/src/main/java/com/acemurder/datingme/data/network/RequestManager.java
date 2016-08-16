@@ -9,10 +9,14 @@ import com.acemurder.datingme.data.network.interceptors.HeaderInterceptors;
 import com.acemurder.datingme.data.network.service.LeanCloudApiService;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -22,6 +26,8 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static android.R.attr.data;
 
 /**
  * Created by zhengyuxuan on 16/8/15.
@@ -59,7 +65,14 @@ public enum RequestManager {
     }
 
     public Subscription addDatingItem(Subscriber<Response> subscriber ,String data){
-        Observable<Response> observable = mApiService.addItem(data);
+        RequestBody body = null;
+        try {
+            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(data)).toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Observable<Response> observable = mApiService.addItem(body);
         return emitObservable(observable,subscriber);
     }
 
@@ -78,7 +91,7 @@ public enum RequestManager {
 
         if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(logging);
         }
 

@@ -10,14 +10,23 @@ import android.util.Log;
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.login.LoginActivity;
+import com.acemurder.datingme.util.LogUtils;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.RequestBody;
 
 import static rx.schedulers.Schedulers.test;
 
@@ -32,20 +41,31 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }*/
        // initView();
-         testData();
+        testData();
+        initView();
     }
 
     private void testData() {
-        RequestManager.INSTANCE.getDatingItems(new SimpleSubscriber<List<DatingItem>>(this,
-                new SubscriberListener<List<DatingItem>>() {
-                    @Override
-                    public void onNext(List<DatingItem> datingItems) {
-                        super.onNext(datingItems);
-                        for (DatingItem item:datingItems){
-                            Log.e("=========",item.getContent());
-                        }
-                    }
-                }),10,0);
+        DatingItem item = new DatingItem();
+        item.setTheme("打篮球");
+        item.setContent("早上八点,一起来打篮球啊");
+        item.setPhotoSrc("http://www.qiniu.com/public/v12/img/feature/pic-safety.png");
+        item.setPromulgator("acemurder");
+        /*try {
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(item.toString())).toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
+        // Log.e("=======",item.toString().getBytes("utf-8"));
+        RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(this, new SubscriberListener<Response>() {
+            @Override
+            public void onNext(Response response) {
+                super.onNext(response);
+               // response.toString();
+                LogUtils.LOGE("tag",response.getCreatedAt()+"  "+response.getObjectId());
+            }
+        }),item.toString());
     }
 
     private void initView() {
@@ -55,23 +75,23 @@ public class MainActivity extends AppCompatActivity {
         final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_toys_white_24px), Color.GRAY).title("约定")
+                getDrawable(R.mipmap.ic_launcher), Color.GRAY).title("约定")
         .build());
         models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_public_white_24px), Color.GRAY).title("社区")
+                getDrawable(R.mipmap.ic_launcher), Color.GRAY).title("社区")
                 .build());
         models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_chat_white_24px), Color.GRAY).title("通讯")
+                getDrawable(R.mipmap.ic_launcher), Color.GRAY).title("通讯")
                 .build());
         models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_person_pin_white_24px), Color.GRAY).title("约定")
+                getDrawable(R.mipmap.ic_launcher), Color.GRAY).title("约定")
                 .build());
         navigationTabBar.setModels(models);
         navigationTabBar.setViewPager(viewPager,2);
         navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ACTIVE);
         navigationTabBar.setBadgeGravity(NavigationTabBar.BadgeGravity.BOTTOM);
         navigationTabBar.setBadgePosition(NavigationTabBar.BadgePosition.CENTER);
-        navigationTabBar.setTypeface("fonts/custom_font.ttf");
+//        navigationTabBar.setTypeface("fonts/custom_font.ttf");
         navigationTabBar.setIsBadged(true);
         navigationTabBar.setIsTitled(true);
         navigationTabBar.setIsTinted(true);
