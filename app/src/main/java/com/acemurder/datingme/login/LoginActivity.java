@@ -10,11 +10,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
-import com.acemurder.datingme.MainActivity;
+import com.acemurder.datingme.ui.activity.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.util.LogUtils;
-import com.acemurder.datingme.util.SPUtils;
 import com.avos.avoscloud.AVUser;
 
 import butterknife.BindView;

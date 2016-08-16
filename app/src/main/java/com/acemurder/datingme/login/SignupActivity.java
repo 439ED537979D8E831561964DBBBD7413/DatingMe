@@ -4,16 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.acemurder.datingme.APP;
-import com.acemurder.datingme.MainActivity;
+import com.acemurder.datingme.ui.activity.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.avos.avoscloud.AVUser;
@@ -21,8 +17,6 @@ import com.avos.avoscloud.AVUser;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.attr.password;
 
 public class SignupActivity extends AppCompatActivity implements LoginContract.ILoginView {
     private static final String TAG = "SignupActivity";
