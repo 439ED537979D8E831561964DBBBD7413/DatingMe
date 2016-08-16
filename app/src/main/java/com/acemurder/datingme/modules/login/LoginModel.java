@@ -1,4 +1,4 @@
-package com.acemurder.datingme.login;
+package com.acemurder.datingme.modules.login;
 
 import com.acemurder.datingme.config.Const;
 import com.avos.avoscloud.AVException;

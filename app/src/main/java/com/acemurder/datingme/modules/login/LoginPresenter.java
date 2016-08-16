@@ -1,10 +1,6 @@
-package com.acemurder.datingme.login;
+package com.acemurder.datingme.modules.login;
 
-import com.acemurder.datingme.base.IBaseView;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.UpdatePasswordCallback;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by zhengyuxuan on 16/8/7.

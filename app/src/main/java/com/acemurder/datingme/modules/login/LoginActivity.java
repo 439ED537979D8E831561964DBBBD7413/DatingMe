@@ -1,4 +1,4 @@
-package com.acemurder.datingme.login;
+package com.acemurder.datingme.modules.login;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
