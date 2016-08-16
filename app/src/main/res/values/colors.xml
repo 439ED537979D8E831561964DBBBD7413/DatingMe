@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primary">#E43F3F</color>
-    <color name="primary_dark">#E12929</color>
-    <color name="primary_darker">#CC1D1D</color>
-    <color name="accent">#FFFFFF</color>
+    <color name="primary_shade">#212121</color>
+    <color name="primary_Light">#9E9E9E</color>
+    <color name="primary_dark">#000000</color>
+    <color name="accent_shade">#00C853</color>
+    <color name="accent_light">#00E676</color>
 
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
@@ -16,4 +17,5 @@
     <color name="iron">#CCCCCC</color>
     <color name="white">#FFFFFF</color>
     <color name="colorGrey">#7c7676</color>
+
 </resources>

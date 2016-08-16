@@ -1,28 +1,18 @@
 package com.acemurder.datingme.modules.main;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
-import com.acemurder.datingme.data.bean.DatingItem;
-import com.acemurder.datingme.data.network.RequestManager;
-import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
-import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
-import com.acemurder.datingme.modules.login.LoginActivity;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static rx.schedulers.Schedulers.test;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String colors[] = new String[]{"#FF9100","#304FFE","#FF5252","#00C853"};
     private MyFragmentPagerAdapter mPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +21,8 @@ public class MainActivity extends AppCompatActivity {
         /*if (APP.getAVUser() == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }*/
-       // initView();
-         testData();
-    }
+        initView();
 
-    private void testData() {
-        RequestManager.INSTANCE.getDatingItems(new SimpleSubscriber<List<DatingItem>>(this,
-                new SubscriberListener<List<DatingItem>>() {
-                    @Override
-                    public void onNext(List<DatingItem> datingItems) {
-                        super.onNext(datingItems);
-                        for (DatingItem item:datingItems){
-                            Log.e("=========",item.getContent());
-                        }
-                    }
-                }),10,0);
     }
 
     private void initView() {
@@ -55,16 +32,16 @@ public class MainActivity extends AppCompatActivity {
         final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
         final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
         models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_toys_white_24px), Color.GRAY).title("约定")
+                getDrawable(R.drawable.ic_date), Color.parseColor(colors[0])).title("约定")
         .build());
         models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_public_white_24px), Color.GRAY).title("社区")
+                getDrawable(R.drawable.ic_community), Color.parseColor(colors[1])).title("社区")
                 .build());
         models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_chat_white_24px), Color.GRAY).title("通讯")
+                getDrawable(R.drawable.ic_instant),Color.parseColor(colors[2])).title("通讯")
                 .build());
         models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_person_pin_white_24px), Color.GRAY).title("约定")
+                getDrawable(R.drawable.ic_person),Color.parseColor(colors[3])).title("个人")
                 .build());
         navigationTabBar.setModels(models);
         navigationTabBar.setViewPager(viewPager,2);
@@ -81,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         navigationTabBar.setIsSwiped(true);
         navigationTabBar.setBgColor(Color.BLACK);
         navigationTabBar.setBadgeSize(10);
-        navigationTabBar.setTitleSize(10);
+        navigationTabBar.setTitleSize(20);
         navigationTabBar.setBehaviorEnabled(true);
     }
 
