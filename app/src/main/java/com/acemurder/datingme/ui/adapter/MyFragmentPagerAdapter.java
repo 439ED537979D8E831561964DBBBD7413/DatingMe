@@ -29,7 +29,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
+    public Fragment getItem(int position) {https://github.com/NewCar/DatingMe.git
         switch (position) {
             case 0: return new ArrangementFragment();
             case 1: return new CommunityFragment();
