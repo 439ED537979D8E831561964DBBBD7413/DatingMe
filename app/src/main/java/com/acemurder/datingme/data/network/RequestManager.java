@@ -3,6 +3,7 @@ package com.acemurder.datingme.data.network;
 import com.acemurder.datingme.BuildConfig;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.config.Api;
+import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.function.ResultWrapperFunc;
 import com.acemurder.datingme.data.network.interceptors.HeaderInterceptors;
 import com.acemurder.datingme.data.network.service.LeanCloudApiService;
@@ -40,12 +41,34 @@ public enum RequestManager {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
                 .client(mOkHttpClient)
-                .addConverterFactory(
-                        GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         mApiService = retrofit.create(LeanCloudApiService.class);
 
+    }
+
+
+
+    public Subscription getDatingItems(Subscriber<List<DatingItem>> subscriber,int page,int count){
+
+        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page+"",count+"").map(new ResultWrapperFunc<List<DatingItem>>());
+        return emitObservable(observable,subscriber);
+
+        //return  emitObservable(mApiService.getDatingItems(page+"",count+""),subscriber);
+    }
+
+    public Subscription addDatingItem(Subscriber<Response> subscriber ,String data){
+        Observable<Response> observable = mApiService.addItem(data);
+        return emitObservable(observable,subscriber);
+    }
+
+
+    private <T> Subscription emitObservable(Observable<T> o, Subscriber<T> s) {
+        return o.subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s);
     }
 
     private OkHttpClient configureOkHttp(OkHttpClient.Builder builder) {
@@ -60,21 +83,5 @@ public enum RequestManager {
         }
 
         return builder.build();
-    }
-
-    public Subscription getDatingItems(Subscriber<List<DatingItem>> subscriber,int page,int count){
-
-        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page+"",count+"").map(new ResultWrapperFunc<List<DatingItem>>());
-        return emitObservable(observable,subscriber);
-
-        //return  emitObservable(mApiService.getDatingItems(page+"",count+""),subscriber);
-    };
-
-
-    private <T> Subscription emitObservable(Observable<T> o, Subscriber<T> s) {
-        return o.subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s);
     }
 }

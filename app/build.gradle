@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'me.tatarka.retrolambda'
+
 
 android {
     compileSdkVersion 24
@@ -43,4 +45,8 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.0.6'
+    compile 'com.afollestad.material-dialogs:core:0.8.5.9'
+
+
 }

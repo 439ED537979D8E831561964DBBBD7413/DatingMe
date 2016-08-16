@@ -5,13 +5,21 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
+import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.data.network.RequestManager;
+import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
+import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.login.LoginActivity;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static rx.schedulers.Schedulers.test;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,10 +28,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (APP.getAVUser() == null) {
+        /*if (APP.getAVUser() == null) {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        }
-        initView();
+        }*/
+       // initView();
+         testData();
+    }
+
+    private void testData() {
+        RequestManager.INSTANCE.getDatingItems(new SimpleSubscriber<List<DatingItem>>(this,
+                new SubscriberListener<List<DatingItem>>() {
+                    @Override
+                    public void onNext(List<DatingItem> datingItems) {
+                        super.onNext(datingItems);
+                        for (DatingItem item:datingItems){
+                            Log.e("=========",item.getContent());
+                        }
+                    }
+                }),10,0);
     }
 
     private void initView() {

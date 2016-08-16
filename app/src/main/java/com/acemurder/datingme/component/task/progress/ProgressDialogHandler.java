@@ -1,10 +1,12 @@
 package com.acemurder.datingme.component.task.progress;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Message;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+
 
 public class ProgressDialogHandler extends Handler {
 
@@ -35,7 +37,12 @@ public class ProgressDialogHandler extends Handler {
             pd.setCancelable(cancelable);
 
             if (cancelable) {
-                pd.setOnCancelListener(dialogInterface -> mProgressCancelListener.onCancelProgress());
+                pd.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        mProgressCancelListener.onCancelProgress();
+                    }
+                });
             }
 
             if (!pd.isShowing()) {

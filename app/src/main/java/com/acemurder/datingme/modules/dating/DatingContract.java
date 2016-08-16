@@ -21,8 +21,10 @@ public interface DatingContract {
 
     interface IDatingView extends IBaseView<IDatingPresenter>{
         void showData(List<DatingItem> datingItems);
-        void showError();
+        void showLoadError();
         void showNoMore();
+        void showAddSuccess();
+        void showAddError();
     }
 
 

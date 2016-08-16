@@ -5,13 +5,13 @@ package com.acemurder.datingme.data.bean;
  */
 
 public class ResultWrapper<T>{
-    private T result;
+    private T results;
 
-    public T getResult() {
-        return result;
+    public T getResults() {
+        return results;
     }
 
-    public void setResult(T result) {
-        this.result = result;
+    public void setResult(T results) {
+        this.results = results;
     }
 }

@@ -3,6 +3,7 @@ package com.acemurder.datingme.modules.dating;
 import android.content.Context;
 
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
@@ -29,7 +30,7 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                mIDatingView.showError();
+                mIDatingView.showLoadError();
             }
 
             @Override
@@ -45,7 +46,20 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
 
     @Override
     public void sendDatingItem(DatingItem datingItem) {
+        RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,
+                new SubscriberListener<Response>() {
+                    @Override
+                    public void onNext(Response response) {
+                        super.onNext(response);
+                        mIDatingView.showAddSuccess();
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mIDatingView.showAddError();
+                    }
+                }),datingItem.toString());
     }
 
     @Override
