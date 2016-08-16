@@ -125,4 +125,23 @@ public class DatingItem{
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString() {
+
+        /*"{ promulgator:" + "\""+promulgator + "\""  +
+                ", content:" + content + "\"" +
+                ", theme:" + theme + "\"" +
+                ", promulgatorId:" + promulgatorId +
+                ", receiverId:" + "\""+ receiverId +
+                ", photoSrc:" + "\""+ photoSrc +"}"*/
+
+      return   "{" +
+                "\"" + "promulgator" + "\"" + ":" + "\"" + promulgator + "\","+
+                "\"" + "content" + "\"" + ":" + "\"" + content + "\","+
+                "\"" + "theme" + "\"" + ":" + "\"" + theme + "\","+
+                "\"" + "promulgatorId" + "\"" + ":" + "\"" + promulgatorId + "\","+
+                "\"" + "photoSrc" + "\"" + ":" + "\"" + photoSrc + "\"}";
+
+    }
 }
