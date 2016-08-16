@@ -1,19 +1,23 @@
-package com.acemurder.datingme.network.interceptors;
+package com.acemurder.datingme.data.network.interceptors;
+
+
 
 import com.acemurder.datingme.config.Const;
-import com.avos.avoscloud.okhttp.Interceptor;
-import com.avos.avoscloud.okhttp.Request;
-import com.avos.avoscloud.okhttp.Response;
 
 import java.io.IOException;
+
+import okhttp3.Interceptor;
+import okhttp3.Request;
 
 /**
  * Created by zhengyuxuan on 16/8/15.
  */
 
 public class HeaderInterceptors implements Interceptor {
+
+
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public okhttp3.Response intercept(Chain chain) throws IOException {
         Request original = chain.request();
 
         // Request customization: add request headers

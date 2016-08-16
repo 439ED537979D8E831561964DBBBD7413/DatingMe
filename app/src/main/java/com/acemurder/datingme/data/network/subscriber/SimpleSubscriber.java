@@ -1,4 +1,4 @@
-package com.acemurder.datingme.network.subscriber;
+package com.acemurder.datingme.data.network.subscriber;
 
 import android.content.Context;
 import android.widget.Toast;

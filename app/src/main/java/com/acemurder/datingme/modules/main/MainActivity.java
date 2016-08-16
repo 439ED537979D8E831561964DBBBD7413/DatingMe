@@ -1,4 +1,4 @@
-package com.acemurder.datingme.ui.activity;
+package com.acemurder.datingme.modules.main;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,8 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
-import com.acemurder.datingme.login.LoginActivity;
-import com.acemurder.datingme.ui.adapter.MyFragmentPagerAdapter;
+import com.acemurder.datingme.modules.login.LoginActivity;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
 import java.util.ArrayList;

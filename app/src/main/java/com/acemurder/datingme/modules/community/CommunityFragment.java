@@ -1,12 +1,12 @@
-package com.acemurder.datingme.ui.fragment;
+package com.acemurder.datingme.modules.community;
 
 import android.support.v4.app.Fragment;
 
 /**
  * Created by fg on 2016/8/15.
  */
-public class PersonalFragment extends Fragment {
-   /* @Override
+public class CommunityFragment extends Fragment {
+  /*  @Override
     protected int getLayoutId() {
         return 0;
     }

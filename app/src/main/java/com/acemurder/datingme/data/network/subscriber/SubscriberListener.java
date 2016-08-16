@@ -1,4 +1,4 @@
-package com.acemurder.datingme.network.subscriber;
+package com.acemurder.datingme.data.network.subscriber;
 
 public abstract class SubscriberListener<T> {
 

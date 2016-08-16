@@ -2,7 +2,7 @@ package com.acemurder.datingme.modules.dating;
 
 import com.acemurder.datingme.base.IBasePresenter;
 import com.acemurder.datingme.base.IBaseView;
-import com.acemurder.datingme.bean.DatingItem;
+import com.acemurder.datingme.data.bean.DatingItem;
 import com.avos.avoscloud.AVUser;
 
 import java.util.List;

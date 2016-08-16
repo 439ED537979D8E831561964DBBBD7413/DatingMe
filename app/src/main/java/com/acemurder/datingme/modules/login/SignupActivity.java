@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
-import com.acemurder.datingme.ui.activity.MainActivity;
+import com.acemurder.datingme.modules.main.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.avos.avoscloud.AVUser;

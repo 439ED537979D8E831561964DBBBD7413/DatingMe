@@ -2,10 +2,10 @@ package com.acemurder.datingme.modules.dating;
 
 import android.content.Context;
 
-import com.acemurder.datingme.bean.DatingItem;
-import com.acemurder.datingme.network.RequestManager;
-import com.acemurder.datingme.network.subscriber.SimpleSubscriber;
-import com.acemurder.datingme.network.subscriber.SubscriberListener;
+import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.data.network.RequestManager;
+import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
+import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.avos.avoscloud.AVUser;
 
 import java.util.List;

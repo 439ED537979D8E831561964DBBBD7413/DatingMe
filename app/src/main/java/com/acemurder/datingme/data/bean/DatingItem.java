@@ -1,12 +1,5 @@
-package com.acemurder.datingme.bean;
+package com.acemurder.datingme.data.bean;
 
-
-import android.os.Parcel;
-
-import com.avos.avoscloud.AVClassName;
-import com.avos.avoscloud.AVObject;
-
-import static android.icu.util.HebrewCalendar.AV;
 
 /**
  * Created by  : ACEMURDER

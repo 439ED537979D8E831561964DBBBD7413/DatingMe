@@ -1,6 +1,6 @@
-package com.acemurder.datingme.network.function;
+package com.acemurder.datingme.data.network.function;
 
-import com.acemurder.datingme.bean.ResultWrapper;
+import com.acemurder.datingme.data.bean.ResultWrapper;
 
 import rx.functions.Func1;
 
