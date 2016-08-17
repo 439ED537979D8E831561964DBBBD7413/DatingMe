@@ -1,3 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="homepage">
+        <item>约定</item>
+        <item>社区</item>
+        <item>通讯</item>
+        <item>个人</item>
+    </string-array>
 </resources>
