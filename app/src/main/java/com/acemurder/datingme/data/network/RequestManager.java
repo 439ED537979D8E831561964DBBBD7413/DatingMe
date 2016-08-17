@@ -1,6 +1,7 @@
 package com.acemurder.datingme.data.network;
 
 import com.acemurder.datingme.BuildConfig;
+import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.config.Api;
 import com.acemurder.datingme.data.bean.Response;
@@ -60,8 +61,13 @@ public enum RequestManager {
 
         Observable<List<DatingItem>> observable = mApiService.getDatingItems(page+"",count+"").map(new ResultWrapperFunc<List<DatingItem>>());
         return emitObservable(observable,subscriber);
+    }
 
-        //return  emitObservable(mApiService.getDatingItems(page+"",count+""),subscriber);
+    public Subscription getCommunityItems(Subscriber<List<Community>> subscriber,int page,int count){
+
+        Observable<List<Community>> observable = mApiService.getCommunityItems(page+"",count+"").map(new ResultWrapperFunc<List<Community>>());
+        return emitObservable(observable,subscriber);
+
     }
 
     public Subscription addDatingItem(Subscriber<Response> subscriber ,String data){
@@ -72,7 +78,19 @@ public enum RequestManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Observable<Response> observable = mApiService.addItem(body);
+        Observable<Response> observable = mApiService.addDatingItem(body);
+        return emitObservable(observable,subscriber);
+     }
+
+    public Subscription addCommunityItem(Subscriber<Response> subscriber ,String data){
+        RequestBody body = null;
+        try {
+            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(data)).toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Observable<Response> observable = mApiService.addCommunityItem(body);
         return emitObservable(observable,subscriber);
     }
 

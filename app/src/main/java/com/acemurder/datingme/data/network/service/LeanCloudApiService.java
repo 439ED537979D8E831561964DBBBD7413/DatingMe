@@ -1,5 +1,6 @@
 package com.acemurder.datingme.data.network.service;
 
+import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.bean.ResultWrapper;
@@ -28,11 +29,18 @@ public interface LeanCloudApiService {
     @GET(Api.API_GET_DATING_ITEM)
     Observable<ResultWrapper<List<DatingItem>>> getDatingItems(@Query("limit")String size, @Query("skip")String page);
 
+    @GET(Api.API_GET_COMMUNITY)
+    Observable<ResultWrapper<List<Community>>> getCommunityItems(@Query("limit")String size, @Query("skip")String page);
+
     @POST(Api.API_SIGN_UP)
     Observable<AVUser> signIn(@Body()String data);
 
     @POST(Api.API_GET_DATING_ITEM)
-    Observable<Response>addItem(@Body RequestBody data);
+    Observable<Response>addDatingItem(@Body RequestBody data);
+
+    @POST(Api.API_GET_COMMUNITY)
+    Observable<Response>addCommunityItem(@Body RequestBody data);
+
 }
 
 

@@ -83,4 +83,12 @@ public class Response {
     public void setObjectId(String objectId) {
         this.objectId = objectId;
     }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "createdAt='" + createdAt + '\'' +
+                ", objectId='" + objectId + '\'' +
+                '}';
+    }
 }

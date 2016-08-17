@@ -3,12 +3,14 @@ package com.acemurder.datingme.modules.main;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
+import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
@@ -24,10 +26,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import okhttp3.RequestBody;
 
+import static android.R.attr.y;
 import static rx.schedulers.Schedulers.test;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testData() {
-        DatingItem item = new DatingItem();
+       /* DatingItem item = new DatingItem();
         item.setTheme("打篮球");
         item.setContent("早上八点,一起来打篮球啊");
         item.setPhotoSrc("http://www.qiniu.com/public/v12/img/feature/pic-safety.png");
-        item.setPromulgator("acemurder");
+        item.setPromulgator("acemurder");*/
         /*try {
             RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(item.toString())).toString());
         } catch (JSONException e) {
@@ -58,14 +64,31 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         // Log.e("=======",item.toString().getBytes("utf-8"));
-        RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(this, new SubscriberListener<Response>() {
+
+        List<String> list = new ArrayList<>();
+        list.add("www.baidu.com");
+        list.add("www.taobao.com");
+        list.add("www.tencent.com");
+        Community community = new Community();
+        community.setAuthorName("acemurder");
+        community.setPhotoSrc(list);
+        community.setTitle("真开心``````");
+        community.setContent("hahahahha嘿嘿嘿");
+        Log.e("-----",community.toString());
+        RequestManager.INSTANCE.addCommunityItem(new SimpleSubscriber<Response>(this, new SubscriberListener<Response>() {
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+
             @Override
             public void onNext(Response response) {
                 super.onNext(response);
-               // response.toString();
-                LogUtils.LOGE("tag",response.getCreatedAt()+"  "+response.getObjectId());
+                Log.e("-----",response.toString());
+
             }
-        }),item.toString());
+        }),community.toString());
+
     }
 
     private void initView() {
