@@ -1,5 +1,6 @@
 package com.acemurder.datingme.modules.dating;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,23 +24,26 @@ import butterknife.ButterKnife;
 public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingViewHolder> {
 
     List<DatingItem>mDatingItemList;
+    Context mContext;
 
-
-    public DatingAdapter( List<DatingItem> datingItems){
+    public DatingAdapter(List<DatingItem> datingItems, Context context){
         mDatingItemList = datingItems;
+        mContext = context;
     }
     @Override
     public DatingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_date,parent,false);
-        DatingViewHolder datingViewHolder = new DatingViewHolder(view);
-        return datingViewHolder;
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_date,parent,false);
+
+        return new DatingViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(DatingViewHolder holder, int position) {
+        if (mDatingItemList != null){
             holder.nameView.setText(mDatingItemList.get(position).getPromulgator());
             holder.contentView.setText(mDatingItemList.get(position).getContent());
             holder.subjectView.setText(mDatingItemList.get(position).getTheme());
+        }
 
     }
 
