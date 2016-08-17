@@ -14,7 +14,7 @@ import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.widget.DividerItemDecoration;
 import com.acemurder.datingme.data.bean.DatingItem;
-import com.acemurder.datingme.onRcvScrollListener;
+import com.acemurder.datingme.component.onRcvScrollListener;
 
 import java.util.ArrayList;
 import java.util.List;

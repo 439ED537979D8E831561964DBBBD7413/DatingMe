@@ -1,13 +1,17 @@
 package com.acemurder.datingme.data.network;
 
 import com.acemurder.datingme.BuildConfig;
+import com.acemurder.datingme.R;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.config.Api;
+import com.acemurder.datingme.data.bean.Remark;
 import com.acemurder.datingme.data.bean.Response;
+import com.acemurder.datingme.data.bean.ResultWrapper;
 import com.acemurder.datingme.data.network.function.ResultWrapperFunc;
 import com.acemurder.datingme.data.network.interceptors.HeaderInterceptors;
 import com.acemurder.datingme.data.network.service.LeanCloudApiService;
+import com.alibaba.fastjson.parser.deserializer.JSONObjectDeserializer;
 
 
 import org.json.JSONException;
@@ -16,6 +20,7 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -43,7 +48,7 @@ public enum RequestManager {
     private static final int DEFAULT_TIMEOUT = 30;
 
 
-    RequestManager(){
+    RequestManager() {
         mOkHttpClient = configureOkHttp(new OkHttpClient.Builder());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Api.BASE_URL)
@@ -56,42 +61,59 @@ public enum RequestManager {
     }
 
 
+    public Subscription getDatingItems(Subscriber<List<DatingItem>> subscriber, int page, int count) {
 
-    public Subscription getDatingItems(Subscriber<List<DatingItem>> subscriber,int page,int count){
-
-        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page+"",count+"").map(new ResultWrapperFunc<List<DatingItem>>());
-        return emitObservable(observable,subscriber);
+        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page + "", count + "").map(new ResultWrapperFunc<List<DatingItem>>());
+        return emitObservable(observable, subscriber);
     }
 
-    public Subscription getCommunityItems(Subscriber<List<Community>> subscriber,int page,int count){
+    public Subscription getCommunityItems(Subscriber<List<Community>> subscriber, int page, int count) {
 
-        Observable<List<Community>> observable = mApiService.getCommunityItems(page+"",count+"").map(new ResultWrapperFunc<List<Community>>());
-        return emitObservable(observable,subscriber);
+        Observable<List<Community>> observable = mApiService.getCommunityItems(page + "", count + "").map(new ResultWrapperFunc<List<Community>>());
+        return emitObservable(observable, subscriber);
 
     }
 
-    public Subscription addDatingItem(Subscriber<Response> subscriber ,String data){
+    public Subscription addDatingItem(Subscriber<Response> subscriber, String data) {
         RequestBody body = null;
         try {
-            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(data)).toString());
+            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Observable<Response> observable = mApiService.addDatingItem(body);
-        return emitObservable(observable,subscriber);
-     }
+        return emitObservable(observable, subscriber);
+    }
 
-    public Subscription addCommunityItem(Subscriber<Response> subscriber ,String data){
+    public Subscription addCommunityItem(Subscriber<Response> subscriber, String data) {
         RequestBody body = null;
         try {
-            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(data)).toString());
+            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Observable<Response> observable = mApiService.addCommunityItem(body);
-        return emitObservable(observable,subscriber);
+        return emitObservable(observable, subscriber);
+    }
+
+    public Subscription getRemarkItems(Subscriber<List<Remark>> subscriber, String communityId) {
+        //{"objectId":"57b02f507db2a20054238cb3"}
+        String data = "{\"communityId\":\"" + communityId + "\"}";
+        Observable<List<Remark>> observable = mApiService.getRemarkItems(data).map(new ResultWrapperFunc<List<Remark>>());
+        return emitObservable(observable, subscriber);
+    }
+
+    public Subscription sendRemark(Subscriber<Response> subscriber,String data){
+        RequestBody body = null;
+        try {
+            body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new JSONObject(data).toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Observable<Response> observable = mApiService.addRemarkItem(body);
+        return  emitObservable(observable,subscriber);
     }
 
 

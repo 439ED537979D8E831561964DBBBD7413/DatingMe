@@ -143,4 +143,16 @@ public class Remark {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+    @Override
+    public String toString(){
+        return   "{" +
+                "\"" + "authorName" + "\"" + ":" + "\"" + authorName + "\","+
+                "\"" + "authorId" + "\"" + ":" + "\"" + authorId + "\","+
+                "\"" + "communityId" + "\"" + ":" + "\"" + communityId + "\","+
+                "\"" + "content" + "\"" + ":" + "\"" + content + "\","+
+                "\"" + "authorPhotoSrc" + "\"" + ":" + "\"" + authorPhotoSrc + "\"}";
+    }
+
+
 }
