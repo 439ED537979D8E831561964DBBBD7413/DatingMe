@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,6 +72,7 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                Log.e("setOnMenuItem","setOnMenuItemClickListener");
                 if (item.getItemId() == R.id.action_finish){
                     mDatingItem.setContent(contentView.getText().toString());
                     mDatingItem.setTheme(themeView.getText().toString());
