@@ -47,6 +47,6 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.0.6'
     compile 'com.afollestad.material-dialogs:core:0.8.5.9'
-
-
+    compile 'com.github.clans:fab:1.6.4'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

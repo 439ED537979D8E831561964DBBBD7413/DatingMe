@@ -1,5 +1,6 @@
 package com.acemurder.datingme.modules.dating;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,11 +17,15 @@ import com.acemurder.datingme.component.widget.DividerItemDecoration;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.onRcvScrollListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -28,11 +33,18 @@ import butterknife.Unbinder;
  */
 public class DatingFragment extends Fragment implements DatingContract.IDatingView{
     @BindView(R.id.recycler_view)RecyclerView mRecyclerView;
+
     private Unbinder mUnbinder;
     DatingAdapter mDatingAdapter;
     private DatingPresenter mDatingPresenter;
     private int page = 0;
     private List<DatingItem>mDatingItemList = new ArrayList<>();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
+    }
 
     @Nullable
     @Override
@@ -43,9 +55,14 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         mDatingPresenter = new DatingPresenter(getActivity(),this);
         mDatingPresenter.getDatingItems(page,3);
         initView();
+        onClick();
         return view;
     }
-
+    @OnClick(R.id.fab)
+    public void onClick(){
+        Intent intent = new Intent(getActivity(), EditActivity.class);
+        startActivityForResult(intent,1);
+    }
     private void initView() {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -70,6 +87,11 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         mDatingAdapter.notifyDataSetChanged();
     }
 
+    @Subscribe
+    public void onEvent(Event event){
+        mDatingItemList.add(event.mDatingItem);
+        mDatingAdapter.notifyItemRangeChanged(0,3);
+    }
     @Override
     public void showLoadError() {
         Toast.makeText(APP.getContext(), "抱歉，加载数据失败", Toast.LENGTH_SHORT).show();
@@ -82,7 +104,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
     @Override
     public void showAddSuccess() {
-
+        mDatingPresenter.getDatingItems(page,3);
     }
 
     @Override
@@ -99,5 +121,11 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

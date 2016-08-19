@@ -1,12 +1,14 @@
 package com.acemurder.datingme.data.bean;
 
 
+import java.io.Serializable;
+
 /**
  * Created by  : ACEMURDER
  * Created at  : 16/8/14.
  * Created for : DatingMe
  */
-public class DatingItem{
+public class DatingItem implements Serializable{
 
 
 
@@ -33,6 +35,7 @@ public class DatingItem{
     private String promulgatorId;
     private String receiverId;
     private String photoSrc;
+    private String title;
 
     public String getPhotoSrc() {
         return photoSrc;
@@ -126,6 +129,14 @@ public class DatingItem{
         this.updatedAt = updatedAt;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public String toString() {
 
@@ -141,7 +152,7 @@ public class DatingItem{
                 "\"" + "content" + "\"" + ":" + "\"" + content + "\","+
                 "\"" + "theme" + "\"" + ":" + "\"" + theme + "\","+
                 "\"" + "promulgatorId" + "\"" + ":" + "\"" + promulgatorId + "\","+
-                "\"" + "photoSrc" + "\"" + ":" + "\"" + photoSrc + "\"}";
-
+                "\"" + "photoSrc" + "\"" + ":" + "\"" + photoSrc  + "\","+
+                "\"" + "title" + "\"" + ":" + "\"" + title + "\"}";
     }
 }

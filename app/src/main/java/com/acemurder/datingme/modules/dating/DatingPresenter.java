@@ -19,6 +19,7 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
     private DatingContract.IDatingView mIDatingView;
     private Context mContext;
 
+
     public DatingPresenter(Context context, DatingContract.IDatingView IDatingView) {
         bind(IDatingView);
         this.mContext = context;
