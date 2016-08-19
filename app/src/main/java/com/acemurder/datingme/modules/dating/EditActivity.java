@@ -77,7 +77,6 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
                 if (item.getItemId() == R.id.action_finish){
                     mDatingItem.setContent(contentView.getText().toString());
                     Log.e("EditActivity",contentView.getText().toString());
@@ -94,7 +93,7 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
 
     @Override
     public void finishActivity() {
-      /*finish();*/
+
         EventBus.getDefault().post(new MessageEvent(mDatingItem));
         finish();
     }

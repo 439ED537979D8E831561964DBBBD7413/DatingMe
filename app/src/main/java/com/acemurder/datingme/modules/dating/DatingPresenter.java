@@ -43,15 +43,15 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
                 else
                     mIDatingView.showData(datingItems);
             }
-        }),size,page * size);
+        }), size, page * size);
     }
 
     @Override
-    public void sendDatingItem(DatingItem datingItem,String path) {
+    public void sendDatingItem(DatingItem datingItem, String path) {
         File file = new File(path);
         if (!file.exists()) {
             sendDatingItem(datingItem);
-        }else{
+        } else {
             RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,
                     new SubscriberListener<Response>() {
                         @Override
@@ -65,11 +65,8 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
                             super.onError(e);
                             mIDatingView.showAddError();
                         }
-                    }),datingItem,path);
+                    }), datingItem, path);
         }
-
-
-
 
 
     }
@@ -89,7 +86,7 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
                         super.onError(e);
                         mIDatingView.showAddError();
                     }
-                }),datingItem.toString());
+                }), datingItem.toString());
     }
 
     @Override
