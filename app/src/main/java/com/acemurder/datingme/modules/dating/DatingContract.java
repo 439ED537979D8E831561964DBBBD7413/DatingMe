@@ -16,6 +16,7 @@ public interface DatingContract {
     interface IDatingPresenter extends IBasePresenter<IDatingView>{
         void getDatingItems(int page,int size);
         void sendDatingItem(DatingItem datingItem);
+        void sendDatingItem(DatingItem datingItem,String path);
         AVUser getUserInfo(String id);
     }
 

@@ -31,6 +31,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
         initView();
     }
         /*if (APP.getAVUser() == null) {
@@ -53,8 +55,7 @@ public class MainActivity extends FragmentActivity {
         // Log.e("=======",item.toString().getBytes("utf-8"));
 
 
-        ButterKnife.bind(this);
-        initView();
+    //    initView();
     }
 
     private void initView() {

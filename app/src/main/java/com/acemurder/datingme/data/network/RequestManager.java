@@ -1,7 +1,11 @@
 package com.acemurder.datingme.data.network;
 
+import android.util.Log;
+
+import com.acemurder.datingme.APP;
 import com.acemurder.datingme.BuildConfig;
 import com.acemurder.datingme.R;
+import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.config.Api;
@@ -12,11 +16,22 @@ import com.acemurder.datingme.data.network.function.ResultWrapperFunc;
 import com.acemurder.datingme.data.network.interceptors.HeaderInterceptors;
 import com.acemurder.datingme.data.network.service.LeanCloudApiService;
 import com.alibaba.fastjson.parser.deserializer.JSONObjectDeserializer;
+import com.alibaba.sdk.android.oss.ClientException;
+import com.alibaba.sdk.android.oss.OSS;
+import com.alibaba.sdk.android.oss.OSSClient;
+import com.alibaba.sdk.android.oss.ServiceException;
+import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
+import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
+import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
+import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +49,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static android.R.attr.data;
+import static com.acemurder.datingme.config.Const.accessKeyId;
+import static com.acemurder.datingme.config.Const.accessKeySecret;
+import static com.acemurder.datingme.config.Const.endpoint;
 
 /**
  * Created by zhengyuxuan on 16/8/15.
@@ -46,6 +64,8 @@ public enum RequestManager {
     private LeanCloudApiService mApiService;
     private OkHttpClient mOkHttpClient;
     private static final int DEFAULT_TIMEOUT = 30;
+    OSS oss;
+//    private OSSClient ossClient;
 
 
     RequestManager() {
@@ -56,7 +76,14 @@ public enum RequestManager {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
+
+    //    ossClient = new OSSClient("acemurder", Const.accessKeyId, Const.accessKeySecret);
+// 上传文件
+// 关闭client
         mApiService = retrofit.create(LeanCloudApiService.class);
+        OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(Const.accessKeyId, Const.accessKeySecret);
+
+        oss = new OSSClient(APP.getContext(), endpoint, credentialProvider);
 
     }
 
@@ -84,6 +111,63 @@ public enum RequestManager {
         }
         Observable<Response> observable = mApiService.addDatingItem(body);
         return emitObservable(observable, subscriber);
+    }
+
+    public Subscription addDatingItem(Subscriber<Response> subscriber, DatingItem datingItem, final String imagePath) {
+        final String key = "DatingMe/"+APP.getAVUser().getObjectId()+"_"+System.currentTimeMillis()+new File(imagePath).getName();
+        PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
+        Observable<Response> observable = Observable.create(new Observable.OnSubscribe<Response>() {
+            @Override
+            public void call(Subscriber<? super Response> subscriber) {
+                try {
+                    Response response = new Response(oss.putObject(put));
+                    datingItem.setPhotoSrc("image.acemurder.com/"+key);
+                    Log.e("==========",datingItem.getPhotoSrc());
+                    subscriber.onNext(response);
+
+                } catch (ClientException e) {
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                } catch (ServiceException e) {
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                }
+
+            }
+        });
+        String data = datingItem.toString();
+        RequestBody body = null;
+
+
+        try {
+            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return emitObservable(observable.zipWith(mApiService.addDatingItem(body),Response::cloneFromResult),subscriber);
+       /* oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
+            @Override
+            public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
+                RequestBody body = null;
+                try {
+                    body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Observable<Response> observable = mApiService.addDatingItem(body);
+                //return emitObservable(observable, subscriber);
+            }
+
+            @Override
+            public void onFailure(PutObjectRequest putObjectRequest, ClientException e, ServiceException e1) {
+
+            }
+        })*/
+
     }
 
     public Subscription addCommunityItem(Subscriber<Response> subscriber, String data) {

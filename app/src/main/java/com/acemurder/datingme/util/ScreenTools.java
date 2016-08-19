@@ -2,7 +2,9 @@ package com.acemurder.datingme.util;
 
 import android.content.Context;
 
-
+/**
+ * Created by mathiasluo on 16-4-11.
+ */
 public class ScreenTools {
 
     private static ScreenTools mScreenTools;

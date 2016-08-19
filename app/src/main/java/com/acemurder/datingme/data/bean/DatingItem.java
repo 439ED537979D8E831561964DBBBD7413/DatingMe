@@ -26,9 +26,37 @@ public class DatingItem implements Serializable{
 
     private boolean hasDated;
     private String promulgator;
+    private String promulgatorPhoto;
+    private String localImagePath;
+
+    public String getLocalImagePath() {
+        return localImagePath;
+    }
+
+    public void setLocalImagePath(String localImagePath) {
+        this.localImagePath = localImagePath;
+    }
+
+    public String getReceiverPhoto() {
+        return receiverPhoto;
+    }
+
+    public void setReceiverPhoto(String receiverPhoto) {
+        this.receiverPhoto = receiverPhoto;
+    }
+
+    public String getPromulgatorPhoto() {
+        return promulgatorPhoto;
+    }
+
+    public void setPromulgatorPhoto(String promulgatorPhoto) {
+        this.promulgatorPhoto = promulgatorPhoto;
+    }
+
     private String content;
     private String theme;
     private String receiver;
+    private String receiverPhoto;
     private String objectId;
     private String createdAt;
     private String updatedAt;

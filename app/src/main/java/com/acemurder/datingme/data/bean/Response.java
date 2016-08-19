@@ -1,5 +1,9 @@
 package com.acemurder.datingme.data.bean;
 
+import android.media.AudioTrack;
+
+import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -14,7 +18,7 @@ import java.util.List;
  * Created by zhengyuxuan on 16/8/16.
  */
 
-public class Response {
+public class Response extends PutObjectResult {
 
     /**
      * createdAt : 2015-06-29T01:39:35.931Z
@@ -66,6 +70,24 @@ public class Response {
         return new ArrayList();
 
 
+    }
+
+
+    public Response(PutObjectResult putObjectResult) {
+        this.setETag(putObjectResult.getETag());
+        this.setServerCallbackReturnBody(putObjectResult.getServerCallbackReturnBody());
+        this.setResponseHeader(putObjectResult.getResponseHeader());
+        this.setStatusCode(putObjectResult.getStatusCode());
+        this.setRequestId(putObjectResult.getRequestId());
+    }
+
+    public Response() {
+    }
+
+    public static Response cloneFromResult(Response originResponse,Response clonedResponse){
+        originResponse.setCreatedAt(clonedResponse.getCreatedAt());
+        originResponse.setObjectId(clonedResponse.getObjectId());
+        return originResponse;
     }
 
     public String getCreatedAt() {
