@@ -35,6 +35,16 @@ public class Community {
     private String objectId;
     private String createdAt;
     private String updatedAt;
+    private String authorPhoto;
+
+    public String getAuthorPhoto() {
+        return authorPhoto;
+    }
+
+    public void setAuthorPhoto(String authorPhoto) {
+        this.authorPhoto = authorPhoto;
+    }
+
     private List<String> photoSrc;
 
     public static Community objectFromData(String str) {

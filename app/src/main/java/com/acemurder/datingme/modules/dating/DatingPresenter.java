@@ -7,8 +7,10 @@ import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
+import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.avos.avoscloud.AVUser;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -42,6 +44,37 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
                     mIDatingView.showData(datingItems);
             }
         }),size,page * size);
+    }
+
+    @Override
+    public void sendDatingItem(DatingItem datingItem,String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            sendDatingItem(datingItem);
+        }else{
+
+
+
+            RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,
+                    new SubscriberListener<Response>() {
+                        @Override
+                        public void onNext(Response response) {
+                            super.onNext(response);
+                            mIDatingView.showAddSuccess();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            mIDatingView.showAddError();
+                        }
+                    }),datingItem,path);
+        }
+
+
+
+
+
     }
 
     @Override

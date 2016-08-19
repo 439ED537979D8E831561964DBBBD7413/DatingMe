@@ -1,10 +1,18 @@
 package com.acemurder.datingme.config;
 
+
 /**
  * Created by zhengyuxuan on 16/8/8.
  */
 
 public class Const {
+
+    public static final String endpoint = "image.acemurder.com";
+    // accessKey请登录https://ak-console.aliyun.com/#/查看
+    public static final String accessKeyId = "0rGiins1DWdpWOuc";
+    public static final String accessKeySecret = "bVm4Fy0IyFCulScJWdHtO0Vy9H6HAT";
+
+
     public static final String APP_ID = "vnRdeLMsUKJJFBOK4u4MtqBv-gzGzoHsz";
     public static final String APP_KEY = "9qxFgPgPvDiKfTdjloLJbJG5";
 
