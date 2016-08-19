@@ -7,7 +7,6 @@ import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
-import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.avos.avoscloud.AVUser;
 
 import java.io.File;
@@ -53,9 +52,6 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
         if (!file.exists()) {
             sendDatingItem(datingItem);
         }else{
-
-
-
             RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,
                     new SubscriberListener<Response>() {
                         @Override

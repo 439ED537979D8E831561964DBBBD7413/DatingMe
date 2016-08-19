@@ -1,6 +1,7 @@
 package com.acemurder.datingme.modules.dating;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Response;
@@ -28,16 +29,14 @@ public class EditPresenter implements EditContract.IEditPresenter {
                     @Override
                     public void onNext(Response response) {
                         super.onNext(response);
+                        Log.e("EP","发送成功" + response);
                         mIEditView.finishActivity();
-                      //  mIDatingView.showAddSuccess();
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-
-                       // mIDatingView.showAddError();
                     }
                 }),datingItem.toString());
     }
