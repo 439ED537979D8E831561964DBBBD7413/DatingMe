@@ -114,15 +114,15 @@ public enum RequestManager {
     }
 
     public Subscription addDatingItem(Subscriber<Response> subscriber, DatingItem datingItem, final String imagePath) {
-        final String key = "DatingMe/"+APP.getAVUser().getObjectId()+"_"+System.currentTimeMillis()+new File(imagePath).getName();
+        final String key = "DatingMe/datingItem/"+APP.getAVUser().getObjectId()+"_"+System.currentTimeMillis()+new File(imagePath).getName();
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
+        datingItem.setPhotoSrc("image.acemurder.com/"+key);
+
         Observable<Response> observable = Observable.create(new Observable.OnSubscribe<Response>() {
             @Override
             public void call(Subscriber<? super Response> subscriber) {
                 try {
                     Response response = new Response(oss.putObject(put));
-                    datingItem.setPhotoSrc("image.acemurder.com/"+key);
-                    Log.e("==========",datingItem.getPhotoSrc());
                     subscriber.onNext(response);
 
                 } catch (ClientException e) {
@@ -135,19 +135,15 @@ public enum RequestManager {
 
             }
         });
-        String data = datingItem.toString();
-        RequestBody body = null;
-
-
         try {
-            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString());
-
+            Log.e("..........",datingItem.getPhotoSrc());
+            return emitObservable(observable
+                    .zipWith(mApiService.addDatingItem(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), (new JSONObject(datingItem.toString())).toString())),
+                    Response::cloneFromResult),subscriber);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-        return emitObservable(observable.zipWith(mApiService.addDatingItem(body),Response::cloneFromResult),subscriber);
+        return null;
        /* oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
