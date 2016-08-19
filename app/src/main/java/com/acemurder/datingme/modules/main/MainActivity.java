@@ -12,8 +12,8 @@ import com.acemurder.datingme.modules.dating.DatingFragment;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,6 +31,28 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+    }
+        /*if (APP.getAVUser() == null) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }*/
+
+
+    private void testData() {
+       /* DatingItem item = new DatingItem();
+        item.setTheme("打篮球");
+        item.setContent("早上八点,一起来打篮球啊");
+        item.setPhotoSrc("http://www.qiniu.com/public/v12/img/feature/pic-safety.png");
+        item.setPromulgator("acemurder");*/
+        /*try {
+            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(item.toString())).toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+
+        // Log.e("=======",item.toString().getBytes("utf-8"));
+
+
         ButterKnife.bind(this);
         initView();
     }

@@ -18,4 +18,7 @@
     <color name="white">#FFFFFF</color>
     <color name="colorGrey">#7c7676</color>
 
+    <dimen name="image_size">120dp</dimen>
+    <dimen name="space_size">2dp</dimen>
+    <dimen name="folder_cover_size">72dp</dimen>
 </resources>

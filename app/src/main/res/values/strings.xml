@@ -18,4 +18,15 @@
     <string name="content">内容:</string>
     <string name="theme">主题:</string>
     <string name="finish">发表</string>
+
+    <!--multi image selector-->
+    <string name="folder_all">所有照片</string>
+    <string name="preview">预览</string>
+    <string name="msg_no_camera">没有系统相机</string>
+    <string name="msg_amount_limit">已经达到最高选择数量</string>
+    <string name="action_done">完成</string>
+    <string name="photo_unit">张</string>
+    <string name="tip_take_photo">拍摄照片</string>
+    <string name="un_login">还没有登录</string>
+
 </resources>
