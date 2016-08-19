@@ -90,13 +90,13 @@ public enum RequestManager {
 
     public Subscription getDatingItems(Subscriber<List<DatingItem>> subscriber, int page, int count) {
 
-        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page + "", count + "").map(new ResultWrapperFunc<List<DatingItem>>());
+        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page + "", count + "","-createdAt").map(new ResultWrapperFunc<List<DatingItem>>());
         return emitObservable(observable, subscriber);
     }
 
     public Subscription getCommunityItems(Subscriber<List<Community>> subscriber, int page, int count) {
 
-        Observable<List<Community>> observable = mApiService.getCommunityItems(page + "", count + "").map(new ResultWrapperFunc<List<Community>>());
+        Observable<List<Community>> observable = mApiService.getCommunityItems(page + "", count + "","-updatedAt").map(new ResultWrapperFunc<List<Community>>());
         return emitObservable(observable, subscriber);
 
     }
@@ -181,7 +181,7 @@ public enum RequestManager {
     public Subscription getRemarkItems(Subscriber<List<Remark>> subscriber, String communityId) {
         //{"objectId":"57b02f507db2a20054238cb3"}
         String data = "{\"communityId\":\"" + communityId + "\"}";
-        Observable<List<Remark>> observable = mApiService.getRemarkItems(data).map(new ResultWrapperFunc<List<Remark>>());
+        Observable<List<Remark>> observable = mApiService.getRemarkItems(data,"-updatedAt").map(new ResultWrapperFunc<List<Remark>>());
         return emitObservable(observable, subscriber);
     }
 
