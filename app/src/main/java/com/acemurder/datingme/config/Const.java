@@ -26,6 +26,7 @@ public class Const {
     public static final int PASSWORD_WRONG = 210;
     public static final int USER_NOT_EXIST = 211;
 
-
+    public static final int TAKE_PHOTO = 1;
+    public static final int CROP_PHOTO = 2;
 
 }

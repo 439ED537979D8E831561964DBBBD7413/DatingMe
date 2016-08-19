@@ -13,7 +13,11 @@
     <string name="network_break">网络中断</string>
     <string name="network_connect_error">连接错误</string>
 
-
+    <string name="title">标题:</string>
+    <string name="place">地点:</string>
+    <string name="content">内容:</string>
+    <string name="theme">主题:</string>
+    <string name="finish">发表</string>
 
     <!--multi image selector-->
     <string name="folder_all">所有照片</string>
@@ -24,4 +28,5 @@
     <string name="photo_unit">张</string>
     <string name="tip_take_photo">拍摄照片</string>
     <string name="un_login">还没有登录</string>
+
 </resources>
