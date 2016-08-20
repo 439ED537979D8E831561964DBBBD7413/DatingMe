@@ -6,14 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.acemurder.datingme.modules.edit.EditActivity">
+    tools:context=".modules.dating.EditActivity">
 
     <LinearLayout
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/toolbar"/>
+        <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
     <EditText
         android:id="@+id/edit_et_theme"
         android:hint="@string/theme"

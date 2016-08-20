@@ -4,13 +4,28 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_dating"
+    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".modules.main.MainActivity">
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+    <com.baoyz.widget.PullRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_dating"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.baoyz.widget.PullRefreshLayout>
+
+        </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -18,5 +33,16 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_edit_black_24px"/>
+    </android.support.design.widget.CoordinatorLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <include
+            layout="@layout/toolbar"/>
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 </android.support.design.widget.CoordinatorLayout>
 

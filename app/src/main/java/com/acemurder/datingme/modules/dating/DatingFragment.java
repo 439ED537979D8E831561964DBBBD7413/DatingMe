@@ -8,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,6 +20,8 @@ import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.onRcvScrollListener;
 import com.acemurder.datingme.component.widget.DividerItemDecoration;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.baoyz.widget.PullRefreshLayout;
+import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,18 +33,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-
 /**
  * Created by fg on 2016/8/16.
  */
 public class DatingFragment extends Fragment implements DatingContract.IDatingView{
     @BindView(R.id.recycler_view_dating)RecyclerView mRecyclerView;
-
+    @BindView(R.id.swipe_container)PullRefreshLayout mPullRefreshLayout;
+    @BindView(R.id.search_view) MaterialSearchView mMaterialSearchView;
     private Unbinder mUnbinder;
     DatingAdapter mDatingAdapter;
     private DatingPresenter mDatingPresenter;
     private int page = 0;
     private List<DatingItem>mDatingItemList = new ArrayList<>();
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +56,6 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_dating,container,false);
         mUnbinder = ButterKnife.bind(this,view);
         mDatingPresenter = new DatingPresenter(getActivity(),this);
@@ -64,7 +69,41 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         Intent intent = new Intent(getActivity(), EditActivity.class);
         startActivityForResult(intent,1);
     }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_search,menu);
+        MenuItem item = menu.findItem(R.id.action_search);
+        Log.e("DatingFragment","是否执行过");
+        mMaterialSearchView.setMenuItem(item);
+        mMaterialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.e("DatingFragment","onQueryTextSubmit");
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.e("DaitngFragment","onQueryTextChange");
+                return true;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_search:return false;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initView() {
+
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mDatingAdapter = new DatingAdapter(mDatingItemList,getActivity());
@@ -75,6 +114,17 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
                 getItem(++page);
             }
         });
+        mPullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
+        mPullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mDatingPresenter.getDatingItems(page,3);
+                Log.e("DatingFragment",page + "");
+                mPullRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
     }
 
     public void getItem(int page) {
@@ -100,7 +150,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
     @Override
     public void showNoMore() {
-
+        Toast.makeText(getActivity(), "已是最新数据", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -4,29 +4,22 @@ import android.util.Log;
 
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.BuildConfig;
-import com.acemurder.datingme.R;
+import com.acemurder.datingme.config.Api;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
-import com.acemurder.datingme.config.Api;
 import com.acemurder.datingme.data.bean.Remark;
 import com.acemurder.datingme.data.bean.Response;
-import com.acemurder.datingme.data.bean.ResultWrapper;
 import com.acemurder.datingme.data.network.function.ResultWrapperFunc;
 import com.acemurder.datingme.data.network.interceptors.HeaderInterceptors;
 import com.acemurder.datingme.data.network.service.LeanCloudApiService;
-import com.alibaba.fastjson.parser.deserializer.JSONObjectDeserializer;
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.ServiceException;
-import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
-import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.alibaba.sdk.android.oss.model.PutObjectResult;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,9 +41,6 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static android.R.attr.data;
-import static com.acemurder.datingme.config.Const.accessKeyId;
-import static com.acemurder.datingme.config.Const.accessKeySecret;
 import static com.acemurder.datingme.config.Const.endpoint;
 
 /**

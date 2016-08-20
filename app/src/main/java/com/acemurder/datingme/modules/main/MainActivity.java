@@ -35,28 +35,7 @@ public class MainActivity extends FragmentActivity {
 
         initView();
     }
-        /*if (APP.getAVUser() == null) {
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-        }*/
 
-
-    private void testData() {
-       /* DatingItem item = new DatingItem();
-        item.setTheme("打篮球");
-        item.setContent("早上八点,一起来打篮球啊");
-        item.setPhotoSrc("http://www.qiniu.com/public/v12/img/feature/pic-safety.png");
-        item.setPromulgator("acemurder");*/
-        /*try {
-            RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"),(new JSONObject(item.toString())).toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
-
-        // Log.e("=======",item.toString().getBytes("utf-8"));
-
-
-    //    initView();
-    }
 
     private void initView() {
         mCommunityFragment = new CommunityFragment();
@@ -84,7 +63,7 @@ public class MainActivity extends FragmentActivity {
                 getDrawable(R.drawable.ic_person),Color.parseColor(colors[3])).title("个人").
                 build());
         navigationTabBar.setModels(models);
-        navigationTabBar.setViewPager(mViewPager,2);
+        navigationTabBar.setViewPager(mViewPager,0);
         navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ACTIVE);
         navigationTabBar.setBadgeGravity(NavigationTabBar.BadgeGravity.BOTTOM);
         navigationTabBar.setBadgePosition(NavigationTabBar.BadgePosition.CENTER);

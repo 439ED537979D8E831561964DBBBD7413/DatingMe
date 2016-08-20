@@ -1,29 +1,12 @@
 package com.acemurder.datingme.modules.community;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.acemurder.datingme.R;
-import com.acemurder.datingme.component.onRcvScrollListener;
-import com.acemurder.datingme.data.bean.Community;
-
-import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by fg on 2016/8/15.
  */
-public class CommunityFragment extends Fragment implements CommunityContract.ICommunityView{
-    private Unbinder mUnbinder;
+public class CommunityFragment extends Fragment{ //implements CommunityContract.ICommunityView{
+    /*private Unbinder mUnbinder;
     private CommunityAdapter mCommunityAdapter;
     private List<Community>mCommunityList;
     private CommunityPresenter mCommunityPresenter;
@@ -42,8 +25,8 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
 
     private void initView() {
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
-        mCommunityAdapter = new CommunityAdapter(getActivity(),mCommunityList);
-        mRecyclerView.setAdapter(mCommunityAdapter);
+       // mCommunityAdapter = new CommunityAdapter(getActivity(),mCommunityList);
+      //  mRecyclerView.setAdapter(mCommunityAdapter);
         mRecyclerView.addOnScrollListener(new onRcvScrollListener(){
             @Override
             public void onBottom() {
@@ -85,5 +68,5 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
-    }
+    }*/
 }

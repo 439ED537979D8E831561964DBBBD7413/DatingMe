@@ -1,27 +1,21 @@
 package com.acemurder.datingme.data.network.service;
 
+import com.acemurder.datingme.config.Api;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Remark;
 import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.bean.ResultWrapper;
-import com.acemurder.datingme.config.Api;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.okhttp.Request;
 
 import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import rx.Observable;
-
-import static android.R.attr.data;
-import static android.R.attr.order;
-import static com.acemurder.datingme.R.id.size;
 
 /**
  * Created by zhengyuxuan on 16/8/15.
