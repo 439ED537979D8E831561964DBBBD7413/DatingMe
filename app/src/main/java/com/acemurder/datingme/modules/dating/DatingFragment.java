@@ -55,7 +55,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         mDatingPresenter = new DatingPresenter(getActivity(),this);
         mDatingPresenter.getDatingItems(page,3);
         initView();
-        onClick();
+       // onClick();
         return view;
     }
     @OnClick(R.id.fab)

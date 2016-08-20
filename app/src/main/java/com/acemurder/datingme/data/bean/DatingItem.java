@@ -8,9 +8,7 @@ import java.io.Serializable;
  * Created at  : 16/8/14.
  * Created for : DatingMe
  */
-public class DatingItem implements Serializable{
-
-
+public class DatingItem implements Serializable, Cloneable {
 
 
     /**
@@ -24,7 +22,7 @@ public class DatingItem implements Serializable{
      * updatedAt : 2016-08-14T02:31:38.613Z
      */
 
-    private boolean hasDated;
+    private boolean hasDated = false;
     private String promulgator;
     private String promulgatorPhoto;
     private String localImagePath;
@@ -175,12 +173,18 @@ public class DatingItem implements Serializable{
                 ", receiverId:" + "\""+ receiverId +
                 ", photoSrc:" + "\""+ photoSrc +"}"*/
 
-      return   "{" +
-                "\"" + "promulgator" + "\"" + ":" + "\"" + promulgator + "\","+
-                "\"" + "content" + "\"" + ":" + "\"" + content + "\","+
-                "\"" + "theme" + "\"" + ":" + "\"" + theme + "\","+
-                "\"" + "promulgatorId" + "\"" + ":" + "\"" + promulgatorId + "\","+
-                "\"" + "photoSrc" + "\"" + ":" + "\"" + photoSrc  + "\","+
+        return "{" +
+                "\"" + "promulgator" + "\"" + ":" + "\"" + promulgator + "\"," +
+                "\"" + "content" + "\"" + ":" + "\"" + content + "\"," +
+                "\"" + "hasDated" + "\"" + ":" +  hasDated + "," +
+                "\"" + "theme" + "\"" + ":" + "\"" + theme + "\"," +
+                "\"" + "promulgatorId" + "\"" + ":" + "\"" + promulgatorId + "\"," +
+                "\"" + "photoSrc" + "\"" + ":" + "\"" + photoSrc + "\"," +
                 "\"" + "title" + "\"" + ":" + "\"" + title + "\"}";
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

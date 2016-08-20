@@ -27,6 +27,15 @@ public class Response extends PutObjectResult {
 
     private String createdAt;
     private String objectId;
+    private String updatedAt;
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public static Response objectFromData(String str) {
 

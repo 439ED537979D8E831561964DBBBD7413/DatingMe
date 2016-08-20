@@ -23,6 +23,7 @@ public class APP extends Application {
         sContext = getApplicationContext();
         AVOSCloud.initialize(this, Const.APP_ID, Const.APP_KEY);
         AVOSCloud.useAVCloudCN();
+
     }
 
 

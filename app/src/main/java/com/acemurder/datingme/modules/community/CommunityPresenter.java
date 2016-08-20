@@ -44,22 +44,9 @@ public class CommunityPresenter implements CommunityContract.ICommunityPresenter
                 }),size,page * size);
     }
 
-    @Override
-    public void sendCommunityItem(Community community) {
-        RequestManager.INSTANCE.addCommunityItem(new SimpleSubscriber<Response>(mContext, new SubscriberListener<Response>() {
-            @Override
-            public void onNext(Response response) {
-                super.onNext(response);
-                mICommunityView.showSendSuccess();
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                super.onError(e);
-                mICommunityView.showSendError();
-            }
-        }),community.toString());
-    }
+
+
 
     @Override
     public void bind(CommunityContract.ICommunityView view) {
