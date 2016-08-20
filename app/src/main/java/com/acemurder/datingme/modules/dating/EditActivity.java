@@ -20,6 +20,7 @@ import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.avos.avoscloud.AVUser;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
@@ -43,14 +44,19 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
     @BindView(R.id.edit_iv_photo)ImageView photoView;
     @BindView(R.id.edit_menu_photo)FloatingActionMenu mFloatingActionMenu;
     private Uri imageUri;
-    private EditPresenter mEditPresenter = new EditPresenter(this,this);
-    private DatingItem mDatingItem = new DatingItem();
-
+    private EditPresenter mEditPresenter;
+    private DatingItem mDatingItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         ButterKnife.bind(this);
+        AVUser avUser = new AVUser();
+        avUser.setUsername("admin");
+        avUser.setObjectId("123456");
+        APP.setUser(avUser);
+          mEditPresenter = new EditPresenter(this,this);
+          mDatingItem = new DatingItem();
         FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.edit_fab_add_photo);
         FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.edit_fab_take_photo);
         fab1.setOnClickListener(this);
@@ -68,13 +74,12 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
                 onBackPressed();
             }
         });
-
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                Log.e("setOnMenuItem","setOnMenuItemClickListener");
                 if (item.getItemId() == R.id.action_finish){
                     mDatingItem.setContent(contentView.getText().toString());
+                    Log.e("EditActivity",contentView.getText().toString());
                     mDatingItem.setTheme(themeView.getText().toString());
                     mDatingItem.setPromulgator(APP.getAVUser().getUsername());
                     mDatingItem.setPromulgatorId(APP.getAVUser().getObjectId());
@@ -88,8 +93,9 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
 
     @Override
     public void finishActivity() {
-      /*finish();*/
-        EventBus.getDefault().post(new Event(mDatingItem));
+
+        EventBus.getDefault().post(new MessageEvent(mDatingItem));
+        finish();
     }
 
     @Override

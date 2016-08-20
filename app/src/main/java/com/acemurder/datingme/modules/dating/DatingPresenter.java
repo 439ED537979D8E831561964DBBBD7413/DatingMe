@@ -7,7 +7,6 @@ import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
-import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.avos.avoscloud.AVUser;
 
 import java.io.File;

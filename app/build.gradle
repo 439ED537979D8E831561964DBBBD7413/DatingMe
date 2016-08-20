@@ -57,4 +57,5 @@ dependencies {
     compile 'com.squareup.okio:okio:1.9.0'
     compile 'com.github.clans:fab:1.6.4'
     compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }
