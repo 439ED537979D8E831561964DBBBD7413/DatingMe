@@ -1,5 +1,6 @@
 package com.acemurder.datingme.data.network;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.acemurder.datingme.APP;
@@ -10,6 +11,8 @@ import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Remark;
 import com.acemurder.datingme.data.bean.Response;
+import com.acemurder.datingme.data.bean.ResultWrapper;
+import com.acemurder.datingme.data.bean.User;
 import com.acemurder.datingme.data.network.function.ResultWrapperFunc;
 import com.acemurder.datingme.data.network.interceptors.HeaderInterceptors;
 import com.acemurder.datingme.data.network.service.LeanCloudApiService;
@@ -21,11 +24,18 @@ import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSPlainTextAKSKCredentialProvider;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
+import com.avos.avoscloud.AVUser;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
@@ -41,6 +51,8 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+
+import static android.R.attr.key;
 import static com.acemurder.datingme.config.Const.endpoint;
 
 /**
@@ -67,9 +79,6 @@ public enum RequestManager {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
 
-    //    ossClient = new OSSClient("acemurder", Const.accessKeyId, Const.accessKeySecret);
-// 上传文件
-// 关闭client
         mApiService = retrofit.create(LeanCloudApiService.class);
         OSSCredentialProvider credentialProvider = new OSSPlainTextAKSKCredentialProvider(Const.accessKeyId, Const.accessKeySecret);
 
@@ -77,16 +86,46 @@ public enum RequestManager {
 
     }
 
+    public Subscription date(Subscriber<Response> subscriber, DatingItem item, AVUser user) {
+        if (item.getPromulgatorId().equals(user.getObjectId())) {
+            throw new IllegalArgumentException("Promulgator and Receiver cant't be a same one.");
+        } else {
+            try {
+                DatingItem itemCopy = (DatingItem) item.clone();
+                itemCopy.setReceiver(user.getUsername());
+                itemCopy.setReceiverId(user.getObjectId());
+                itemCopy.setHasDated(true);
+                // itemCopy.setReceiverPhoto(user.getPhotoSrc());
+                RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new JSONObject(itemCopy.toString()).toString());
+                //  Log.e("xxxxxxxxxx",)
+                Observable<Response> observable = mApiService.date(item.getObjectId(), body);
+
+                return emitObservable(observable, subscriber);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+
+    public Subscription login(Subscriber<User> subscriber, String userName, String password) {
+        Observable<User> observable = mApiService.login(userName, password);
+        return emitObservable(observable, subscriber);
+
+    }
+
 
     public Subscription getDatingItems(Subscriber<List<DatingItem>> subscriber, int page, int count) {
 
-        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page + "", count + "","-createdAt").map(new ResultWrapperFunc<List<DatingItem>>());
+        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page + "", count + "", "-createdAt").map(new ResultWrapperFunc<List<DatingItem>>());
         return emitObservable(observable, subscriber);
     }
 
     public Subscription getCommunityItems(Subscriber<List<Community>> subscriber, int page, int count) {
 
-        Observable<List<Community>> observable = mApiService.getCommunityItems(page + "", count + "","-updatedAt").map(new ResultWrapperFunc<List<Community>>());
+        Observable<List<Community>> observable = mApiService.getCommunityItems(page + "", count + "", "-updatedAt").map(new ResultWrapperFunc<List<Community>>());
         return emitObservable(observable, subscriber);
 
     }
@@ -104,9 +143,9 @@ public enum RequestManager {
     }
 
     public Subscription addDatingItem(Subscriber<Response> subscriber, DatingItem datingItem, final String imagePath) {
-        final String key = "DatingMe/datingItem/"+APP.getAVUser().getObjectId()+"_"+System.currentTimeMillis()+new File(imagePath).getName();
+        final String key = "DatingMe/datingItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + new File(imagePath).getName();
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
-        datingItem.setPhotoSrc("image.acemurder.com/"+key);
+        datingItem.setPhotoSrc("image.acemurder.com/" + key);
 
         Observable<Response> observable = Observable.create(new Observable.OnSubscribe<Response>() {
             @Override
@@ -126,40 +165,23 @@ public enum RequestManager {
             }
         });
         try {
-            Log.e("..........",datingItem.getPhotoSrc());
             return emitObservable(observable
                     .zipWith(mApiService.addDatingItem(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), (new JSONObject(datingItem.toString())).toString())),
-                    Response::cloneFromResult),subscriber);
+                            Response::cloneFromResult), subscriber);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return null;
-       /* oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
-            @Override
-            public void onSuccess(PutObjectRequest putObjectRequest, PutObjectResult putObjectResult) {
-                RequestBody body = null;
-                try {
-                    body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString());
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Observable<Response> observable = mApiService.addDatingItem(body);
-                //return emitObservable(observable, subscriber);
-            }
-
-            @Override
-            public void onFailure(PutObjectRequest putObjectRequest, ClientException e, ServiceException e1) {
-
-            }
-        })*/
 
     }
 
-    public Subscription addCommunityItem(Subscriber<Response> subscriber, String data) {
+
+    //增加一条社区动态,无图
+    public Subscription addCommunityItem(Subscriber<Response> subscriber, Community community) {
+
         RequestBody body = null;
         try {
-            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString());
+            body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), (new JSONObject(community.toString())).toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -168,22 +190,59 @@ public enum RequestManager {
         return emitObservable(observable, subscriber);
     }
 
+    //增加一条社区动态,带图
+    public Subscription addCommunityItem(Subscriber<Response> subscriber, Community community,List<String> imagePath) {
+       // final String key = "DatingMe/CommunityItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + new File(imagePath).getName();
+       // PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
+        final String key = "DatingMe/CommunityItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + "_"+new File(imagePath.get(0)).getName();
+        PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath.get(0));
+        List<String> list = new ArrayList<>();
+        list.add(Const.endpoint+"/"+key);
+        community.setPhotoSrc(list);
+
+        Observable<Response> observable = Observable.create(new Observable.OnSubscribe<Response>() {
+            @Override
+            public void call(Subscriber<? super Response> subscriber) {
+                try {
+                    Response response = new Response(oss.putObject(put));
+                    subscriber.onNext(response);
+
+                }catch (Exception e) {
+                    e.printStackTrace();
+                    subscriber.onError(e);
+                }
+
+            }
+        });
+        try {
+            return emitObservable(observable
+                    .zipWith(mApiService.addCommunityItem(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), (new JSONObject(community.toString())).toString())),
+                            Response::cloneFromResult), subscriber);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
+
+    }
+
     public Subscription getRemarkItems(Subscriber<List<Remark>> subscriber, String communityId) {
         //{"objectId":"57b02f507db2a20054238cb3"}
         String data = "{\"communityId\":\"" + communityId + "\"}";
-        Observable<List<Remark>> observable = mApiService.getRemarkItems(data,"-updatedAt").map(new ResultWrapperFunc<List<Remark>>());
+        Observable<List<Remark>> observable = mApiService.getRemarkItems(data, "-updatedAt").map(new ResultWrapperFunc<List<Remark>>());
         return emitObservable(observable, subscriber);
     }
 
-    public Subscription sendRemark(Subscriber<Response> subscriber,String data){
+    public Subscription sendRemark(Subscriber<Response> subscriber, String data) {
         RequestBody body = null;
         try {
-            body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"),new JSONObject(data).toString());
+            body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new JSONObject(data).toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         Observable<Response> observable = mApiService.addRemarkItem(body);
-        return  emitObservable(observable,subscriber);
+        return emitObservable(observable, subscriber);
     }
 
 

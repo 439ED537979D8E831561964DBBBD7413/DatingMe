@@ -14,7 +14,7 @@ import java.util.List;
  * Created by zhengyuxuan on 16/8/17.
  */
 
-public class Community {
+public class Community implements Cloneable {
 
 
     /**
@@ -173,5 +173,10 @@ public class Community {
                 "\"" + "content" + "\"" + ":" + "\"" + content + "\","+
                 "\"" + "title" + "\"" + ":" + "\"" + title + "\","+
                 "\"" + "photoSrc" + "\"" + ":" +  photos.toString() + "}";
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

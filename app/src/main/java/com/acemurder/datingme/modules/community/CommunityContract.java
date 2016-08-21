@@ -15,9 +15,11 @@ public interface CommunityContract {
     interface ICommunityView extends IBaseView<ICommunityPresenter>{
         void showCommunityItems(List<Community> communities);
         void showGetCommunityItemsError();
+    }
+
+    interface IPostNewCommunityView extends IBaseView<IPostNewCommunityPresenter>{
         void showSendError();
         void showSendSuccess();
-
     }
 
     interface IRemarkView extends IBaseView<ICommunityPresenter>{
@@ -29,9 +31,13 @@ public interface CommunityContract {
     }
     interface ICommunityPresenter extends IBasePresenter<ICommunityView>{
         void getCommunityItems(int page,int size);
-        void sendCommunityItem(Community community);
-
     }
+
+    interface IPostNewCommunityPresenter extends IBasePresenter<IPostNewCommunityView>{
+        void sendCommunityItem(Community community);
+        void sendCommunityItem(Community community,List<String> path);
+    }
+
 
     interface IRemarkPresenter extends IBasePresenter<ICommunityView>{
         void getRemarkItem(String communityId);
