@@ -8,8 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,6 @@ import com.acemurder.datingme.component.onRcvScrollListener;
 import com.acemurder.datingme.component.widget.DividerItemDecoration;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.baoyz.widget.PullRefreshLayout;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -39,7 +36,7 @@ import butterknife.Unbinder;
 public class DatingFragment extends Fragment implements DatingContract.IDatingView{
     @BindView(R.id.recycler_view_dating)RecyclerView mRecyclerView;
     @BindView(R.id.swipe_container)PullRefreshLayout mPullRefreshLayout;
-    @BindView(R.id.search_view) MaterialSearchView mMaterialSearchView;
+   // @BindView(R.id.search_view) MaterialSearchView mMaterialSearchView;
     private Unbinder mUnbinder;
     DatingAdapter mDatingAdapter;
     private DatingPresenter mDatingPresenter;
@@ -71,26 +68,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     }
 
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_search,menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        Log.e("DatingFragment","是否执行过");
-        mMaterialSearchView.setMenuItem(item);
-        mMaterialSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.e("DatingFragment","onQueryTextSubmit");
-                return true;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.e("DaitngFragment","onQueryTextChange");
-                return true;
-            }
-        });
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

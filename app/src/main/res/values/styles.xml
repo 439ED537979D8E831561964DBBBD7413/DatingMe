@@ -7,8 +7,8 @@
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/primary_dark</item>
-        <item name="colorPrimaryDark">@color/primary_shade</item>
+        <item name="colorPrimary">@color/primary_shade</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/accent_light</item>
 
         <item name="android:windowBackground">@color/primary_dark</item>
@@ -27,24 +27,5 @@
         <item name="android:textColorPrimary">@color/iron</item>
         <item name="android:background">@color/primary_shade</item>
     </style>
-    <style name="MaterialSearchViewStyle">
-        <!-- Change voice icon -->
-        <item name="searchVoiceIcon">@drawable/ic_action_voice_search_inverted</item>
 
-        <!-- Change clear text icon -->
-        <item name="searchCloseIcon">@drawable/ic_action_navigation_close_inverted</item>
-
-        <!-- Change up icon -->
-        <item name="searchBackIcon">@drawable/ic_action_navigation_arrow_back_inverted</item>
-
-        <!-- Change icon for the suggestions -->
-        <item name="searchSuggestionIcon">@drawable/ic_suggestion</item>
-
-        <!-- Change background for the suggestions list view -->
-        <item name="searchSuggestionBackground">@android:color/white</item>
-
-
-        <!-- Hint for edit text -->
-        <item name="android:hint">@string/search_hint</item>
-    </style>
 </resources>

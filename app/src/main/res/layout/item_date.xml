@@ -15,6 +15,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
                 <ImageView
+
                     android:scaleType="centerCrop"
                     android:id="@+id/item_dating_iv_image"
                     android:layout_width="match_parent"
@@ -22,9 +23,9 @@
                     android:src="@drawable/ic_cat"/>
                 <com.acemurder.datingme.component.widget.CircleImageView
                     android:id="@+id/item_dating_tv_portrait"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"/>
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/moiling"/>
                 <TextView
                     android:id="@+id/item_dating_tv_name"
                     android:layout_toRightOf="@+id/item_dating_tv_portrait"
@@ -32,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#fff"
                     android:textSize="18dp"
-                    android:text="dfsf"/>
+                    android:text="moiling"/>
                 <TextView
                     android:id="@+id/item_dating_tv_theme"
                     android:layout_width="wrap_content"
@@ -41,14 +42,14 @@
                     android:layout_alignTop="@+id/item_dating_iv_image"
                     android:textColor="#fff"
                     android:textSize="15dp"
-                    android:text="hello"/>
+                    android:text="代码"/>
             </RelativeLayout>
         <TextView
             android:id="@+id/item_dating_tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="dsfsfdfagdgdgdga"
+            android:text="代码"
             android:textColor="@color/cardview_dark_background"
             android:textSize="25sp"
             android:maxLines="2"
@@ -60,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:maxLines="2"
                 android:ellipsize="end"
-                android:text="dfhkshfkshfdj"/>
+                android:text="晚上一起写代码"/>
             <ImageView
                 android:src="@color/colorGrey"
                 android:layout_width="match_parent"
