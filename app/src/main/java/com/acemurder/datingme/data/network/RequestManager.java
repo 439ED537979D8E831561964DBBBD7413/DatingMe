@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 
+import cn.leancloud.chatkit.LCChatKitUser;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -49,6 +50,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
@@ -142,6 +144,27 @@ public enum RequestManager {
         return emitObservable(observable, subscriber);
     }
 
+    public Subscription getAllUser(Subscriber<List<User>> subscriber){
+        return emitObservable(mApiService.getAlluser().map(new ResultWrapperFunc<>()),subscriber);
+    }
+
+
+    public Subscription getAllLCChatKitUser(Subscriber<List<LCChatKitUser>>subscriber){
+        Observable<List<LCChatKitUser>> observable = mApiService
+                .getAlluser().map(new ResultWrapperFunc<>())
+                .map(new Func1<List<User>, List<LCChatKitUser>>() {
+                    @Override
+                    public List<LCChatKitUser> call(List<User> users) {
+                        List<LCChatKitUser> newUsers = new ArrayList<LCChatKitUser>();
+                        for (User user:users){
+                            newUsers.add(new LCChatKitUser(user.getObjectId(),user.getUsername(),user.getPhotoSrc()));
+                        }
+                        return newUsers;
+                    }
+                });
+        return emitObservable(observable,subscriber);
+    }
+
     public Subscription addDatingItem(Subscriber<Response> subscriber, DatingItem datingItem, final String imagePath) {
         final String key = "DatingMe/datingItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + new File(imagePath).getName();
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
@@ -189,6 +212,7 @@ public enum RequestManager {
         Observable<Response> observable = mApiService.addCommunityItem(body);
         return emitObservable(observable, subscriber);
     }
+
 
     //增加一条社区动态,带图
     public Subscription addCommunityItem(Subscriber<Response> subscriber, Community community,List<String> imagePath) {

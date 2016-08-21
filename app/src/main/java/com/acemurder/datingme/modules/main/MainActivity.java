@@ -1,5 +1,6 @@
 package com.acemurder.datingme.modules.main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.modules.community.CommunityFragment;
 import com.acemurder.datingme.modules.dating.DatingFragment;
+import com.acemurder.datingme.modules.im.ContactFragment;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
@@ -30,11 +32,20 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+       setContentView(R.layout.activity_main);
+       ButterKnife.bind(this);
 
         initView();
+        testData();
+       // sendMessageToJerryFromTom();
     }
+
+
+
+    private void testData() {
+
+    }
+
 
 
     private void initView() {
@@ -43,6 +54,7 @@ public class MainActivity extends FragmentActivity {
         mPersonalFragment = new PersonalFragment();
         mFragmentList.add(mDatingFragment);
         mFragmentList.add(mCommunityFragment);
+        mFragmentList.add(new ContactFragment());
         mFragmentList.add(mPersonalFragment);
         mViewPager.setOffscreenPageLimit(4);
         mViewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList

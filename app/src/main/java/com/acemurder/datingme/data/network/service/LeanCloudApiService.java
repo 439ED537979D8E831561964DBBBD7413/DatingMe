@@ -42,6 +42,9 @@ public interface LeanCloudApiService {
                                                                  @Query("skip")String page,
                                                                  @Query("order") String order);
 
+    @GET(Api.API_GET_ALL_USER)
+    Observable<ResultWrapper<List<User>>> getAlluser();
+
     @PUT(Api.API_GET_DATING_ITEM+"/"+"{PATH}")
     Observable<Response>date(@Path("PATH")String id,@Body RequestBody body);
 

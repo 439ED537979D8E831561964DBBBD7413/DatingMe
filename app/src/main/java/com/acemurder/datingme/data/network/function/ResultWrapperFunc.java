@@ -13,7 +13,7 @@ import rx.functions.Func1;
 public class ResultWrapperFunc<T> implements Func1<ResultWrapper<T>,T> {
     @Override
     public T call(ResultWrapper<T> tResultWrapper) {
-        Log.e("=====",(tResultWrapper == null)+"");
+       // Log.e("=====",(tResultWrapper == null)+"");
 
         if (tResultWrapper.getResults() != null){
             return tResultWrapper.getResults();

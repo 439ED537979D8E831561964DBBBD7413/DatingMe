@@ -11,11 +11,13 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.leancloud.chatkit.LCChatKitUser;
+
 /**
  * Created by zhengyuxuan on 16/8/19.
  */
 
-public class User{
+public class User  {
 
     /**
      * description : 这个人很懒，什么都没有留下！
@@ -38,6 +40,8 @@ public class User{
     private String createdAt;
     private boolean emailVerified;
     private boolean mobilePhoneVerified;
+
+
 
     public static User objectFromData(String str) {
 

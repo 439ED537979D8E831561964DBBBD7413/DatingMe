@@ -49,15 +49,6 @@ public class CommunityFragment extends Fragment{ //implements CommunityContract.
 
     }
 
-    @Override
-    public void showSendError() {
-
-    }
-
-    @Override
-    public void showSendSuccess() {
-
-    }
 
     @Override
     public void setPresenter(CommunityContract.ICommunityPresenter presenter) {
