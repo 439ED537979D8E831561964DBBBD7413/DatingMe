@@ -2,28 +2,155 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+    <include
+        layout="@layout/toolbar"/>
     <LinearLayout
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayout">
         <com.acemurder.datingme.component.widget.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/moiling"/>
 
         <TextView
             android:id="@+id/peson_tv_name"
             android:text="Alice314"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
+            android:textSize="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
         <TextView
             android:id="@+id/person_tv_sex"
             android:text="女"
+            android:layout_marginTop="40dp"
+            android:textSize="20dp"
+            android:layout_marginLeft="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <ImageView
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="80dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_navigate_next_black_24px"/>
     </LinearLayout>
+    <View
+        android:id="@+id/view1"
+        android:layout_marginTop="45dp"
+        android:layout_below="@+id/linearLayout"
+        android:background="@color/divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+    <LinearLayout
+        android:layout_below="@+id/view1"
+        android:id="@+id/linearLayout_function"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+
+        <ImageView
+            style="@style/ImageStyle"
+            android:src="@drawable/ic_favorite_border_black_18px"/>
+        <TextView
+            style="@style/TextStyle"
+            android:id="@+id/person_tv_publish"
+            android:maxEms="3"
+            android:text="发表的约定"/>
+        <View
+            style="@style/dividerStyle"/>
+        <ImageView
+            style="@style/ImageStyle"
+            android:src="@drawable/ic_favorite_border_black_18px"/>
+        <TextView
+            style="@style/TextStyle"
+            android:id="@+id/person_tv_finished"
+            android:maxEms="3"
+            android:text="已完成约定"/>
+        <View
+            style="@style/dividerStyle"/>
+        <ImageView
+            style="@style/ImageStyle"
+            android:src="@drawable/ic_favorite_border_black_18px"/>
+        <TextView
+            style="@style/TextStyle"
+            android:id="@+id/person_tv_stared"
+            android:text="赞过的动态"
+            android:maxEms="3"/>
+        <View
+            style="@style/dividerStyle"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/view2"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/linearLayout_function"
+        android:background="@color/divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+    <LinearLayout
+        android:id="@+id/linearLayout_signature"
+        android:layout_below="@+id/view2"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView
+        android:layout_marginTop="10dp"
+        android:text="个性签名:"
+        android:textSize="20dp"
+        android:textColor="@color/primary_text"
+        android:id="@+id/signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/signature_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textColor="@color/secondary_text"
+        android:text="唯美食与美人不可辜负。"/>
+    </LinearLayout>
+    <ImageView
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/person_iv_configure"
+        android:src="@drawable/ic_build_black_24px"
+        android:layout_below="@+id/linearLayout_signature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/linearLayout_signature"
+        android:layout_toRightOf="@+id/person_iv_configure"
+        android:id="@+id/configure"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="设置"
+        android:textColor="@color/primary_text"
+        android:textSize="22dp"/>
+    <ImageView
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/person_iv_about"
+        android:src="@drawable/ic_info_outline"
+        android:layout_below="@+id/configure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:layout_below="@+id/configure"
+        android:layout_toRightOf="@+id/person_iv_about"
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关于"
+        android:textSize="22dp"
+        android:textColor="@color/primary_text"/>
 </RelativeLayout>

@@ -25,7 +25,7 @@
     <EditText
         android:id="@+id/edit_et_title"
         android:hint="@string/title"
-        android:textColorHint="@color/primary_Light"
+        android:textColorHint="@color/primary"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
     <EditText

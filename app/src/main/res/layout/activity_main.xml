@@ -26,7 +26,7 @@
         app:ntb_badge_title_color="#ffffffff"
         app:ntb_badge_use_typeface="true"
         app:ntb_badged="true"
-        app:ntb_bg_color="@color/primary_Light"
+        app:ntb_bg_color="@color/white"
         app:ntb_icon_size_fraction="0.5"
         app:ntb_inactive_color="@color/colorGrey"
         app:ntb_scaled="true"

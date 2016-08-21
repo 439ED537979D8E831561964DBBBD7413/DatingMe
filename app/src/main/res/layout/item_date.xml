@@ -23,8 +23,8 @@
                     android:src="@drawable/ic_cat"/>
                 <com.acemurder.datingme.component.widget.CircleImageView
                     android:id="@+id/item_dating_tv_portrait"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:src="@drawable/moiling"/>
                 <TextView
                     android:id="@+id/item_dating_tv_name"

@@ -61,4 +61,5 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.baoyz.pullrefreshlayout:library:1.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    compile 'com.bigkoo:convenientbanner:2.0.5'
 }
