@@ -52,4 +52,32 @@
         <item name="android:layout_marginLeft">20dp</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
+
+    <style name="configureStyle" parent="AlertDialog.AppCompat.Light">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:background">@color/monsoon</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+    </style>
+
+    <style name="DetailsName" parent="AlertDialog.AppCompat.Light">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textColor">@color/primary_dark</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="DetailsDate" parent="AlertDialog.AppCompat.Light">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:textColor">@color/secondary_text</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">10dp</item>
+    </style>
+
 </resources>

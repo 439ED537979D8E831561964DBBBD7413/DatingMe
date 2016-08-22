@@ -67,9 +67,6 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         startActivityForResult(intent,1);
     }
 
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

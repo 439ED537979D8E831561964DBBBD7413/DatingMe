@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <include
+        layout="@layout/toolbar"/>
+
+    <TextView
+        android:drawableLeft="@drawable/ic_delete_black_24px"
+        android:id="@+id/configure_clean_cache"
+        android:text="@string/clean_cache"
+        style="@style/configureStyle"/>
+    <TextView
+        android:id="@+id/configure_comment"
+        android:text="@string/comment"
+        style="@style/configureStyle"/>
+</LinearLayout>

@@ -5,6 +5,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               tools:context=".modules.main.MainActivity">
+
     <android.support.v4.view.ViewPager
         android:layout_alignParentTop="true"
         android:id="@+id/vpPager"

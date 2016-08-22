@@ -39,7 +39,6 @@ import butterknife.ButterKnife;
 public class EditActivity extends AppCompatActivity implements EditContract.IEditView,View.OnClickListener {
     @BindView(R.id.toolbar)Toolbar mToolbar;
     @BindView(R.id.edit_et_theme)EditText themeView;
-    @BindView(R.id.edit_et_title)EditText titleView;
     @BindView(R.id.edit_et_content)EditText contentView;
     @BindView(R.id.edit_iv_photo)ImageView photoView;
     @BindView(R.id.edit_menu_photo)FloatingActionMenu mFloatingActionMenu;
@@ -83,7 +82,6 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
                     mDatingItem.setTheme(themeView.getText().toString());
                     mDatingItem.setPromulgator(APP.getAVUser().getUsername());
                     mDatingItem.setPromulgatorId(APP.getAVUser().getObjectId());
-                    //mDatingItem.setTitle(APP.getAVUser().get);
                     mEditPresenter.sendDatingItem(mDatingItem);
                 }
                 return true;
@@ -93,14 +91,13 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
 
     @Override
     public void finishActivity() {
-
         EventBus.getDefault().post(new MessageEvent(mDatingItem));
         finish();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_edit,menu);
+        getMenuInflater().inflate(R.menu.menu_finish,menu);
         return true;
     }
 
@@ -118,6 +115,7 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
                     e.printStackTrace();
                 }
                 imageUri = Uri.fromFile(outputTakeImage);
+                Log.e("EditActivity",imageUri.toString());
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,imageUri);
                 startActivityForResult(intent, Const.TAKE_PHOTO);
@@ -126,6 +124,7 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
                 File outputAddImage = new File(Environment.getExternalStorageDirectory(),
                         "output_image.jpg");
                 try {
+                    Log.e("EditActivity","这一步没问题");
                     if(outputAddImage.exists()){
                         outputAddImage.delete();
                     }
@@ -159,10 +158,13 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
                 }
                 break;
             case Const.CROP_PHOTO:
+                Log.e("TAG","这里被执行了吗");
                 if (resultCode == RESULT_OK){
                     try {
+                        Log.e("TAG","这里被执行了吗");
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver()
                                 .openInputStream(imageUri));
+                        Log.e("TAG",imageUri.toString());
                         photoView.setImageBitmap(bitmap);
                     }catch (FileNotFoundException e){
                         e.printStackTrace();

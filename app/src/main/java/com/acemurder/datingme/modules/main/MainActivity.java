@@ -3,8 +3,8 @@ package com.acemurder.datingme.modules.main;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.modules.community.CommunityFragment;
@@ -12,13 +12,13 @@ import com.acemurder.datingme.modules.dating.DatingFragment;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
-
 import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     private String colors[] = new String[]{"#FF9100","#304FFE","#FF5252","#00C853"};
     @BindView(R.id.vpPager) ViewPager mViewPager;

@@ -3,7 +3,6 @@
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -17,9 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:theme="@style/AppTheme.Dark"
             android:name=".modules.main.MainActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -34,7 +33,9 @@
         <activity
             android:name=".modules.login.SignupActivity"
             android:theme="@style/AppTheme.Dark"/>
-        <activity android:name=".modules.dating.EditActivity">
+        <activity android:name=".modules.dating.EditActivity"/>
+        <activity android:name=".modules.community.WritingActivity"/>
+        <activity android:name=".modules.community.DetailsActivity">
         </activity>
     </application>
 
