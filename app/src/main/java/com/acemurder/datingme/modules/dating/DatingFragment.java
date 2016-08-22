@@ -3,6 +3,7 @@ package com.acemurder.datingme.modules.dating;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -55,12 +56,17 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dating,container,false);
         mUnbinder = ButterKnife.bind(this,view);
-        mDatingPresenter = new DatingPresenter(getActivity(),this);
-        mDatingPresenter.getDatingItems(page,3);
-        initView();
-       // onClick();
         return view;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mDatingPresenter = new DatingPresenter(getActivity(),this);
+        initView();
+        mDatingPresenter.getDatingItems(page,10);
+    }
+
     @OnClick(R.id.fab)
     public void onClick(){
         Intent intent = new Intent(getActivity(), EditActivity.class);
@@ -70,15 +76,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_search:return false;
-            default:
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+
 
     private void initView() {
 
@@ -96,8 +94,8 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         mPullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mDatingPresenter.getDatingItems(page,3);
-                Log.e("DatingFragment",page + "");
+                mDatingItemList.clear();
+                mDatingPresenter.getDatingItems(0,10);
                 mPullRefreshLayout.setRefreshing(false);
             }
         });
@@ -106,24 +104,25 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     }
 
     public void getItem(int page) {
-        mDatingPresenter.getDatingItems(page,3);
+        mDatingPresenter.getDatingItems(page,10);
     }
 
     @Override
     public void showData(List<DatingItem> datingItems) {
         mDatingItemList.addAll(datingItems);
-        mDatingAdapter.notifyDataSetChanged();
+        mDatingAdapter.notifyItemRangeInserted(mDatingAdapter.getItemCount(),datingItems.size());
     }
 
     @Subscribe
     public void onEvent(MessageEvent event){
         Log.e("DatingFragment",event.mDatingItem.getContent());
-        mDatingPresenter.getDatingItems(0,3);
+        mDatingPresenter.getDatingItems(0,10);
         mDatingAdapter.notifyDataSetChanged();
     }
     @Override
     public void showLoadError() {
-        Toast.makeText(APP.getContext(), "抱歉，加载数据失败", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(APP.getContext(), "抱歉，加载数据失败", Toast.LENGTH_SHORT).show();
+        Snackbar.make(mRecyclerView,"网络有点小问题",Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
@@ -133,7 +132,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
     @Override
     public void showAddSuccess() {
-        mDatingPresenter.getDatingItems(page,3);
+       // mDatingPresenter.getDatingItems(page,3);
     }
 
     @Override
@@ -156,5 +155,6 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     public void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+        mDatingPresenter.unBind();
     }
 }

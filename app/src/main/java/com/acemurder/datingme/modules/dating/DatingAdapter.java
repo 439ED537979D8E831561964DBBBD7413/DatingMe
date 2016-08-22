@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.widget.CircleImageView;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -40,9 +41,14 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
     @Override
     public void onBindViewHolder(DatingViewHolder holder, int position) {
         if (mDatingItemList != null){
-            holder.nameView.setText(mDatingItemList.get(position).getPromulgator());
-            holder.contentView.setText(mDatingItemList.get(position).getContent());
-            holder.subjectView.setText(mDatingItemList.get(position).getTheme());
+            holder.mNameText.setText(mDatingItemList.get(position).getPromulgator());
+            holder.mContentText.setText(mDatingItemList.get(position).getContent());
+            holder.mThemeText.setText("#"+mDatingItemList.get(position).getTheme()+"#");
+            if (!mDatingItemList.get(position).getPromulgatorPhoto().equals("null"))
+                Glide.with(mContext).load(mDatingItemList.get(position).getPromulgatorPhoto()).into(holder.mCircleImageView);
+
+            if (!mDatingItemList.get(position).getPhotoSrc().equals("null"))
+                Glide.with(mContext).load(mDatingItemList.get(position).getPhotoSrc()).into(holder.mPhotoImage);
         }
 
     }
@@ -54,15 +60,12 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
 
     public static class DatingViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.item_dating_cardview_card)CardView cardView;
-        @BindView(R.id.item_dating_tv_portrait)CircleImageView mCircleImageView;
-        @BindView(R.id.item_dating_tv_name)TextView nameView;
-        @BindView(R.id.item_dating_iv_image)ImageView mImageView;
-        @BindView(R.id.item_dating_tv_theme)TextView subjectView;
-        @BindView(R.id.item_dating_tv_title)TextView titleView;
-        @BindView(R.id.item_dating_tv_content)TextView contentView;
-        @BindView(R.id.item_dating_iv_share)ImageView shareView;
-        @BindView(R.id.item_dating_iv_chat)ImageView chatView;
-        @BindView(R.id.item_dating_iv_accept)ImageView acceptView;
+        @BindView(R.id.dating_item_civ_photo)CircleImageView mCircleImageView;
+        @BindView(R.id.dating_item_iv_pic)ImageView mPhotoImage;
+        @BindView(R.id.dating_item_tv_theme)TextView mThemeText;
+        @BindView(R.id.dating_item_tv_content)TextView mContentText;
+        @BindView(R.id.dating_item_tv_name)TextView mNameText;
+
 
         public DatingViewHolder(View itemView) {
             super(itemView);

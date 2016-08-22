@@ -5,27 +5,43 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.widget.TextView;
 
+import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
+import com.acemurder.datingme.component.MainViewPager;
+import com.acemurder.datingme.component.widget.bottombar.BottomBar;
 import com.acemurder.datingme.modules.community.CommunityFragment;
 import com.acemurder.datingme.modules.dating.DatingFragment;
+import com.acemurder.datingme.modules.im.ContactFragment;
 import com.acemurder.datingme.modules.me.PersonalFragment;
+import com.acemurder.datingme.util.LogUtils;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
 
 import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 
 public class MainActivity extends FragmentActivity {
 
-    private String colors[] = new String[]{"#FF9100","#304FFE","#FF5252","#00C853"};
-    @BindView(R.id.vpPager) ViewPager mViewPager;
+    //@BindView(R.id.vpPager) ViewPager mViewPager;
+    private final String TAG = LogUtils.makeLogTag(this.getClass());
     private DatingFragment mDatingFragment;
     private CommunityFragment mCommunityFragment;
     private PersonalFragment mPersonalFragment;
-     ArrayList<Fragment>mFragmentList = new ArrayList<>();
+    private ContactFragment mContactFragment;
+    List<Fragment> mFragmentList = new ArrayList<>();
+
+    @BindView(R.id.bottom_bar) BottomBar mBottomBar;
+    @BindView(R.id.main_toolbar_title) TextView mTitleTextView;
+    @BindView(R.id.main_view_pager) ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,51 +50,46 @@ public class MainActivity extends FragmentActivity {
         ButterKnife.bind(this);
 
         initView();
+        
     }
 
 
     private void initView() {
-        mCommunityFragment = new CommunityFragment();
         mDatingFragment = new DatingFragment();
+        mCommunityFragment = new CommunityFragment();
         mPersonalFragment = new PersonalFragment();
+        mContactFragment = new ContactFragment();
         mFragmentList.add(mDatingFragment);
         mFragmentList.add(mCommunityFragment);
+        mFragmentList.add(mContactFragment);
         mFragmentList.add(mPersonalFragment);
-        mViewPager.setOffscreenPageLimit(4);
-        mViewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), mFragmentList
-                ,getResources().getStringArray(R.array.homepage)));
+        TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),mFragmentList);
+        mViewPager.setAdapter(tabPagerAdapter);
+       // mViewPager.setOffscreenPageLimit(4);
 
-        final NavigationTabBar navigationTabBar = (NavigationTabBar) findViewById(R.id.ntb);
-        final ArrayList<NavigationTabBar.Model> models = new ArrayList<>();
-        models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_date), Color.parseColor(colors[0])).title("约定").
-                build());
-        models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_community), Color.parseColor(colors[1])).title("社区")
-                .build());
-        models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_instant),Color.parseColor(colors[2])).title("通讯")
-                .build());
-        models.add(new NavigationTabBar.Model.Builder(getResources().
-                getDrawable(R.drawable.ic_person),Color.parseColor(colors[3])).title("个人").
-                build());
-        navigationTabBar.setModels(models);
-        navigationTabBar.setViewPager(mViewPager,0);
-        navigationTabBar.setTitleMode(NavigationTabBar.TitleMode.ACTIVE);
-        navigationTabBar.setBadgeGravity(NavigationTabBar.BadgeGravity.BOTTOM);
-        navigationTabBar.setBadgePosition(NavigationTabBar.BadgePosition.CENTER);
-//        navigationTabBar.setTypeface("fonts/custom_font.ttf");
-        navigationTabBar.setIsBadged(true);
-        navigationTabBar.setIsTitled(true);
-        navigationTabBar.setIsTinted(true);
-        navigationTabBar.setIsBadgeUseTypeface(true);
-        navigationTabBar.setBadgeBgColor(Color.RED);
-        navigationTabBar.setBadgeTitleColor(Color.WHITE);
-        navigationTabBar.setIsSwiped(true);
-        navigationTabBar.setBgColor(Color.BLACK);
-        navigationTabBar.setBadgeSize(10);
-        navigationTabBar.setTitleSize(20);
-        navigationTabBar.setBehaviorEnabled(true);
+
+        mBottomBar.setOnBottomViewClickListener((view, position) -> {
+            mViewPager.setCurrentItem(position,false);
+            switch (position) {
+                case 0:
+                    mTitleTextView.setText("有约");
+                    break;
+                case 1:
+                    mTitleTextView.setText("广场");
+                    break;
+                case 2:
+                    mTitleTextView.setText("我的");
+                    break;
+                case 3:
+                    mTitleTextView.setText("聊聊");
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+
     }
 
 }

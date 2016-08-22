@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".modules.main.MainActivity"
+    android:layout_below="@id/main_appbar_layout"
+    >
+
+    <com.acemurder.datingme.component.MainViewPager
+        android:id="@+id/main_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        android:layout_weight="1"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider"/>
+
+    <com.acemurder.datingme.component.widget.bottombar.BottomBar
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <com.acemurder.datingme.component.widget.bottombar.BottomButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:button_image_normal="@drawable/ic_main_data"
+            app:button_text="有约"
+            app:color_choose="@color/primary"
+            app:color_normal="@color/tabText"/>
+
+        <com.acemurder.datingme.component.widget.bottombar.BottomButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:button_image_normal="@drawable/ic_main_home"
+            app:button_text="秀秀"
+            app:color_choose="@color/primary"
+            app:color_normal="@color/tabText"/>
+
+
+        <com.acemurder.datingme.component.widget.bottombar.BottomButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:button_image_normal="@drawable/ic_main_chat"
+            app:button_text="聊聊"
+            app:color_choose="@color/primary"
+            app:color_normal="@color/tabText"/>
+
+        <com.acemurder.datingme.component.widget.bottombar.BottomButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            app:button_image_normal="@drawable/ic_main_face"
+            app:button_text="我的"
+            app:color_choose="@color/primary"
+            app:color_normal="@color/tabText"/>
+
+    </com.acemurder.datingme.component.widget.bottombar.BottomBar>
+
+</LinearLayout>

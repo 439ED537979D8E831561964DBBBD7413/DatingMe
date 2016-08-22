@@ -8,14 +8,6 @@
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".modules.main.MainActivity">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.SearchView
-            android:background="@color/primary_dark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </FrameLayout>
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -34,7 +26,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.baoyz.widget.PullRefreshLayout>
-
         </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

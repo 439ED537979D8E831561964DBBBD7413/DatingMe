@@ -61,4 +61,6 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.baoyz.pullrefreshlayout:library:1.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
+    compile 'com.github.stuxuhai:jpinyin:1.0'
+    compile 'com.android.support:design:24.1.1'
 }
