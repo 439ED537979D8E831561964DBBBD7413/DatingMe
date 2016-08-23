@@ -22,27 +22,27 @@ public interface CommunityContract {
         void showSendSuccess();
     }
 
-    interface IRemarkView extends IBaseView<ICommunityPresenter>{
-        void showRemarkItems(List<Remark> remarks);
-        void showGetRemarkItemsError();
-        void showSendError();
-        void showSendSuccess();
 
-    }
     interface ICommunityPresenter extends IBasePresenter<ICommunityView>{
-        void getCommunityItems(int page,int size);
+        void getCommunityItems(int page, int size);
     }
 
     interface IPostNewCommunityPresenter extends IBasePresenter<IPostNewCommunityView>{
         void sendCommunityItem(Community community);
-        void sendCommunityItem(Community community,List<String> path);
+        void sendCommunityItem(Community community, List<String> path);
     }
 
 
-    interface IRemarkPresenter extends IBasePresenter<ICommunityView>{
+    interface IRemarkPresenter extends IBasePresenter<IRemarkView>{
         void getRemarkItem(String communityId);
         void sendRemarkItem(Remark remark);
     }
 
+    interface IRemarkView extends IBaseView<IRemarkPresenter>{
+        void showRemarkItems(List<Remark> remarks);
+        void showGetRemarkItemsError();
+        void showSendError();
+        void showSendSuccess();
+    }
 
 }

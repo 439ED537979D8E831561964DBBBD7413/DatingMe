@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +66,11 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
             if (!mDatingItemList.get(position).getPromulgatorPhoto().equals("null"))
                 Glide.with(mContext).load(mDatingItemList.get(position).getPromulgatorPhoto()).into(holder.mCircleImageView);
 
-            if (!mDatingItemList.get(position).getPhotoSrc().equals("null"))
+            if (!mDatingItemList.get(position).getPhotoSrc().equals("null")){
+                Log.e("onBindViewHolder",position+"     "+mDatingItemList.get(position).getPhotoSrc());
                 Glide.with(mContext).load(mDatingItemList.get(position).getPhotoSrc()).into(holder.mPhotoImage);
+
+            }
         }
 
     }

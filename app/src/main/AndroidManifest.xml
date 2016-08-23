@@ -18,7 +18,7 @@
     <application
         android:name=".APP"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/date"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/LCIMKitTheme">
@@ -40,8 +40,17 @@
         <activity
             android:name=".modules.login.SignupActivity"
             android:theme="@style/AppTheme.Dark"/>
-        <activity android:name=".modules.dating.EditActivity">
+        <activity android:name=".modules.dating.AddDatingActivity"
+            android:theme="@style/AppTheme.Dark">
+
         </activity>
+        <activity android:name=".modules.community.WritingActivity"
+            android:theme="@style/AppTheme.Dark"/>
+        <activity android:name=".modules.community.DetailsActivity"/>
+
+        <activity android:name=".component.image_selector.MultiImageSelectorActivity"
+                  android:configChanges="orientation|screenSize" />
+
     </application>
 
 </manifest>

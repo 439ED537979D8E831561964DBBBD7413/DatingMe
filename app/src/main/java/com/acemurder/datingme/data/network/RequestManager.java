@@ -157,6 +157,8 @@ public enum RequestManager {
                     public List<LCChatKitUser> call(List<User> users) {
                         List<LCChatKitUser> newUsers = new ArrayList<LCChatKitUser>();
                         for (User user:users){
+                            if (user.getPhotoSrc().equals("null"))
+                                user.setPhotoSrc("http://image.acemurder.com/DatingMe/moiling.jpg");
                             newUsers.add(new LCChatKitUser(user.getObjectId(),user.getUsername(),user.getPhotoSrc()));
                         }
                         return newUsers;
@@ -168,7 +170,7 @@ public enum RequestManager {
     public Subscription addDatingItem(Subscriber<Response> subscriber, DatingItem datingItem, final String imagePath) {
         final String key = "DatingMe/datingItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + new File(imagePath).getName();
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
-        datingItem.setPhotoSrc("image.acemurder.com/" + key);
+        datingItem.setPhotoSrc("http://image.acemurder.com/" + key);
 
         Observable<Response> observable = Observable.create(new Observable.OnSubscribe<Response>() {
             @Override

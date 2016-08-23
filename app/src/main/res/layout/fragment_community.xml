@@ -4,13 +4,13 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <com.bigkoo.convenientbanner.ConvenientBanner
-        android:id="@+id/convenient_Banner"
+
+    <include
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:canLoop="true"/>
-    <!--<android.support.v7.widget.RecyclerView
+        android:layout_height="?attr/actionBarSize"
+        layout="@layout/toolbar"/>
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_community"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>-->
+        android:layout_height="match_parent"/>
 </LinearLayout>

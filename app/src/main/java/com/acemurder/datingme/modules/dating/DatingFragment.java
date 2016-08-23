@@ -9,12 +9,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.onRcvScrollListener;
 import com.acemurder.datingme.component.widget.DividerItemDecoration;
@@ -69,7 +67,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
     @OnClick(R.id.fab)
     public void onClick(){
-        Intent intent = new Intent(getActivity(), EditActivity.class);
+        Intent intent = new Intent(getActivity(), AddDatingActivity.class);
         startActivityForResult(intent,1);
     }
 
@@ -130,15 +128,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         Toast.makeText(getActivity(), "已是最新数据", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void showAddSuccess() {
-       // mDatingPresenter.getDatingItems(page,3);
-    }
 
-    @Override
-    public void showAddError() {
-
-    }
 
     @Override
     public void setPresenter(DatingContract.IDatingPresenter presenter) {

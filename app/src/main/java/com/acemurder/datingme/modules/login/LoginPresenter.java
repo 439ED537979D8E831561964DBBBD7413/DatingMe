@@ -44,7 +44,17 @@ public class LoginPresenter implements LoginContract.ILoginCallBack, LoginContra
 
     @Override
     public void onSignInSuccess(AVUser user) {
-        mView.showSignInSuccess(user);
+
+        LCChatKit.getInstance().open(user.getObjectId(), new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (null == e) {
+                    mView.showSignInSuccess(user);
+                } else {
+                    mView.showSignInError(Const.UNKNOWN_WRONG);
+                }
+            }
+        });
     }
 
     @Override

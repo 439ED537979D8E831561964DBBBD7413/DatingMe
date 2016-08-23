@@ -86,7 +86,13 @@ public class NineGridlayout extends ViewGroup {
                     else if (mOnNormalImageItemClickListener != null)
                         mOnNormalImageItemClickListener.onClick(view, finalI1);
             });
-            childrenView.setOnClickDeleteListener(v -> mOnClickDeleteListener.onClickDelete(v, finalI));
+            childrenView.setOnClickDeleteListener(new CustomImageView.OnClickDeleteListener() {
+                @Override
+                public void onClickDelete(View v) {
+                    if (mOnClickDeleteListener != null)
+                        mOnClickDeleteListener.onClickDelete(v, finalI);
+                }
+            });
 
             childrenView.setImageUrl(((Image) listData.get(i)).url);
 
