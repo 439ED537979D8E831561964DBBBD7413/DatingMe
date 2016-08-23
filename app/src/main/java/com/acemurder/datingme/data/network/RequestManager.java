@@ -68,7 +68,7 @@ public enum RequestManager {
     private LeanCloudApiService mApiService;
     private OkHttpClient mOkHttpClient;
     private static final int DEFAULT_TIMEOUT = 30;
-    OSS oss;
+    private OSSClient oss;
 //    private OSSClient ossClient;
 
 

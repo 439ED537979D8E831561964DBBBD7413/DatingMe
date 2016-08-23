@@ -39,12 +39,12 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
 
     @Override
     public void onBindViewHolder(CommunityViewHolder holder, int position) {
-        if (mCommunityItem != null){
+       /* if (mCommunityItem != null){
             holder.contentView.setText(mCommunityItem.get(position).getContent());
             Glide.with(mContext).load(mCommunityItem.get(position).getPhotoSrc().get(position))
                     .centerCrop().placeholder(R.id.community_iv_image).crossFade().into(holder.imageView);
 
-        }
+        }*/
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
     }
 
     public static class CommunityViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.community_et_content)EditText contentView;
+       // @BindView(R.id.community_et_content)EditText contentView;
         @BindView(R.id.community_iv_image)ImageView imageView;
         @BindView(R.id.community_iv_mark)ImageView markView;
         @BindView(R.id.community_tv_star)TextView starView;

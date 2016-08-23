@@ -7,6 +7,7 @@ import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
+import com.avos.avoscloud.AVObject;
 
 import java.util.List;
 

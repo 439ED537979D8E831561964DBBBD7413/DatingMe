@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_height="wrap_content">
         <com.acemurder.datingme.component.widget.CircleImageView
             android:layout_marginTop="40dp"
             android:layout_marginLeft="15dp"
@@ -36,6 +36,7 @@
             android:textSize="15dp"/>
     </RelativeLayout>
     <android.support.v7.widget.CardView
+        android:id="@+id/item_community_cv_card"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         app:cardCornerRadius="10dp"
@@ -48,17 +49,20 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <ImageView
-                    android:src="@drawable/ic_proxy"
-                    android:adjustViewBounds="true"
-                    android:id="@+id/community_iv_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+
                 <TextView
 
                     android:id="@+id/community_tv_theme"
                     android:textColor="@color/icons"
                     android:text="运动"
+                    android:background="@drawable/text_view_border"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <ImageView
+                    android:src="@drawable/ic_proxy"
+                    android:adjustViewBounds="true"
+                    android:id="@+id/community_iv_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
             </FrameLayout>
@@ -67,6 +71,7 @@
                 android:background="@color/colorGrey"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"

@@ -1,10 +1,12 @@
 package com.acemurder.datingme.modules.main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -15,28 +17,34 @@ import com.acemurder.datingme.component.widget.bottombar.BottomBar;
 import com.acemurder.datingme.modules.community.CommunityFragment;
 import com.acemurder.datingme.modules.dating.DatingFragment;
 import com.acemurder.datingme.modules.im.ContactFragment;
+import com.acemurder.datingme.modules.login.LoginActivity;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.acemurder.datingme.util.LogUtils;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.AVRelation;
+import com.avos.avoscloud.SaveCallback;
 import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     //@BindView(R.id.vpPager) ViewPager mViewPager;
     private final String TAG = LogUtils.makeLogTag(this.getClass());
     private DatingFragment mDatingFragment;
     private CommunityFragment mCommunityFragment;
     private PersonalFragment mPersonalFragment;
-    private ContactFragment mContactFragment;
+    private LCIMConversationListFragment mLCIMConversationListFragment;
     List<Fragment> mFragmentList = new ArrayList<>();
 
     @BindView(R.id.bottom_bar) BottomBar mBottomBar;
@@ -47,10 +55,20 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (!APP.hasLogin()){
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        }
         ButterKnife.bind(this);
 
+
         initView();
-        
+        testData();
+    }
+
+    private void testData() {
+
+
+
     }
 
 
@@ -58,10 +76,10 @@ public class MainActivity extends FragmentActivity {
         mDatingFragment = new DatingFragment();
         mCommunityFragment = new CommunityFragment();
         mPersonalFragment = new PersonalFragment();
-        mContactFragment = new ContactFragment();
+        mLCIMConversationListFragment = new LCIMConversationListFragment();
         mFragmentList.add(mDatingFragment);
         mFragmentList.add(mCommunityFragment);
-        mFragmentList.add(mContactFragment);
+        mFragmentList.add(mLCIMConversationListFragment);
         mFragmentList.add(mPersonalFragment);
         TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),mFragmentList);
         mViewPager.setAdapter(tabPagerAdapter);

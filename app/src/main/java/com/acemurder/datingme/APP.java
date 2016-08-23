@@ -16,6 +16,7 @@ public class APP extends Application {
 
     private static AVUser mAVUser;
     private static Context sContext;
+    private static boolean  hasLogined = false;
 
     @Override
     public void onCreate() {
@@ -28,9 +29,18 @@ public class APP extends Application {
 
 
     public static void setUser(AVUser user) {
-        mAVUser = user;
-        SPUtils.set(getContext(), Const.SP_USER_NAME, user.getUsername());
-        SPUtils.set(getContext(), Const.SP_USER_NAME, user.getObjectId());
+        if (user != null){
+            mAVUser = user;
+            SPUtils.set(getContext(), Const.SP_USER_NAME, user.getUsername());
+            SPUtils.set(getContext(), Const.SP_USER_NAME, user.getObjectId());
+            hasLogined = true;
+        }else
+            hasLogined = false;
+
+    }
+
+    public static boolean hasLogin(){
+        return hasLogined;
     }
 
     public static AVUser getAVUser() {

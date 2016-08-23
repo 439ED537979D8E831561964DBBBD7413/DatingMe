@@ -28,5 +28,16 @@ public interface DatingContract {
         void showAddError();
     }
 
+    interface IEditView extends IBaseView<EditContract.IEditPresenter>{
+        void initView();
+        void finishActivity();
+    }
+
+    interface IEditPresenter extends IBasePresenter<EditContract.IEditView>{
+        void sendDatingItem(DatingItem datingItem);
+        void getDatingItems(int page,int size);
+        AVUser getUserInfo(String id);
+    }
+
 
 }

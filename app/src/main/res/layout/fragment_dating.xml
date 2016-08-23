@@ -7,7 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".modules.main.MainActivity">
+    tools:context=".modules.main.MainActivity"
+    android:background="#fdf2e6">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
