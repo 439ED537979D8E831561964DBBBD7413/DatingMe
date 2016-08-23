@@ -33,10 +33,16 @@ public interface CommunityContract {
     }
 
 
-    interface IRemarkPresenter extends IBasePresenter<ICommunityView>{
+    interface IRemarkPresenter extends IBasePresenter<IRemarkView>{
         void getRemarkItem(String communityId);
         void sendRemarkItem(Remark remark);
     }
 
+    interface IRemarkView extends IBaseView<IRemarkPresenter>{
+        void showRemarkItems(List<Remark> remarks);
+        void showGetRemarkItemsError();
+        void showSendError();
+        void showSendSuccess();
+    }
 
 }

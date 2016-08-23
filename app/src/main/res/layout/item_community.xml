@@ -38,6 +38,7 @@
         android:id="@+id/item_community_cv_card"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
+        android:background="#a9876f"
         app:cardCornerRadius="10dp"
         android:layout_width="250dp"
         android:layout_height="250dp">

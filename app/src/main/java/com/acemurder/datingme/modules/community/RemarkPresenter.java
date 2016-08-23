@@ -58,7 +58,7 @@ public class RemarkPresenter implements CommunityContract.IRemarkPresenter {
     }
 
     @Override
-    public void bind(CommunityContract.ICommunityView view) {
+    public void bind(CommunityContract.IRemarkView view) {
 
     }
 

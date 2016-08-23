@@ -111,7 +111,7 @@ public class WritingActivity extends AppCompatActivity implements CommunityContr
                                 String root = Environment.getExternalStorageDirectory().toString();
                                 File myDir = new File(root + "/path");
                                 myDir.mkdirs();
-                                String fileName = "photo" + 0 + " tempImage.jpg";
+                                String fileName = "photo_" + 0 + "_tempImage.jpg";
                                 File outputTakeImage = new File(myDir,fileName);
 
                                 try {
@@ -132,7 +132,7 @@ public class WritingActivity extends AppCompatActivity implements CommunityContr
                                 String root1 = Environment.getExternalStorageDirectory().toString();
                                 File myDir1 = new File(root1 + "/path");
                                 myDir1.mkdirs();
-                                String fileName1 = "photo" + 0 + " output_image.jpg";
+                                String fileName1 = "photo_" + 0 + "_output_image.jpg";
                                 File outputAddImage = new File(myDir1,fileName1);
 
                                 try {

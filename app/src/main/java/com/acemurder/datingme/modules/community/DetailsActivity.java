@@ -10,10 +10,13 @@ import android.widget.TextView;
 
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.widget.CircleImageView;
+import com.acemurder.datingme.data.bean.Remark;
+
+import java.util.List;
 
 import butterknife.BindView;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements CommunityContract.IRemarkView{
     @BindView(R.id.activity_details_portrait)CircleImageView mCircleImageView;
     @BindView(R.id.activity_details_name)TextView nameView;
     @BindView(R.id.activity_details_date)TextView dateView;
@@ -28,5 +31,30 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+    }
+
+    @Override
+    public void showRemarkItems(List<Remark> remarks) {
+
+    }
+
+    @Override
+    public void showGetRemarkItemsError() {
+
+    }
+
+    @Override
+    public void showSendError() {
+
+    }
+
+    @Override
+    public void showSendSuccess() {
+
+    }
+
+    @Override
+    public void setPresenter(CommunityContract.IRemarkPresenter presenter) {
+
     }
 }

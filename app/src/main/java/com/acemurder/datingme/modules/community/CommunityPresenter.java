@@ -3,8 +3,6 @@ package com.acemurder.datingme.modules.community;
 import android.content.Context;
 
 import com.acemurder.datingme.data.bean.Community;
-import com.acemurder.datingme.data.bean.Remark;
-import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
@@ -43,10 +41,6 @@ public class CommunityPresenter implements CommunityContract.ICommunityPresenter
                     }
                 }),size,page * size);
     }
-
-
-
-
 
     @Override
     public void bind(CommunityContract.ICommunityView view) {
