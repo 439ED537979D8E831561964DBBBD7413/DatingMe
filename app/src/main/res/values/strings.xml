@@ -34,4 +34,9 @@
     <string name="share_application">分享应用</string>
     <string name="comment">意见反馈</string>
     <string name="edit">编辑</string>
+
+    <string name="portrait">头像</string>
+    <string name="nikeName">昵称</string>
+    <string name="signature">签名</string>
+    <string name="sex">性别</string>
 </resources>

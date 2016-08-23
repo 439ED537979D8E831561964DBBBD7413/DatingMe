@@ -87,6 +87,7 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getActivity(),DetailsActivity.class);
+                intent.putExtra("community_data",mCommunityList.get(position));
                 startActivity(intent);
             }
         });

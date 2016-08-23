@@ -40,7 +40,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.Comm
     @Override
     public void onBindViewHolder(CommunityViewHolder holder, int position) {
         if (mCommunityItem != null){
-          //  holder.contentView.setText(mCommunityItem.get(position).getContent());
             try {
                 Glide.with(mContext).load(mCommunityItem.get(position).getPhotoSrc().get(position))
                         .centerCrop().placeholder(R.drawable.ic_proxy).crossFade().into(holder.imageView);

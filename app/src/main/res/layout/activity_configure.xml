@@ -12,6 +12,7 @@
         android:text="@string/clean_cache"
         style="@style/configureStyle"/>
     <TextView
+        android:drawableLeft="@drawable/ic_chat_bubble"
         android:id="@+id/configure_comment"
         android:text="@string/comment"
         style="@style/configureStyle"/>

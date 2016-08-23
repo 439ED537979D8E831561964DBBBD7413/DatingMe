@@ -17,26 +17,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
+            android:id="@+id/item_details_tv_name"
             android:text="Alice314"
             style="@style/DetailsName"
             android:layout_marginTop="20dp"/>
         <TextView
+            android:id="@+id/item_details_tv_date"
             android:text="2016/8/22"
             style="@style/DetailsDate"
             android:layout_marginTop="5dp"/>
         <TextView
+            android:id="@+id/item_details_tv_content"
             android:text="不行啊"
             android:textSize="15dp"
             style="@style/DetailsDate"
             android:layout_marginTop="5dp"/>
     </LinearLayout>
-
-    <TextView
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="190dp"
-        android:drawableLeft="@drawable/ic_favorite_border_black_18px"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="20"/>
 
 </LinearLayout>

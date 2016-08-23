@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by zhengyuxuan on 16/8/17.
  */
 
-public class Community implements Cloneable {
+public class Community implements Cloneable,Serializable {
 
 
     /**

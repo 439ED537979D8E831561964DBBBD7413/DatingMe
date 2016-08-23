@@ -32,9 +32,9 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_marginLeft">10dp</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">#000</item>
     </style>
 
@@ -54,10 +54,10 @@
     </style>
 
     <style name="configureStyle" parent="AlertDialog.AppCompat.Light">
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginTop">20dp</item>
         <item name="android:layout_margin">10dp</item>
         <item name="android:background">@color/monsoon</item>
-        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingTop">15dp</item>
         <item name="android:paddingLeft">10dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
@@ -77,7 +77,23 @@
         <item name="android:textColor">@color/secondary_text</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginTop">10dp</item>
-        <item name="android:textSize">10dp</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+    <style name="UserText" parent="AlertDialog.AppCompat.Light">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+
+    <style name="UserImage" parent="AlertDialog.AppCompat.Light">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:src">@drawable/ic_navigate_next_black_24px</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
 </resources>

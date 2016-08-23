@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
     <include
         layout="@layout/toolbar"/>
     <LinearLayout
@@ -39,66 +40,14 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_navigate_next_black_24px"/>
     </LinearLayout>
-    <View
-        android:id="@+id/view1"
-        android:layout_marginTop="45dp"
+    <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/linearLayout"
-        android:background="@color/divider"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"/>
-    <LinearLayout
-        android:layout_below="@+id/view1"
-        android:id="@+id/linearLayout_function"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <ImageView
-            style="@style/ImageStyle"
-            android:src="@drawable/ic_favorite_border_black_18px"/>
-        <TextView
-            style="@style/TextStyle"
-            android:id="@+id/person_tv_publish"
-            android:maxEms="3"
-            android:text="发表的约定"/>
-        <View
-            style="@style/dividerStyle"/>
-        <ImageView
-            style="@style/ImageStyle"
-            android:src="@drawable/ic_favorite_border_black_18px"/>
-        <TextView
-            style="@style/TextStyle"
-            android:id="@+id/person_tv_finished"
-            android:maxEms="3"
-            android:text="已完成约定"/>
-        <View
-            style="@style/dividerStyle"/>
-        <ImageView
-            style="@style/ImageStyle"
-            android:src="@drawable/ic_favorite_border_black_18px"/>
-        <TextView
-            style="@style/TextStyle"
-            android:id="@+id/person_tv_stared"
-            android:text="赞过的动态"
-            android:maxEms="3"/>
-        <View
-            style="@style/dividerStyle"/>
-    </LinearLayout>
-    <View
-        android:id="@+id/view2"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/linearLayout_function"
-        android:background="@color/divider"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"/>
-    <LinearLayout
-        android:id="@+id/linearLayout_signature"
-        android:layout_below="@+id/view2"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
     <TextView
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
         android:text="个性签名:"
         android:textSize="20dp"
@@ -116,18 +65,61 @@
         android:textColor="@color/secondary_text"
         android:text="唯美食与美人不可辜负。"/>
     </LinearLayout>
+    <View
+        android:id="@+id/view1"
+        android:layout_marginTop="45dp"
+        android:layout_below="@+id/linearLayout"
+        android:background="@color/divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+    <LinearLayout
+        android:layout_below="@+id/view1"
+        android:id="@+id/linearLayout_function"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/TextStyle"
+            android:id="@+id/person_tv_publish"
+            android:text="发表的约定"/>
+        <View
+            android:layout_marginTop="10dp"
+            android:background="@color/colorGrey"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            style="@style/TextStyle"
+            android:id="@+id/person_tv_finished"
+            android:text="已完成约定"/>
+
+    </LinearLayout>
+    <View
+        android:id="@+id/view2"
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/linearLayout_function"
+        android:background="@color/divider"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:layout_below="@+id/view2"
+        android:id="@+id/pia_chart"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"/>
     <ImageView
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:id="@+id/person_iv_configure"
         android:src="@drawable/ic_build_black_24px"
-        android:layout_below="@+id/linearLayout_signature"
+        android:layout_below="@+id/pia_chart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/linearLayout_signature"
+        android:layout_below="@+id/pia_chart"
         android:layout_toRightOf="@+id/person_iv_configure"
         android:id="@+id/configure"
         android:layout_width="match_parent"
@@ -153,4 +145,6 @@
         android:text="关于"
         android:textSize="22dp"
         android:textColor="@color/primary_text"/>
+
+
 </RelativeLayout>
