@@ -1,10 +1,8 @@
 package com.acemurder.datingme.modules.login;
 
-import android.content.Intent;
-import android.widget.Toast;
 
 import com.acemurder.datingme.config.Const;
-import com.acemurder.datingme.modules.main.MainActivity;
+import com.acemurder.datingme.modules.im.guide.AVImClientManager;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
@@ -30,7 +28,7 @@ public class LoginPresenter implements LoginContract.ILoginCallBack, LoginContra
     @Override
     public void onLoginSuccess(AVUser user) {
 
-        LCChatKit.getInstance().open(user.getObjectId(), new AVIMClientCallback() {
+        /*LCChatKit.getInstance().open(user.getObjectId(), new AVIMClientCallback() {
             @Override
             public void done(AVIMClient avimClient, AVIMException e) {
                 if (null == e) {
@@ -39,13 +37,33 @@ public class LoginPresenter implements LoginContract.ILoginCallBack, LoginContra
                     mView.showLoginError(Const.UNKNOWN_WRONG);
                 }
             }
+        });*/
+
+        AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+               if (e == null)
+                   mView.showLoginSuccess(user);
+                else
+                   mView.showLoginError(Const.UNKNOWN_WRONG);
+            }
         });
     }
 
     @Override
     public void onSignInSuccess(AVUser user) {
 
-        LCChatKit.getInstance().open(user.getObjectId(), new AVIMClientCallback() {
+        AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (e == null)
+                    mView.showSignInSuccess(user);
+                else
+                    mView.showSignInError(Const.UNKNOWN_WRONG);
+            }
+        });
+
+        /*LCChatKit.getInstance().open(user.getObjectId(), new AVIMClientCallback() {
             @Override
             public void done(AVIMClient avimClient, AVIMException e) {
                 if (null == e) {
@@ -54,7 +72,7 @@ public class LoginPresenter implements LoginContract.ILoginCallBack, LoginContra
                     mView.showSignInError(Const.UNKNOWN_WRONG);
                 }
             }
-        });
+        });*/
     }
 
     @Override

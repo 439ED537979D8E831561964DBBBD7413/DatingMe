@@ -12,7 +12,7 @@ public class DatingItem implements Serializable, Cloneable {
 
 
     /**
-     * hasDated : false
+     * has_date : false
      * promulgator :
      * content : null
      * theme : 篮球
@@ -176,7 +176,7 @@ public class DatingItem implements Serializable, Cloneable {
         return "{" +
                 "\"" + "promulgator" + "\"" + ":" + "\"" + promulgator + "\"," +
                 "\"" + "content" + "\"" + ":" + "\"" + content + "\"," +
-                "\"" + "hasDated" + "\"" + ":" +  hasDated + "," +
+                "\"" + "has_date" + "\"" + ":" +  hasDated + "," +
                 "\"" + "theme" + "\"" + ":" + "\"" + theme + "\"," +
                 "\"" + "promulgatorId" + "\"" + ":" + "\"" + promulgatorId + "\"," +
                 "\"" + "photoSrc" + "\"" + ":" + "\"" + photoSrc + "\"," +

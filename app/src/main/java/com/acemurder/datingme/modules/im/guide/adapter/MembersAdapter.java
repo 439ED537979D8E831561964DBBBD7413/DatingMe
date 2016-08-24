@@ -1,8 +1,9 @@
-package com.acemurder.datingme.modules.im;
+package com.acemurder.datingme.modules.im.guide.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.acemurder.datingme.modules.im.guide.viewholder.MemberHolder;
 import com.github.stuxuhai.jpinyin.PinyinFormat;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
 
@@ -14,8 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import cn.leancloud.chatkit.LCChatKitUser;
 
 /**
  * Created by wli on 15/8/14.
@@ -44,13 +43,13 @@ public class MembersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
    * 设置成员列表，然后更新索引
    * 此处会对数据以 空格、数字、字母（汉字转化为拼音后的字母） 的顺序进行重新排列
    */
-  public void setMemberList(List<LCChatKitUser> userList) {
+  public void setMemberList(List<String> list) {
     memberList.clear();
-    if (null != userList) {
-      for (LCChatKitUser user : userList) {
+    if (null != list) {
+      for (String name : list) {
         MemberItem item = new MemberItem();
-        item.lcChatKitUser = user;
-        item.sortContent = PinyinHelper.convertToPinyinString(user.getUserName(), "", PinyinFormat.WITHOUT_TONE);
+        item.content = name;
+        item.sortContent = PinyinHelper.convertToPinyinString(name, "", PinyinFormat.WITHOUT_TONE);
         memberList.add(item);
       }
     }
@@ -60,12 +59,12 @@ public class MembersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
   @Override
   public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    return new ContactItemHolder(parent.getContext(), parent);
+    return new MemberHolder(parent.getContext(), parent);
   }
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-      ((ContactItemHolder) holder).bindData(memberList.get(position).lcChatKitUser);
+      ((MemberHolder) holder).bindData(memberList.get(position));
   }
 
   @Override
@@ -120,7 +119,7 @@ public class MembersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
   }
 
   public static class MemberItem {
-    public LCChatKitUser lcChatKitUser;
+    public String content;
     public String sortContent;
   }
 }

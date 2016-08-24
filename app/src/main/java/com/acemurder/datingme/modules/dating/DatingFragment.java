@@ -3,6 +3,7 @@ package com.acemurder.datingme.modules.dating;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.onRcvScrollListener;
 import com.acemurder.datingme.component.widget.DividerItemDecoration;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.util.AnimationUtils;
 import com.baoyz.widget.PullRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,18 +31,23 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+
 /**
  * Created by fg on 2016/8/16.
  */
-public class DatingFragment extends Fragment implements DatingContract.IDatingView{
-    @BindView(R.id.recycler_view_dating)RecyclerView mRecyclerView;
-    @BindView(R.id.swipe_container)PullRefreshLayout mPullRefreshLayout;
-   // @BindView(R.id.search_view) MaterialSearchView mMaterialSearchView;
+public class DatingFragment extends Fragment implements DatingContract.IDatingView {
+    @BindView(R.id.recycler_view_dating)
+    RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_container)
+    PullRefreshLayout mPullRefreshLayout;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    // @BindView(R.id.search_view) MaterialSearchView mMaterialSearchView;
     private Unbinder mUnbinder;
-    DatingAdapter mDatingAdapter;
+    private DatingAdapter mDatingAdapter;
     private DatingPresenter mDatingPresenter;
     private int page = 0;
-    private List<DatingItem>mDatingItemList = new ArrayList<>();
+    private List<DatingItem> mDatingItemList = new ArrayList<>();
 
 
     @Override
@@ -52,37 +59,34 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_dating,container,false);
-        mUnbinder = ButterKnife.bind(this,view);
+        View view = inflater.inflate(R.layout.fragment_dating, container, false);
+        mUnbinder = ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mDatingPresenter = new DatingPresenter(getActivity(),this);
+        mDatingPresenter = new DatingPresenter(getActivity(), this);
         initView();
-        mDatingPresenter.getDatingItems(page,10);
+        AnimationUtils.hideFabInRecyclerView(mRecyclerView,fab);
+        mDatingPresenter.getDatingItems(page, 10);
     }
 
     @OnClick(R.id.fab)
-    public void onClick(){
+    public void onClick() {
         Intent intent = new Intent(getActivity(), AddDatingActivity.class);
-        startActivityForResult(intent,1);
+        startActivityForResult(intent, 1);
     }
-
-
-
-
 
 
     private void initView() {
 
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mDatingAdapter = new DatingAdapter(mDatingItemList,getActivity());
+        mDatingAdapter = new DatingAdapter(mDatingItemList, getActivity());
         mRecyclerView.setAdapter(mDatingAdapter);
-        mRecyclerView.addOnScrollListener(new onRcvScrollListener(){
+        mRecyclerView.addOnScrollListener(new onRcvScrollListener() {
             @Override
             public void onBottom() {
                 getItem(++page);
@@ -93,7 +97,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
             @Override
             public void onRefresh() {
                 mDatingItemList.clear();
-                mDatingPresenter.getDatingItems(0,10);
+                mDatingPresenter.getDatingItems(0, 10);
                 mPullRefreshLayout.setRefreshing(false);
             }
         });
@@ -102,32 +106,32 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     }
 
     public void getItem(int page) {
-        mDatingPresenter.getDatingItems(page,10);
+        mDatingPresenter.getDatingItems(page, 10);
     }
 
     @Override
     public void showData(List<DatingItem> datingItems) {
         mDatingItemList.addAll(datingItems);
-        mDatingAdapter.notifyItemRangeInserted(mDatingAdapter.getItemCount(),datingItems.size());
+        mDatingAdapter.notifyItemRangeInserted(mDatingAdapter.getItemCount(), datingItems.size());
     }
 
     @Subscribe
-    public void onEvent(MessageEvent event){
-        Log.e("DatingFragment",event.mDatingItem.getContent());
-        mDatingPresenter.getDatingItems(0,10);
+    public void onEvent(MessageEvent event) {
+        Log.e("DatingFragment", event.mDatingItem.getContent());
+        mDatingPresenter.getDatingItems(0, 10);
         mDatingAdapter.notifyDataSetChanged();
     }
+
     @Override
     public void showLoadError() {
-       // Toast.makeText(APP.getContext(), "抱歉，加载数据失败", Toast.LENGTH_SHORT).show();
-        Snackbar.make(mRecyclerView,"网络有点小问题",Snackbar.LENGTH_SHORT).show();
+        // Toast.makeText(APP.getContext(), "抱歉，加载数据失败", Toast.LENGTH_SHORT).show();
+        Snackbar.make(mRecyclerView, "网络有点小问题", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showNoMore() {
         Toast.makeText(getActivity(), "已是最新数据", Toast.LENGTH_SHORT).show();
     }
-
 
 
     @Override

@@ -40,8 +40,9 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
     private List<Community> mCommunityList = new ArrayList<>();
     private CommunityPresenter mCommunityPresenter;
     private int page = 0;
-    @BindView(R.id.toolbar) Toolbar mToolbar;
-    @BindView(R.id.recycler_view_community)RecyclerView mRecyclerView;
+ //  @BindView(R.id.toolbar) Toolbar mToolbar;
+    @BindView(R.id.recycler_view_community)
+ RecyclerView mRecyclerView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,11 +65,11 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
 
 
     private void initView() {
-        mToolbar.setTitle("社区");
-        mToolbar.setTitleTextColor(Color.WHITE);
+       // mToolbar.setTitle("社区");
+     //   mToolbar.setTitleTextColor(Color.WHITE);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
-        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+       // ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        /*mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 Log.e("CommunityFragment","此处是否被执行");
@@ -79,17 +80,10 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
                 return true;
             }
         });
-
+*/
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCommunityAdapter = new CommunityAdapter(getActivity(),mCommunityList);
         mRecyclerView.setAdapter(mCommunityAdapter);
-        mCommunityAdapter.setOnItemClickListener(new CommunityAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(),DetailsActivity.class);
-                startActivity(intent);
-            }
-        });
         mRecyclerView.addOnScrollListener(new onRcvScrollListener(){
             @Override
             public void onBottom() {
@@ -100,8 +94,7 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_edit,menu);
-        super.onCreateOptionsMenu(menu, inflater);
+
     }
 
     public void getItem(int page) {

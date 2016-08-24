@@ -46,7 +46,7 @@
             android:layout_weight="1"
             android:gravity="center"
             app:button_image_normal="@drawable/ic_main_home"
-            app:button_text="秀秀"
+            app:button_text="社区"
             app:color_choose="@color/primary"
             app:color_normal="@color/tabText"/>
 
@@ -57,7 +57,7 @@
             android:layout_weight="1"
             android:gravity="center"
             app:button_image_normal="@drawable/ic_main_chat"
-            app:button_text="聊聊"
+            app:button_text="广场"
             app:color_choose="@color/primary"
             app:color_normal="@color/tabText"/>
 
