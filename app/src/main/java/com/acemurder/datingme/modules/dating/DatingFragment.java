@@ -36,7 +36,6 @@ import butterknife.Unbinder;
 public class DatingFragment extends Fragment implements DatingContract.IDatingView{
     @BindView(R.id.recycler_view_dating)RecyclerView mRecyclerView;
     @BindView(R.id.swipe_container)PullRefreshLayout mPullRefreshLayout;
-   // @BindView(R.id.search_view) MaterialSearchView mMaterialSearchView;
     private Unbinder mUnbinder;
     DatingAdapter mDatingAdapter;
     private DatingPresenter mDatingPresenter;
@@ -58,7 +57,6 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         mDatingPresenter = new DatingPresenter(getActivity(),this);
         mDatingPresenter.getDatingItems(page,3);
         initView();
-       // onClick();
         return view;
     }
     @OnClick(R.id.fab)

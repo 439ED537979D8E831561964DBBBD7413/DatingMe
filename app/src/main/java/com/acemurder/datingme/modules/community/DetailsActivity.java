@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -49,11 +51,10 @@ public class DetailsActivity extends AppCompatActivity implements CommunityContr
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
         AVUser avUser = new AVUser();
-        avUser.setUsername("admin");
-        avUser.setObjectId("123456");
+        avUser.setUsername("moiling");
+        avUser.setObjectId("12345a");
         APP.setUser(avUser);
         mRemarkPresenter = new RemarkPresenter(this,this);
-
         initView();
     }
 
@@ -78,6 +79,7 @@ public class DetailsActivity extends AppCompatActivity implements CommunityContr
         });
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Log.e("DetailsActivity","这里被执行了吗");
         mDetailsAdapter = new DetailsAdapter(this,mRemarkList);
         mRecyclerView.setAdapter(mDetailsAdapter);
 
@@ -85,10 +87,19 @@ public class DetailsActivity extends AppCompatActivity implements CommunityContr
             @Override
             public void onClick(View view) {
                 Remark remark = new Remark();
-                remark.setContent(mEditText.getText().toString());
+
                 remark.setAuthorId(APP.getAVUser().getObjectId());
                 remark.setAuthorName(APP.getAVUser().getUsername());
-                mRemarkPresenter.sendRemarkItem(remark);
+                remark.setCommunityId(objectId);
+                if (!TextUtils.isEmpty(mEditText.getText())){
+                    remark.setContent(mEditText.getText().toString());
+                    Log.e("DetailsActivity",mEditText.getText().toString());
+                    mRemarkPresenter.sendRemarkItem(remark);
+                    mEditText.setText(" ");
+                }else {
+                    Toast.makeText(DetailsActivity.this, "输入内容不能为空", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
@@ -96,6 +107,7 @@ public class DetailsActivity extends AppCompatActivity implements CommunityContr
 
     @Override
     public void showRemarkItems(List<Remark> remarks) {
+        Log.e("DetailsActivity",remarks.get(0).getContent());
         mRemarkList.addAll(remarks);
         mDetailsAdapter.notifyDataSetChanged();
     }

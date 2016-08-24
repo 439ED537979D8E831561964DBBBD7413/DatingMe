@@ -1,6 +1,7 @@
 package com.acemurder.datingme.modules.community;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.acemurder.datingme.data.bean.Remark;
 import com.acemurder.datingme.data.bean.Response;
@@ -35,6 +36,7 @@ public class RemarkPresenter implements CommunityContract.IRemarkPresenter {
             @Override
             public void onNext(List<Remark> remarks) {
                 super.onNext(remarks);
+                Log.e("RemarkPresenter",remarks.toString());
                 mIRemarkView.showRemarkItems(remarks);
             }
         }),communityId);
@@ -52,6 +54,7 @@ public class RemarkPresenter implements CommunityContract.IRemarkPresenter {
             @Override
             public void onNext(Response response) {
                 super.onNext(response);
+                Log.e("RemarkPresenter",response.toString());
                 mIRemarkView.showSendSuccess();
             }
         }),remark.toString());

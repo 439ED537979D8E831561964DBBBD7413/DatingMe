@@ -124,7 +124,6 @@ public class EditActivity extends AppCompatActivity implements EditContract.IEdi
                 File outputAddImage = new File(Environment.getExternalStorageDirectory(),
                         "output_image.jpg");
                 try {
-                    Log.e("EditActivity","这一步没问题");
                     if(outputAddImage.exists()){
                         outputAddImage.delete();
                     }
