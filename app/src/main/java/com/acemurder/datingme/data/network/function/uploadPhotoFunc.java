@@ -10,7 +10,6 @@ import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import retrofit2.http.Field;
 import rx.functions.Func1;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by zhengyuxuan on 16/8/19.

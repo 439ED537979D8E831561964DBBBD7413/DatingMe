@@ -42,6 +42,9 @@ public interface LeanCloudApiService {
                                                                  @Query("skip")String page,
                                                                  @Query("order") String order);
 
+    @GET(Api.API_GET_ALL_USER)
+    Observable<ResultWrapper<List<User>>> getAlluser();
+
     @PUT(Api.API_GET_DATING_ITEM+"/"+"{PATH}")
     Observable<Response>date(@Path("PATH")String id,@Body RequestBody body);
 
@@ -58,7 +61,7 @@ public interface LeanCloudApiService {
     Observable<ResultWrapper<List<Remark>>>getRemarkItems(@Query("where")String data,@Query("order") String order);
 
     @POST(Api.API_GET_Remark_ITEM)
-    Observable<Response>addRemarkItem(@Body RequestBody data);
+    Observable<Response>addRemarkItem(@Body RequestBody data,@Query("order")String order);
 
 }
 

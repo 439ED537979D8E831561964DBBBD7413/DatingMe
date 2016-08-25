@@ -7,15 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".modules.main.MainActivity">
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <android.support.v7.widget.SearchView
-            android:background="@color/primary_dark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </FrameLayout>
+    tools:context=".modules.main.MainActivity"
+    android:background="#fdf2e6">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -25,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-    <com.baoyz.widget.PullRefreshLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -33,16 +26,16 @@
             android:id="@+id/recycler_view_dating"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-    </com.baoyz.widget.PullRefreshLayout>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
         </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        app:backgroundTint="@color/primary"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_edit_black_24px"/>
+        android:src="@drawable/date"/>
     </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".modules.dating.EditActivity">
+    tools:context=".modules.dating.AddDatingActivity">
 
     <LinearLayout
         android:scrollbarAlwaysDrawVerticalTrack="true"
@@ -20,6 +20,7 @@
     <EditText
         android:id="@+id/edit_et_theme"
         android:hint="@string/theme"
+        android:textColor="@color/primary_text"
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
     <EditText
@@ -27,10 +28,14 @@
         android:hint="@string/title"
         android:textColorHint="@color/primary"
         android:layout_width="match_parent"
+        android:textColor="@color/primary_text"
+
         android:layout_height="50dp"/>
     <EditText
         android:id="@+id/edit_et_content"
         android:hint="@string/content"
+        android:textColor="@color/primary_text"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
         <ImageView

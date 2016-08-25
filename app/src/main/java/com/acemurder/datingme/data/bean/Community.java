@@ -1,5 +1,8 @@
 package com.acemurder.datingme.data.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -15,7 +18,7 @@ import java.util.List;
  * Created by zhengyuxuan on 16/8/17.
  */
 
-public class Community implements Cloneable,Serializable {
+public class Community implements Cloneable ,Serializable{
 
 
     /**
@@ -46,7 +49,7 @@ public class Community implements Cloneable,Serializable {
         this.authorPhoto = authorPhoto;
     }
 
-    private List<String> photoSrc;
+    private List<String> photoSrc = new ArrayList<>();
 
     public static Community objectFromData(String str) {
 
@@ -160,13 +163,18 @@ public class Community implements Cloneable,Serializable {
     public String toString() {
         StringBuffer photos = new StringBuffer();
         photos.append("[");
-        for (int i = 0 ; i < photoSrc.size() -1 ; i++){
-            photos.append("\"");
-            photos.append(photoSrc.get(i));
-            photos.append("\",");
 
-        }
-        photos.append("\""+photoSrc.get(photoSrc.size() - 1) + "\"]");
+        if (photoSrc.size() != 0){
+            for (int i = 0 ; i < photoSrc.size() -1 ; i++){
+                photos.append("\"");
+                photos.append(photoSrc.get(i));
+                photos.append("\",");
+
+            }
+            photos.append("\""+photoSrc.get(photoSrc.size() - 1) + "\"]");
+        }else
+            photos.append("]");
+
 
         return  "{" +
                 "\"" + "authorName" + "\"" + ":" + "\"" + authorName + "\","+
@@ -180,4 +188,7 @@ public class Community implements Cloneable,Serializable {
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
+
+
 }

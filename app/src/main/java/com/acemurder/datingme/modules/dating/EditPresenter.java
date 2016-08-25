@@ -10,14 +10,16 @@ import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.avos.avoscloud.AVUser;
 
+import java.io.File;
+
 /**
  * Created by fg on 2016/8/18.
  */
-public class EditPresenter implements EditContract.IEditPresenter {
-    private EditContract.IEditView mIEditView;
+public class EditPresenter implements DatingContract.IEditPresenter {
+    private DatingContract.IEditView mIEditView;
     private Context mContext;
 
-    public EditPresenter(Context context, EditContract.IEditView IEditView){
+    public EditPresenter(Context context, DatingContract.IEditView IEditView){
         mContext = context;
         mIEditView = IEditView;
     }
@@ -30,8 +32,6 @@ public class EditPresenter implements EditContract.IEditPresenter {
                     public void onNext(Response response) {
                         super.onNext(response);
                         Log.e("EP","发送成功" + response);
-                        mIEditView.finishActivity();
-
                     }
 
                     @Override
@@ -42,22 +42,38 @@ public class EditPresenter implements EditContract.IEditPresenter {
     }
 
     @Override
-    public void getDatingItems(int page, int size) {
+    public void sendDatingItem(DatingItem datingItem, String path) {
+        File file = new File(path);
+        if (!file.exists()) {
+            sendDatingItem(datingItem);
+        } else {
+            RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,true,false,
+                    new SubscriberListener<Response>() {
+                        @Override
+                        public void onNext(Response response) {
+                            super.onNext(response);
+                            mIEditView.showAddSuccess();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            mIEditView.showAddError();
+                        }
+                    }), datingItem, path);
+        }
+
 
     }
 
-    @Override
-    public AVUser getUserInfo(String id) {
-        return null;
-    }
 
     @Override
-    public void bind(EditContract.IEditView view) {
+    public void bind(DatingContract.IEditView view) {
 
     }
 
     @Override
     public void unBind() {
-
+        this.mIEditView = null;
     }
 }
