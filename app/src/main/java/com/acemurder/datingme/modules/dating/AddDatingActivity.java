@@ -3,6 +3,7 @@ package com.acemurder.datingme.modules.dating;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,6 +23,7 @@ import com.acemurder.datingme.data.bean.User;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
+import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
 import com.avos.avoscloud.AVUser;
 
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.internal.Utils;
+import de.greenrobot.event.EventBus;
 import rx.Observable;
 
 /**
@@ -67,6 +70,7 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
                 onBackPressed();
                 break;
             case R.id.toolbar_save:
+                view.setClickable(false);
                 if (APP.getAVUser() == null){
                     Toast.makeText(APP.getContext(),"还没有登录哦",Toast.LENGTH_SHORT).show();
                     return;
@@ -197,11 +201,15 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
 
     @Override
     public void showAddSuccess() {
+        EventBus.getDefault().post(new InsertDatingEvent());
 
+        onBackPressed();
     }
 
     @Override
     public void showAddError() {
-
+       // onBackPressed();
+        mSaveText.setClickable(true);
+        Snackbar.make(mNineGridlayout,"未知错误",Snackbar.LENGTH_SHORT).show();
     }
 }

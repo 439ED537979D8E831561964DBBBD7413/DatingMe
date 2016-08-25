@@ -19,11 +19,13 @@ import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.onRcvScrollListener;
 import com.acemurder.datingme.component.widget.DividerItemDecoration;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
 import com.acemurder.datingme.util.AnimationUtils;
 import com.baoyz.widget.PullRefreshLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +57,6 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -64,6 +65,14 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         View view = inflater.inflate(R.layout.fragment_dating, container, false);
         mUnbinder = ButterKnife.bind(this, view);
         return view;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        EventBus.getDefault().register(this);
+
     }
 
     @Override
@@ -117,17 +126,12 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
             mDatingItemList.clear();
         int count = datingItems.size();
         mDatingItemList.addAll(datingItems);
-        mDatingAdapter.notifyItemRangeInserted(count, datingItems.size());
+        mDatingAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
 
     }
 
-    @Subscribe
-    public void onEvent(MessageEvent event) {
-        /*Log.e("DatingFragment", event.mDatingItem.getContent());
-        mDatingPresenter.getDatingItems(0, 10);
-        mDatingAdapter.notifyDataSetChanged();*/
-    }
+
 
     @Override
     public void showLoadError() {
@@ -150,16 +154,27 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onInserDatingItemEvent(InsertDatingEvent insertDatingEvent){
+        Log.e("=========","mmmmmmmmmmmmmmmmm");
+        mDatingItemList.clear();
+        getItem(0);
+    }
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        EventBus.getDefault().unregister(this);
+        mDatingPresenter.unBind();
+
     }
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
-        mDatingPresenter.unBind();
+
     }
+
 }

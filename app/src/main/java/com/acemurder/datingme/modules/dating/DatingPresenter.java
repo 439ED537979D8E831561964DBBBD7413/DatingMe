@@ -80,7 +80,7 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
             public void onNext(Response response) {
                 super.onNext(response);
             }
-        }),datingItem, APP.getAVUser());
+        }),datingItem);
     }
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.acemurder.datingme"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.acemurder.datingme">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -10,10 +10,10 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     、
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
         android:name=".APP"
@@ -23,37 +23,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Dark">
         <activity
-            android:theme="@style/AppTheme.Dark"
             android:name=".modules.main.MainActivity"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Dark">
+        </activity>
+        <activity
+            android:name=".modules.login.LoginActivity"
+            android:theme="@style/AppTheme.Dark">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            >
-        </activity>
-        <activity
-            android:name=".modules.login.LoginActivity"
-            android:theme="@style/AppTheme.Dark">
         </activity>
         <activity
             android:name=".modules.login.SignupActivity"
             android:theme="@style/AppTheme.Dark"/>
-        <activity android:name=".modules.dating.AddDatingActivity"
+        <activity
+            android:name=".modules.dating.AddDatingActivity"
             android:theme="@style/AppTheme.Dark">
 
         </activity>
-        <activity android:name=".modules.community.WritingActivity"
+        <activity
+            android:name=".modules.community.WritingActivity"
             android:theme="@style/AppTheme.Dark"/>
         <activity android:name=".modules.community.DetailsActivity"/>
 
-        <activity android:name=".component.image_selector.MultiImageSelectorActivity"
-                  android:configChanges="orientation|screenSize" />
         <activity
-            android:theme="@style/AppTheme.Dark"
+            android:name=".component.image_selector.MultiImageSelectorActivity"
+            android:configChanges="orientation|screenSize"/>
+        <activity
             android:name=".modules.im.guide.activity.AVSquareActivity"
             android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
 
         <activity

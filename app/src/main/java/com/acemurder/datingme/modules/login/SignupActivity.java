@@ -108,8 +108,9 @@ public class SignupActivity extends AppCompatActivity implements LoginContract.I
     @Override
     public void showSignInSuccess(AVUser user) {
         mProgressDialog.dismiss();
-        APP.setUser(user);
-        startActivity(new Intent(SignupActivity.this, MainActivity.class));
+       // APP.setUser(user);
+       // startActivity(new Intent(SignupActivity.this, MainActivity.class));
+        onBackPressed();
     }
 
     @Override

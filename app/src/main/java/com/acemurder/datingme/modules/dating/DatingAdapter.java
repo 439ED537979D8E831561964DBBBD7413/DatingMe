@@ -18,14 +18,20 @@ import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.widget.CircleImageView;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.data.bean.Response;
+import com.acemurder.datingme.data.network.RequestManager;
+import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
+import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.im.guide.Constants;
 import com.acemurder.datingme.modules.im.guide.activity.AVSingleChatActivity;
 import com.acemurder.datingme.modules.im.guide.event.LeftChatItemClickEvent;
+import com.acemurder.datingme.modules.login.LoginActivity;
 import com.acemurder.datingme.util.TimeUtils;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -65,35 +71,41 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
 
     @Override
     public void onBindViewHolder(DatingViewHolder holder, int position) {
+        holder.setDatingItem(mDatingItemList.get(position));
+
         holder.mPhotoImage.setVisibility(View.VISIBLE);
-        holder.mChatText.setClickable(true);
-        holder.mDateText.setClickable(true);
+        holder.mIsDateImage.setVisibility(View.GONE);
+        holder.mChatText.setTextColor(Color.parseColor("#DEAE75"));
+        holder.mDateText.setTextColor(Color.parseColor("#DEAE75"));
+        if (mDatingItemList.get(position).hasDated()) {
+            holder.mIsDateImage.setVisibility(View.VISIBLE);
 
-
-        if (mDatingItemList != null) {
-            if (mDatingItemList.get(position).hasDated()){
-                holder.mIsDateImage.setVisibility(mDatingItemList.get(position).hasDated() ? View.VISIBLE : View.GONE);
+            if (mDatingItemList.get(position).getReceiver().equals(APP.getAVUser().getUsername())){
+                Log.e("=======","csd ncdscds, dsc dsc dsc ds.c");
+                holder.mChatText.setTextColor(Color.RED);
+                holder.mDateText.setTextColor(Color.RED);
+            }else {
                 holder.mChatText.setTextColor(Color.GRAY);
                 holder.mDateText.setTextColor(Color.GRAY);
-                holder.mChatText.setClickable(false);
-                holder.mDateText.setClickable(false);
-
             }
-            holder.setDatingItem(mDatingItemList.get(position));
-            holder.mNameText.setText(mDatingItemList.get(position).getPromulgator());
-            holder.mContentText.setText(mDatingItemList.get(position).getContent());
-            holder.mThemeText.setText("#" + mDatingItemList.get(position).getTheme() + "#");
-            holder.mTimeText.setText(TimeUtils.getTimeDetail(mDatingItemList.get(position).getCreatedAt()
-                    .replace("T", " ").substring(0, 19)));
-            if (!mDatingItemList.get(position).getPromulgatorPhoto().equals("null"))
-                Glide.with(mContext).load(mDatingItemList.get(position).getPromulgatorPhoto()).into(holder.mCircleImageView);
 
-            if (!mDatingItemList.get(position).getPhotoSrc().equals("null") && !mDatingItemList.get(position).getPhotoSrc().isEmpty()) {
-                Log.e("onBindViewHolder", position + "     " + mDatingItemList.get(position).getPhotoSrc());
-                Glide.with(mContext).load(mDatingItemList.get(position).getPhotoSrc()).centerCrop().into(holder.mPhotoImage);
-            } else
-                holder.mPhotoImage.setVisibility(View.GONE);
+            //   holder.mChatText.setClickable(false);
+            //   holder.mDateText.setClickable(false);
         }
+        holder.mNameText.setText(mDatingItemList.get(position).getPromulgator());
+        holder.mContentText.setText(mDatingItemList.get(position).getContent());
+        holder.mThemeText.setText("#" + mDatingItemList.get(position).getTheme() + "#");
+        holder.mTimeText.setText(TimeUtils.getTimeDetail(mDatingItemList.get(position).getCreatedAt()
+                .replace("T", " ").substring(0, 19)));
+        if (!mDatingItemList.get(position).getPromulgatorPhoto().equals("null"))
+            Glide.with(mContext).load(mDatingItemList.get(position).getPromulgatorPhoto()).into(holder.mCircleImageView);
+
+        if (!mDatingItemList.get(position).getPhotoSrc().equals("null") && !mDatingItemList.get(position).getPhotoSrc().isEmpty()) {
+            Log.e("onBindViewHolder", position + "     " + mDatingItemList.get(position).getPhotoSrc());
+            Glide.with(mContext).load(mDatingItemList.get(position).getPhotoSrc()).centerCrop().into(holder.mPhotoImage);
+        } else
+            holder.mPhotoImage.setVisibility(View.GONE);
+
 
     }
 
@@ -103,7 +115,7 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
     }
 
 
-    public static class DatingViewHolder extends RecyclerView.ViewHolder {
+    class DatingViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_dating_cardview_card)
         CardView cardView;
         @BindView(R.id.dating_item_civ_photo)
@@ -138,22 +150,54 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
 
         }
 
-        @OnClick(R.id.dating_item_tv_chat)
-        public void onChatClick() {
+        @OnClick({R.id.dating_item_tv_chat,R.id.dating_item_tv_date})
+        public void onChatClick(View view) {
             /*Intent intent = new Intent(mChatText.getContext(), LCIMConversationActivity.class);
             intent.putExtra(LCIMConstants.PEER_ID, mDatingItem.getObjectId());
             mChatText.getContext().startActivity(intent);*/
            /* LeftChatItemClickEvent clickEvent = new LeftChatItemClickEvent();
             clickEvent.userId = mDatingItem.getPromulgator();
             EventBus.getDefault().post(clickEvent);*/
+            if (mDatingItem.hasDated() && !mDatingItem.getReceiver().equals(APP.getAVUser().getUsername())) {
+
+                return;
+            }
             if (mDatingItem.getPromulgator().equals(APP.getAVUser().getUsername())) {
                 Snackbar.make(itemView, "您要和自己约吗?找不到人?去广场逛逛吧", Snackbar.LENGTH_SHORT).show();
                 return;
             }
-            Intent intent = new Intent(itemView.getContext(), AVSingleChatActivity.class);
-            intent.putExtra(Constants.MEMBER_ID, mDatingItem.getPromulgator());
-            itemView.getContext().startActivity(intent);
+
+            switch (view.getId()){
+                case R.id.dating_item_tv_chat:
+                    Intent intent = new Intent(itemView.getContext(), AVSingleChatActivity.class);
+                    intent.putExtra(Constants.MEMBER_ID, mDatingItem.getPromulgator());
+                    itemView.getContext().startActivity(intent);
+                    break;
+                case R.id.dating_item_tv_date:
+                    RequestManager.INSTANCE.date(new SimpleSubscriber<Response>(itemView.getContext(), true, false, new SubscriberListener<Response>() {
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            Snackbar.make(itemView,"遇到点小错误,稍后再试",Snackbar.LENGTH_SHORT).show();
+
+                        }
+
+                        @Override
+                        public void onNext(Response response) {
+                            super.onNext(response);
+                            mDatingItem.setReceiver(APP.getAVUser().getUsername());
+                            mDatingItem.setHasDated(true);
+                            DatingAdapter.this.notifyDataSetChanged();
+                        }
+                    }),mDatingItem);
+
+            }
+
         }
 
+        @OnClick(R.id.dating_item_tv_date)
+        public void onDateClick (){
+
+        }
     }
 }

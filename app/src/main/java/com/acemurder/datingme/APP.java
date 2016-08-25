@@ -11,6 +11,8 @@ import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 
+import static com.acemurder.datingme.util.SPUtils.get;
+
 /**
  * Created by zhengyuxuan on 16/8/4.
  */
@@ -39,7 +41,7 @@ public class APP extends Application {
         if (user != null){
             mAVUser = user;
             SPUtils.set(getContext(), Const.SP_USER_NAME, user.getUsername());
-            SPUtils.set(getContext(), Const.SP_USER_NAME, user.getObjectId());
+            SPUtils.set(getContext(), Const.SP_USER_OBJECT_ID, user.getObjectId());
             hasLogined = true;
         }else
             hasLogined = false;
@@ -47,6 +49,16 @@ public class APP extends Application {
     }
 
     public static boolean hasLogin(){
+        if (!hasLogined){
+            String name = (String) SPUtils.get(getContext(), Const.SP_USER_NAME, "");
+            String id = (String) SPUtils.get(getContext(), Const.SP_USER_NAME, "");
+            if (!name.equals("") && !id.equals("")){
+                mAVUser = new AVUser();
+                mAVUser.setUsername(name);
+                mAVUser.setObjectId(id);
+                return true;
+            }
+        }
         return hasLogined;
     }
 
