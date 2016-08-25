@@ -12,10 +12,11 @@ import com.acemurder.datingme.R;
 import com.acemurder.datingme.modules.im.guide.Constants;
 import com.acemurder.datingme.modules.im.guide.activity.AVSquareActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by zhengyuxuan on 15/12/4.

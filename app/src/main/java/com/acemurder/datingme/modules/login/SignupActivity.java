@@ -1,18 +1,16 @@
 package com.acemurder.datingme.modules.login;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.acemurder.datingme.APP;
-import com.acemurder.datingme.modules.main.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
-import com.acemurder.datingme.util.permission.Utils;
+import com.acemurder.datingme.util.Utils;
 import com.avos.avoscloud.AVUser;
 
 import butterknife.BindView;
@@ -109,11 +107,15 @@ public class SignupActivity extends AppCompatActivity implements LoginContract.I
     @Override
     public void showSignInSuccess(AVUser user) {
         Utils.hideSoftInput(passwordText);
+        Utils.hideSoftInput(nameText);
 
+        // APP.setUser(user);
+        // startActivity(new Intent(SignupActivity.this, MainActivity.class));
+        Handler handler = new Handler(getMainLooper());
+        handler.postDelayed(() -> onBackPressed(), 500);
         mProgressDialog.dismiss();
-       // APP.setUser(user);
-       // startActivity(new Intent(SignupActivity.this, MainActivity.class));
-        onBackPressed();
+
+
     }
 
     @Override

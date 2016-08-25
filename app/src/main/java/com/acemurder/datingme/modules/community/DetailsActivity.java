@@ -8,21 +8,16 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
-import com.acemurder.datingme.component.widget.CircleImageView;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.Remark;
 import com.acemurder.datingme.modules.community.adapter.DetailsAdapter;
-import com.acemurder.datingme.util.permission.Utils;
-import com.avos.avoscloud.AVUser;
+import com.acemurder.datingme.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;

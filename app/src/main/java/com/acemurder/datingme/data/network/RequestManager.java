@@ -40,7 +40,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 
-import cn.leancloud.chatkit.LCChatKitUser;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -163,24 +162,6 @@ public enum RequestManager {
         return emitObservable(mApiService.getAlluser().map(new ResultWrapperFunc<>()),subscriber);
     }
 
-
-    public Subscription getAllLCChatKitUser(Subscriber<List<LCChatKitUser>>subscriber){
-        Observable<List<LCChatKitUser>> observable = mApiService
-                .getAlluser().map(new ResultWrapperFunc<>())
-                .map(new Func1<List<User>, List<LCChatKitUser>>() {
-                    @Override
-                    public List<LCChatKitUser> call(List<User> users) {
-                        List<LCChatKitUser> newUsers = new ArrayList<LCChatKitUser>();
-                        for (User user:users){
-                            if (user.getPhotoSrc().equals("null"))
-                                user.setPhotoSrc("http://image.acemurder.com/DatingMe/moiling.jpg");
-                            newUsers.add(new LCChatKitUser(user.getObjectId(),user.getUsername(),user.getPhotoSrc()));
-                        }
-                        return newUsers;
-                    }
-                });
-        return emitObservable(observable,subscriber);
-    }
 
     public Subscription addDatingItem(Subscriber<Response> subscriber, DatingItem datingItem, final String imagePath) {
         final String key = "DatingMe/datingItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + new File(imagePath).getName();

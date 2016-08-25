@@ -24,7 +24,10 @@ import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
+import com.acemurder.datingme.util.Utils;
 import com.avos.avoscloud.AVUser;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +35,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.internal.Utils;
-import de.greenrobot.event.EventBus;
 import rx.Observable;
 
 /**
@@ -201,14 +202,28 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
 
     @Override
     public void showAddSuccess() {
+        Utils.hideSoftInput(mAddNewsEdit);
+        Utils.hideSoftInput(mThemeEditText);
+        mSaveText.setClickable(true);
+        Log.e("showAddSuccess","showAddSuccess");
         EventBus.getDefault().post(new InsertDatingEvent());
         onBackPressed();
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
     public void showAddError() {
+        Utils.hideSoftInput(mAddNewsEdit);
+        Utils.hideSoftInput(mThemeEditText);
        // onBackPressed();
         mSaveText.setClickable(true);
+        Log.e("showAddError","showAddError");
+
         Snackbar.make(mNineGridlayout,"未知错误",Snackbar.LENGTH_SHORT).show();
     }
 }

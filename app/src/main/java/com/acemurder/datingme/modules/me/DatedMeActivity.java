@@ -1,5 +1,7 @@
 package com.acemurder.datingme.modules.me;
 
+import android.graphics.Color;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,11 +78,39 @@ public class DatedMeActivity extends AppCompatActivity {
 
             @Override
             public void onNext(List<DatingItem> datingItems) {
-                super.onNext(datingItems);
-                mDatingItems.clear();
-                mSwipeRefreshLayout.setRefreshing(false);
-                mDatingItems.addAll(datingItems);
-                mDateAdapter.notifyDataSetChanged();
+                if (datingItems.size() != 0){
+                    super.onNext(datingItems);
+                    mDatingItems.clear();
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mDatingItems.addAll(datingItems);
+                    mDateAdapter.notifyDataSetChanged();
+                }
+                else {
+                    Handler handler = new Handler(getMainLooper());
+                    handler.post(() -> new MaterialDialog.Builder(DatedMeActivity.this)
+                            .title("还没有被约过哦")
+                            .content("居然还没有约过,快去广场吼两声吧")
+                            .canceledOnTouchOutside(false)
+                            .titleColor(Color.parseColor("#F7C282"))
+                            .contentColor(Color.parseColor("#F7C282"))
+                            // .positiveText("吐槽")
+                            .negativeText("知道了")
+                            .callback(new MaterialDialog.ButtonCallback() {
+                                @Override
+                                public void onPositive(MaterialDialog dialog) {
+                                    super.onPositive(dialog);
+                                    dialog.dismiss();
+                                }
+
+                                @Override
+                                public void onNegative(MaterialDialog dialog) {
+                                    super.onNegative(dialog);
+                                    dialog.dismiss();
+                                    onBackPressed();
+                                }
+                            }).show());
+                }
+
             }
         }), APP.getAVUser().getUsername());
     }

@@ -21,7 +21,7 @@ import com.acemurder.datingme.component.widget.DividerItemDecoration;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
 import com.acemurder.datingme.util.AnimationUtils;
-import com.baoyz.widget.PullRefreshLayout;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -96,7 +96,9 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
         mSwipeRefreshLayout.setOnRefreshListener(() ->{
             //mDatingItemList.clear();
-            getItem(0);
+            Log.e("-------","cdscdscdscds");
+            getItem(page = 0);
+            hasMore = true;
         });
 
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
@@ -122,10 +124,12 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
     @Override
     public void showData(List<DatingItem> datingItems) {
-        if (page == 0)
+        Log.e("showData",datingItems.get(0).getContent());
+        if (page == 0){
             mDatingItemList.clear();
-        int count = datingItems.size();
+        }
         mDatingItemList.addAll(datingItems);
+
         mDatingAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(false);
 
@@ -157,8 +161,8 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onInserDatingItemEvent(InsertDatingEvent insertDatingEvent){
         Log.e("=========","mmmmmmmmmmmmmmmmm");
-        mDatingItemList.clear();
-        getItem(0);
+      //  mDatingItemList.clear();
+        getItem(page = 0);
     }
 
 

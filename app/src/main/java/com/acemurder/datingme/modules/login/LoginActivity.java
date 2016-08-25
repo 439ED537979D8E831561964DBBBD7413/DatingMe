@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,7 +15,7 @@ import com.acemurder.datingme.modules.main.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.util.LogUtils;
-import com.acemurder.datingme.util.permission.Utils;
+import com.acemurder.datingme.util.Utils;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
@@ -151,6 +150,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
     @Override
     public void showLoginSuccess(AVUser user) {
         Utils.hideSoftInput(passwordText);
+        Utils.hideSoftInput(nameText);
 
         LogUtils.LOGE("======>", user.getUsername());
         mProgressDialog.dismiss();

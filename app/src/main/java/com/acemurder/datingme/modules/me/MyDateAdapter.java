@@ -1,7 +1,9 @@
 package com.acemurder.datingme.modules.me;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -15,6 +17,8 @@ import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.widget.CircleImageView;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.modules.im.guide.Constants;
+import com.acemurder.datingme.modules.im.guide.activity.AVSingleChatActivity;
 import com.acemurder.datingme.util.TimeUtils;
 import com.bumptech.glide.Glide;
 
@@ -54,7 +58,7 @@ public class MyDateAdapter extends RecyclerView.Adapter<MyDateAdapter.MyDateView
     @Override
     public void onBindViewHolder(MyDateViewHolder holder, int position) {
        // holder.setDatingItem(mDatingItemList.get(position));
-
+        holder.setDatingItem(mDatingItemList.get(position));
         holder.mPhotoImage.setVisibility(View.VISIBLE);
         holder.mIsDateImage.setVisibility(View.GONE);
       //  holder.mChatText.setTextColor(Color.parseColor("#DEAE75"));
@@ -88,6 +92,13 @@ public class MyDateAdapter extends RecyclerView.Adapter<MyDateAdapter.MyDateView
     }
 
     class MyDateViewHolder extends RecyclerView.ViewHolder{
+
+        private DatingItem mDatingItem;
+
+        public void setDatingItem(DatingItem datingItem) {
+            mDatingItem = datingItem;
+        }
+
         @BindView(R.id.item_dating_cardview_card)
         CardView cardView;
         @BindView(R.id.dating_item_civ_photo)
@@ -109,6 +120,15 @@ public class MyDateAdapter extends RecyclerView.Adapter<MyDateAdapter.MyDateView
         public MyDateViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+        }
+
+        @OnClick(R.id.item_dating_cardview_card)
+        public void OnCardClick(){
+            if (!isFromMy){
+                Intent intent = new Intent(itemView.getContext(), AVSingleChatActivity.class);
+                intent.putExtra(Constants.MEMBER_ID, mDatingItem.getPromulgator());
+                itemView.getContext().startActivity(intent);
+            }
         }
 
 

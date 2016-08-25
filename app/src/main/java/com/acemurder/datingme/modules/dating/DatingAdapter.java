@@ -26,6 +26,7 @@ import com.acemurder.datingme.modules.im.guide.Constants;
 import com.acemurder.datingme.modules.im.guide.activity.AVSingleChatActivity;
 import com.acemurder.datingme.modules.im.guide.event.LeftChatItemClickEvent;
 import com.acemurder.datingme.modules.login.LoginActivity;
+import com.acemurder.datingme.modules.me.MyDateActivity;
 import com.acemurder.datingme.util.TimeUtils;
 import com.bumptech.glide.Glide;
 
@@ -37,11 +38,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.leancloud.chatkit.activity.LCIMConversationActivity;
-import cn.leancloud.chatkit.utils.LCIMConstants;
-import de.greenrobot.event.EventBus;
 
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
+import static com.acemurder.datingme.R.id.dating_item_tv_name;
 
 
 /**
@@ -51,11 +50,17 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
 
     List<DatingItem> mDatingItemList;
     Context mContext;
-
+    private boolean isFromDatingFragment = true;
 
     public DatingAdapter(List<DatingItem> datingItems, Context context) {
         mDatingItemList = datingItems;
         mContext = context;
+    }
+
+    public DatingAdapter(List<DatingItem> datingItems, Context context, boolean isFromDatingFragment) {
+        mDatingItemList = datingItems;
+        mContext = context;
+        this.isFromDatingFragment = isFromDatingFragment;
     }
 
     public Context getContext() {
@@ -80,11 +85,10 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
         if (mDatingItemList.get(position).hasDated()) {
             holder.mIsDateImage.setVisibility(View.VISIBLE);
 
-            if (mDatingItemList.get(position).getReceiver().equals(APP.getAVUser().getUsername())){
-                Log.e("=======","csd ncdscds, dsc dsc dsc ds.c");
+            if (mDatingItemList.get(position).getReceiver().equals(APP.getAVUser().getUsername())) {
                 holder.mChatText.setTextColor(Color.RED);
                 holder.mDateText.setTextColor(Color.RED);
-            }else {
+            } else {
                 holder.mChatText.setTextColor(Color.GRAY);
                 holder.mDateText.setTextColor(Color.GRAY);
             }
@@ -126,7 +130,7 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
         TextView mThemeText;
         @BindView(R.id.dating_item_tv_content)
         TextView mContentText;
-        @BindView(R.id.dating_item_tv_name)
+        @BindView(dating_item_tv_name)
         TextView mNameText;
         @BindView(R.id.dating_item_tv_time)
         TextView mTimeText;
@@ -150,16 +154,36 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
 
         }
 
+        @OnClick(R.id.item_dating_cardview_card)
+        public void onCardClick() {
+
+        }
 
         @OnClick(R.id.dating_item_iv_pic)
-        public void onImageClick(){
-            Intent i = new Intent(itemView.getContext(),ImageActivity.class);
-            i.putExtra("url",mDatingItem.getPhotoSrc());
+        public void onImageClick() {
+            Intent i = new Intent(itemView.getContext(), ImageActivity.class);
+            i.putExtra("url", mDatingItem.getPhotoSrc());
             itemView.getContext().startActivity(i);
 
         }
 
-        @OnClick({R.id.dating_item_tv_chat,R.id.dating_item_tv_date})
+        @OnClick({R.id.dating_item_civ_photo, R.id.dating_item_tv_name})
+        public void onPersonClick() {
+            if (isFromDatingFragment) {
+                if (mDatingItem.getPromulgator().equals(APP.getAVUser().getUsername())) {
+                    itemView.getContext().startActivity(new Intent(itemView.getContext(), MyDateActivity.class));
+
+                } else {
+                    Intent intent = new Intent(itemView.getContext(), PersonDatingActivity.class);
+                    intent.putExtra("name", mDatingItem.getPromulgator());
+                    itemView.getContext().startActivity(intent);
+                }
+            }
+
+        }
+
+
+        @OnClick({R.id.dating_item_tv_chat, R.id.dating_item_tv_date})
         public void onChatClick(View view) {
             /*Intent intent = new Intent(mChatText.getContext(), LCIMConversationActivity.class);
             intent.putExtra(LCIMConstants.PEER_ID, mDatingItem.getObjectId());
@@ -176,7 +200,7 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
                 return;
             }
 
-            switch (view.getId()){
+            switch (view.getId()) {
                 case R.id.dating_item_tv_chat:
                     Intent intent = new Intent(itemView.getContext(), AVSingleChatActivity.class);
                     intent.putExtra(Constants.MEMBER_ID, mDatingItem.getPromulgator());
@@ -187,7 +211,7 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
                         @Override
                         public void onError(Throwable e) {
                             super.onError(e);
-                            Snackbar.make(itemView,"遇到点小错误,稍后再试",Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(itemView, "遇到点小错误,稍后再试", Snackbar.LENGTH_SHORT).show();
 
                         }
 
@@ -198,7 +222,7 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
                             mDatingItem.setHasDated(true);
                             DatingAdapter.this.notifyDataSetChanged();
                         }
-                    }),mDatingItem);
+                    }), mDatingItem);
 
             }
 

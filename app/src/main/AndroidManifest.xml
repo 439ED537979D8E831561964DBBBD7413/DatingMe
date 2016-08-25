@@ -7,10 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    、
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
     <uses-permission android:name="android.permission.VIBRATE"/>
 
     <application
@@ -41,9 +38,6 @@
             android:name=".modules.dating.AddDatingActivity"
             android:theme="@style/AppTheme.Dark">
         </activity>
-        <activity
-            android:name=".modules.community.WritingActivity"
-            android:theme="@style/AppTheme.Dark"/>
         <activity android:name=".modules.community.DetailsActivity"/>
         <activity
             android:name=".component.image_selector.MultiImageSelectorActivity"
@@ -73,8 +67,11 @@
         </activity>
         <activity android:name=".modules.me.DatedMeActivity">
         </activity>
-        <activity android:name=".modules.dating.ImageActivity"
+        <activity
+            android:name=".modules.dating.ImageActivity"
             android:theme="@style/AVActivity.FullScreen">
+        </activity>
+        <activity android:name=".modules.dating.PersonDatingActivity">
         </activity>
     </application>
 

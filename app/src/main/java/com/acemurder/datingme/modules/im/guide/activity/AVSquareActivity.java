@@ -59,14 +59,19 @@ public class AVSquareActivity extends AVBaseActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_square);
 
+
     String conversationId = getIntent().getStringExtra(Constants.CONVERSATION_ID);
     String title = getIntent().getStringExtra(Constants.ACTIVITY_TITLE);
 
     chatFragment = (ChatFragment)getFragmentManager().findFragmentById(R.id.fragment_chat);
     toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+
+
     setSupportActionBar(toolbar);
     setTitle(title);
+    toolbar.setNavigationIcon(R.drawable.btn_navigation_back);
+    toolbar.setNavigationOnClickListener((view -> onBackPressed()));
 
     getSquare(conversationId);
     queryInSquare(conversationId);

@@ -1,4 +1,4 @@
-package com.acemurder.datingme.util.permission;
+package com.acemurder.datingme.util;
 
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;

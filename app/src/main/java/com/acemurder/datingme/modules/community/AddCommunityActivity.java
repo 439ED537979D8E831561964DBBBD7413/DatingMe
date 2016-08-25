@@ -27,13 +27,15 @@ import com.acemurder.datingme.modules.dating.DatingContract;
 import com.acemurder.datingme.modules.dating.EditPresenter;
 import com.avos.avoscloud.AVUser;
 
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 import rx.Observable;
 
 /**
@@ -106,7 +108,7 @@ public class AddCommunityActivity extends AppCompatActivity implements Community
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_dating);
         ButterKnife.bind(this);
-      //  EventBus.getDefault().register(this);
+      //EventBus.getDefault().register(this);
         mUser = APP.getAVUser();
         mIPostNewCommunityPresenter = new PostNewCommunityPresenter(this,this);
         init();
