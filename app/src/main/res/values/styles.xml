@@ -178,5 +178,22 @@
 
     <style name="TextAppearance.small"></style>
 
+    <style name="UserText" parent="AlertDialog.AppCompat.Light">
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+
+    <style name="UserImage" parent="AlertDialog.AppCompat.Light">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:src">@drawable/ic_navigate_next_black_24px</item>
+        <item name="android:adjustViewBounds">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 
 </resources>

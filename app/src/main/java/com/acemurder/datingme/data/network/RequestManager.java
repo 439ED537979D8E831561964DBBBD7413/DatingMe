@@ -16,6 +16,7 @@ import com.acemurder.datingme.data.bean.User;
 import com.acemurder.datingme.data.network.function.ResultWrapperFunc;
 import com.acemurder.datingme.data.network.interceptors.HeaderInterceptors;
 import com.acemurder.datingme.data.network.service.LeanCloudApiService;
+import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -114,6 +116,21 @@ public enum RequestManager {
         Observable<User> observable = mApiService.login(userName, password);
         return emitObservable(observable, subscriber);
 
+    }
+
+    public Subscription getDatingItemsWithName(SimpleSubscriber<List<DatingItem>>subscriber,String name){
+        String data = "{\""+"promulgator\":"+ "\""+name +"\"}";
+        Log.e(".........",data);
+        Observable<List<DatingItem>> observable = mApiService.getMyDatingItem(data,"-createdAt").map(new ResultWrapperFunc<>());
+        return emitObservable(observable,subscriber);
+
+    }
+
+    public Subscription getRecieveDatingItemsWithName(SimpleSubscriber<List<DatingItem>>subscriber,String name){
+        String data = "{\""+"receiver\":"+ "\""+name +"\"}";
+
+        Observable<List<DatingItem>> observable = mApiService.getMyDatingItem(data,"-createdAt").map(new ResultWrapperFunc<>());
+        return emitObservable(observable,subscriber);
     }
 
 
@@ -290,4 +307,6 @@ public enum RequestManager {
 
         return builder.build();
     }
+
+
 }

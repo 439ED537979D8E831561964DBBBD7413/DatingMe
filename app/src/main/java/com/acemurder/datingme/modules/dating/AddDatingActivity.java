@@ -202,7 +202,6 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
     @Override
     public void showAddSuccess() {
         EventBus.getDefault().post(new InsertDatingEvent());
-
         onBackPressed();
     }
 

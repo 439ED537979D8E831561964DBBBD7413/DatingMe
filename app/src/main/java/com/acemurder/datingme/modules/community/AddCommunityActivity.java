@@ -117,6 +117,10 @@ public class AddCommunityActivity extends AppCompatActivity implements Community
 
     private void init() {
 
+        mThemeEditText.setHint("嗯,吐槽得有个标题");
+        mAddNewsEdit.setHint("没内容怎么吐槽~~");
+        mTitleText.setText("吐个槽");
+
         mImgList = new ArrayList<>();
         mImgList.add(new Image(ADD_IMG, Image.TYPE_ADD));
         mNineGridlayout.setImagesData(mImgList);

@@ -12,6 +12,7 @@ import com.acemurder.datingme.APP;
 import com.acemurder.datingme.modules.main.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
+import com.acemurder.datingme.util.permission.Utils;
 import com.avos.avoscloud.AVUser;
 
 import butterknife.BindView;
@@ -107,6 +108,8 @@ public class SignupActivity extends AppCompatActivity implements LoginContract.I
 
     @Override
     public void showSignInSuccess(AVUser user) {
+        Utils.hideSoftInput(passwordText);
+
         mProgressDialog.dismiss();
        // APP.setUser(user);
        // startActivity(new Intent(SignupActivity.this, MainActivity.class));

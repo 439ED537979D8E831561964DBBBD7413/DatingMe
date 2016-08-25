@@ -195,9 +195,5 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
 
         }
 
-        @OnClick(R.id.dating_item_tv_date)
-        public void onDateClick (){
-
-        }
     }
 }

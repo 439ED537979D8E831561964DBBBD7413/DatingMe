@@ -1,16 +1,23 @@
 package com.acemurder.datingme.modules.im.guide.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 
+import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
+import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.modules.im.guide.AVImClientManager;
 import com.acemurder.datingme.modules.im.guide.Constants;
 import com.acemurder.datingme.modules.im.guide.event.LeftChatItemClickEvent;
 import com.acemurder.datingme.modules.im.guide.fragment.ChatFragment;
+import com.acemurder.datingme.modules.login.LoginActivity;
+import com.acemurder.datingme.util.SPUtils;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMConversation;
 import com.avos.avoscloud.im.v2.AVIMConversationQuery;
@@ -133,8 +140,28 @@ public class AVSquareActivity extends AVBaseActivity {
    * 处理聊天 item 点击事件，点击后跳转到相应1对1的对话
    */
   public void onEvent(LeftChatItemClickEvent event) {
-    Intent intent = new Intent(this, AVSingleChatActivity.class);
+    /*Intent intent = new Intent(this, AVSingleChatActivity.class);
     intent.putExtra(Constants.MEMBER_ID, event.userId);
-    startActivity(intent);
+    startActivity(intent);*/
+    Handler handler = new Handler(getMainLooper());
+    handler.post(() ->new MaterialDialog.Builder(this)
+            .title("想要约?")
+            .content("想要私聊啊?去发布一个约才让你单聊,哼哼")
+            .titleColor(Color.parseColor("#F7C282"))
+            .contentColor(Color.parseColor("#F7C282"))
+       //     .positiveText("退出登录")
+            .negativeText("好的")
+            .callback(new MaterialDialog.ButtonCallback() {
+              @Override
+              public void onPositive(MaterialDialog dialog) {
+                super.onPositive(dialog);
+              }
+
+              @Override
+              public void onNegative(MaterialDialog dialog) {
+                super.onNegative(dialog);
+                dialog.dismiss();
+              }
+            }).show());
   }
 }

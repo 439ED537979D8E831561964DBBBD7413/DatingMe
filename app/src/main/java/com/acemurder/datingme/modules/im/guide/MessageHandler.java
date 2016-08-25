@@ -47,12 +47,7 @@ public class MessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage> {
     }
   }
 
-  /**
-   * 因为没有 db，所以暂时先把消息广播出去，由接收方自己处理
-   * 稍后应该加入 db
-   * @param message
-   * @param conversation
-   */
+
   private void sendEvent(AVIMTypedMessage message, AVIMConversation conversation) {
     ImTypeMessageEvent event = new ImTypeMessageEvent();
     event.message = message;

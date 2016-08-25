@@ -21,6 +21,11 @@ public class APP extends Application {
 
     private static AVUser mAVUser;
     private static Context sContext;
+
+    public static void setHasLogined(boolean hasLogined) {
+        APP.hasLogined = hasLogined;
+    }
+
     private static boolean  hasLogined = false;
 
     @Override
@@ -51,7 +56,7 @@ public class APP extends Application {
     public static boolean hasLogin(){
         if (!hasLogined){
             String name = (String) SPUtils.get(getContext(), Const.SP_USER_NAME, "");
-            String id = (String) SPUtils.get(getContext(), Const.SP_USER_NAME, "");
+            String id = (String) SPUtils.get(getContext(), Const.SP_USER_OBJECT_ID, "");
             if (!name.equals("") && !id.equals("")){
                 mAVUser = new AVUser();
                 mAVUser.setUsername(name);

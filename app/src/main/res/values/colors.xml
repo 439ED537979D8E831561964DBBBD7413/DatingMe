@@ -25,6 +25,9 @@
     <color name="white">#FFFFFF</color>
     <color name="colorGrey">#7c7676</color>
 
+    <color name="ripple_normal">#CACCCB</color>
+    <color name="ripple_dark">#B0B2B1</color>
+
 
     <color name="common_blue">#2c97e8</color>
     <color name="common_gray">#898989</color>
@@ -36,4 +39,10 @@
 
     <color name="crop__button_bar">#f3f3f3</color>
     <color name="crop__button_text">#666666</color>
+
+    <color name="divider1">#e3e3e8</color>
+    <color name="divider_light">#e0e0e0</color>
+    <color name="divider_relate_me">#cfcfcf</color>
+    <color name="divider_edit_info">#e4e4e9</color>
+    <color name="divider_edit_introduce">#e5e5ea</color>
 </resources>

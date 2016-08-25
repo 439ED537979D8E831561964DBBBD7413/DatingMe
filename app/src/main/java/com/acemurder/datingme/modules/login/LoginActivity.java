@@ -16,6 +16,7 @@ import com.acemurder.datingme.modules.main.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.util.LogUtils;
+import com.acemurder.datingme.util.permission.Utils;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
@@ -63,6 +64,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
 
                     if (e == null){
                         mProgressDialog.dismiss();
+                        Utils.hideSoftInput(passwordText);
+
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
                         LoginActivity.this.finish();
                     }
@@ -147,6 +150,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
 
     @Override
     public void showLoginSuccess(AVUser user) {
+        Utils.hideSoftInput(passwordText);
+
         LogUtils.LOGE("======>", user.getUsername());
         mProgressDialog.dismiss();
         APP.setUser(user);

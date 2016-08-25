@@ -25,16 +25,10 @@ import com.acemurder.datingme.modules.im.ContactFragment;
 import com.acemurder.datingme.modules.login.LoginActivity;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.acemurder.datingme.util.LogUtils;
-import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVRelation;
-import com.avos.avoscloud.SaveCallback;
-import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
+
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
