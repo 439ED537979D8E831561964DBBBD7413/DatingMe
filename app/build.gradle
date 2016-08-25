@@ -62,5 +62,5 @@ dependencies {
     compile 'com.baoyz.pullrefreshlayout:library:1.2.0'
     compile 'com.miguelcatalan:materialsearchview:1.4.0'
     compile 'com.bigkoo:convenientbanner:2.0.5'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+    compile 'jp.wasabeef:blurry:2.0.2'
 }
