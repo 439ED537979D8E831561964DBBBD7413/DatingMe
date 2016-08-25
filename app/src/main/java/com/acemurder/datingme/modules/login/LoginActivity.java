@@ -5,16 +5,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
+import com.acemurder.datingme.modules.im.guide.AVImClientManager;
 import com.acemurder.datingme.modules.main.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.util.LogUtils;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,11 +46,31 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
         mLoginPresenter = new LoginPresenter(this);
         mProgressDialog = new ProgressDialog(this, R.style.AppTheme_Dark_Dialog);
 
         mProgressDialog.setMessage("拼命登录中~");
         mProgressDialog.setTitle("登录中");
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        if (APP.hasLogin()){
+            nameText.setText(APP.getAVUser().getUsername());
+            passwordText.setText("**********");
+            mProgressDialog.show();
+            AVImClientManager.getInstance().open(APP.getAVUser().getUsername(), new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+
+                    if (e == null){
+                        mProgressDialog.dismiss();
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        LoginActivity.this.finish();
+                    }
+                }
+            });
+
+        }
+
     }
 
 

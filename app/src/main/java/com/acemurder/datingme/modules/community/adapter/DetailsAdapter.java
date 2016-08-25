@@ -50,7 +50,7 @@ public class DetailsAdapter extends RecyclerView.Adapter {
             return new DetailsViewHolder(view);
         } else {
             View view = LayoutInflater.from(mContext).inflate(R.layout.item_community, parent, false);
-            return new CommunityViewHolder(view);
+            return new SingleCommunityHolder(view);
         }
     }
 
@@ -66,25 +66,26 @@ public class DetailsAdapter extends RecyclerView.Adapter {
                 }
 
                 ((DetailsViewHolder) holder).nameView.setText(mRemarkList.get(position - 1).getAuthorName());
-                ((DetailsViewHolder) holder).dateView.setText(mRemarkList.get(position - 1).getUpdatedAt());
+                ((DetailsViewHolder) holder).dateView.setText(TimeUtils.getTimeDetail(mRemarkList.get(position - 1).getUpdatedAt()
+                        .replace("T", " ").substring(0, 19)));
                 ((DetailsViewHolder) holder).contentView.setText(mRemarkList.get(position - 1).getContent());
             }
         } else {
             Community c = mCommunity;
-            ((CommunityViewHolder) holder).setCommunity(c);
+            ((SingleCommunityHolder) holder).setCommunity(c);
             if (!c.getAuthorPhoto().equals("null")) {
-                Glide.with(mContext).load(c.getAuthorPhoto()).centerCrop().placeholder(R.drawable.back).into(((CommunityViewHolder) holder).mCircleImageView);
+                Glide.with(mContext).load(c.getAuthorPhoto()).centerCrop().placeholder(R.drawable.back).into(((SingleCommunityHolder) holder).mCircleImageView);
             }
             if (c.getPhotoSrc() != null && c.getPhotoSrc().size() != 0 && !c.getPhotoSrc().get(0).equals("null")) {
-                Glide.with(mContext).load(c.getPhotoSrc().get(0)).into(((CommunityViewHolder) holder).imageView);
+                Glide.with(mContext).load(c.getPhotoSrc().get(0)).into(((SingleCommunityHolder) holder).imageView);
             } else {
-                Glide.with(mContext).load(R.drawable.back).centerCrop().placeholder(R.drawable.back).into(((CommunityViewHolder) holder).imageView);
+                Glide.with(mContext).load(R.drawable.back).centerCrop().placeholder(R.drawable.back).into(((SingleCommunityHolder) holder).imageView);
             }
-            ((CommunityViewHolder) holder).mNameText.setText(c.getAuthorName());
-            ((CommunityViewHolder) holder).mTimeText.setText(TimeUtils.getTimeDetail(c.getUpdatedAt()
+            ((SingleCommunityHolder) holder).mNameText.setText(c.getAuthorName());
+            ((SingleCommunityHolder) holder).mTimeText.setText(TimeUtils.getTimeDetail(c.getUpdatedAt()
                     .replace("T", " ").substring(0, 19)));
-            ((CommunityViewHolder) holder).mTitleText.setText(c.getTitle());
-            ((CommunityViewHolder) holder).mContentText.setText(c.getContent());
+            ((SingleCommunityHolder) holder).mTitleText.setText(c.getTitle());
+            ((SingleCommunityHolder) holder).mContentText.setText(c.getContent());
         }
 
 
@@ -114,6 +115,18 @@ public class DetailsAdapter extends RecyclerView.Adapter {
         public DetailsViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+
+    public static class SingleCommunityHolder extends CommunityViewHolder {
+        public SingleCommunityHolder(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void onCardClick() {
+            //super.onCardClick();
         }
     }
 

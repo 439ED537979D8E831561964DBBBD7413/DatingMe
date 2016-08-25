@@ -88,14 +88,12 @@ public enum RequestManager {
 
     }
 
-    public Subscription date(Subscriber<Response> subscriber, DatingItem item, AVUser user) {
-        if (item.getPromulgatorId().equals(user.getObjectId())) {
-            throw new IllegalArgumentException("Promulgator and Receiver cant't be a same one.");
-        } else {
+    public Subscription date(Subscriber<Response> subscriber, DatingItem item) {
+
             try {
                 DatingItem itemCopy = (DatingItem) item.clone();
-                itemCopy.setReceiver(user.getUsername());
-                itemCopy.setReceiverId(user.getObjectId());
+                itemCopy.setReceiver(APP.getAVUser().getUsername());
+                itemCopy.setReceiverId(APP.getAVUser().getObjectId());
                 itemCopy.setHasDated(true);
                 // itemCopy.setReceiverPhoto(user.getPhotoSrc());
                 RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new JSONObject(itemCopy.toString()).toString());
@@ -108,7 +106,7 @@ public enum RequestManager {
                 e.printStackTrace();
             }
             return null;
-        }
+
     }
 
 

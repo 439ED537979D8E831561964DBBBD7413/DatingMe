@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     mTitleTextView.setText("有约");
                     break;
                 case 1:
-                    mTitleTextView.setText("社区");
+                    mTitleTextView.setText("吐槽");
                     showMenu();
                     break;
                 case 2:

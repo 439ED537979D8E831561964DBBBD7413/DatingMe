@@ -176,9 +176,12 @@ public class DatingItem implements Serializable, Cloneable {
         return "{" +
                 "\"" + "promulgator" + "\"" + ":" + "\"" + promulgator + "\"," +
                 "\"" + "content" + "\"" + ":" + "\"" + content + "\"," +
-                "\"" + "has_date" + "\"" + ":" +  hasDated + "," +
+                "\"" + "hasDated" + "\"" + ":" +  hasDated + "," +
                 "\"" + "theme" + "\"" + ":" + "\"" + theme + "\"," +
                 "\"" + "promulgatorId" + "\"" + ":" + "\"" + promulgatorId + "\"," +
+                "\"" + "receiverId" + "\"" + ":" + "\"" + receiverId + "\"," +
+                "\"" + "receiver" + "\"" + ":" + "\"" + receiver + "\"," +
+                "\"" + "receiverPhoto" + "\"" + ":" + "\"" + receiverPhoto + "\"," +
                 "\"" + "photoSrc" + "\"" + ":" + "\"" + photoSrc + "\"," +
                 "\"" + "title" + "\"" + ":" + "\"" + title + "\"}";
     }
