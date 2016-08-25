@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,7 +40,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     @BindView(R.id.recycler_view_dating)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_container)
-    PullRefreshLayout mPullRefreshLayout;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.fab)
     FloatingActionButton fab;
     // @BindView(R.id.search_view) MaterialSearchView mMaterialSearchView;
@@ -47,6 +48,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     private DatingAdapter mDatingAdapter;
     private DatingPresenter mDatingPresenter;
     private int page = 0;
+    private boolean hasMore = true;
     private List<DatingItem> mDatingItemList = new ArrayList<>();
 
 
@@ -71,6 +73,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         initView();
         AnimationUtils.hideFabInRecyclerView(mRecyclerView,fab);
         mDatingPresenter.getDatingItems(page, 10);
+
     }
 
     @OnClick(R.id.fab)
@@ -82,6 +85,11 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
     private void initView() {
 
+        mSwipeRefreshLayout.setOnRefreshListener(() ->{
+            //mDatingItemList.clear();
+            getItem(0);
+        });
+
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mDatingAdapter = new DatingAdapter(mDatingItemList, getActivity());
@@ -89,48 +97,51 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         mRecyclerView.addOnScrollListener(new onRcvScrollListener() {
             @Override
             public void onBottom() {
-                getItem(++page);
+                if (!mSwipeRefreshLayout.isRefreshing() && hasMore)
+                    getItem(++page);
             }
         });
-        mPullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
-        mPullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mDatingItemList.clear();
-                mDatingPresenter.getDatingItems(0, 10);
-                mPullRefreshLayout.setRefreshing(false);
-            }
-        });
+
 
 
     }
 
     public void getItem(int page) {
+        mSwipeRefreshLayout.setRefreshing(true);
         mDatingPresenter.getDatingItems(page, 10);
     }
 
     @Override
     public void showData(List<DatingItem> datingItems) {
+        if (page == 0)
+            mDatingItemList.clear();
+        int count = datingItems.size();
         mDatingItemList.addAll(datingItems);
-        mDatingAdapter.notifyItemRangeInserted(mDatingAdapter.getItemCount(), datingItems.size());
+        mDatingAdapter.notifyItemRangeInserted(count, datingItems.size());
+        mSwipeRefreshLayout.setRefreshing(false);
+
     }
 
     @Subscribe
     public void onEvent(MessageEvent event) {
-        Log.e("DatingFragment", event.mDatingItem.getContent());
+        /*Log.e("DatingFragment", event.mDatingItem.getContent());
         mDatingPresenter.getDatingItems(0, 10);
-        mDatingAdapter.notifyDataSetChanged();
+        mDatingAdapter.notifyDataSetChanged();*/
     }
 
     @Override
     public void showLoadError() {
+        mSwipeRefreshLayout.setRefreshing(false);
         // Toast.makeText(APP.getContext(), "抱歉，加载数据失败", Toast.LENGTH_SHORT).show();
         Snackbar.make(mRecyclerView, "网络有点小问题", Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showNoMore() {
-        Toast.makeText(getActivity(), "已是最新数据", Toast.LENGTH_SHORT).show();
+       // Toast.makeText(getActivity(), "已是最新数据", Toast.LENGTH_SHORT).show();
+        hasMore = false;
+        Snackbar.make(mRecyclerView,"没有更多了哦",Snackbar.LENGTH_SHORT).show();
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 

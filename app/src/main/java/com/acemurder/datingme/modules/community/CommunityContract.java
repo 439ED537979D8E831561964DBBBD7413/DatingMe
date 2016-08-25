@@ -15,6 +15,7 @@ public interface CommunityContract {
     interface ICommunityView extends IBaseView<ICommunityPresenter>{
         void showCommunityItems(List<Community> communities);
         void showGetCommunityItemsError();
+        void showNoMore();
     }
 
     interface IPostNewCommunityView extends IBaseView<IPostNewCommunityPresenter>{

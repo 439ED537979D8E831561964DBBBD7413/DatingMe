@@ -22,6 +22,6 @@
         android:layout_gravity="center"
         android:textColor="@color/common_blue"
         android:textSize="19sp"
-        android:text="约不到人?去广场溜一圈,找找小伙伴"
+        android:text="约不到人?去广场吼一声,找个小伙伴"
         android:layout_below="@+id/chatting_iv_sad"/>
 </RelativeLayout>

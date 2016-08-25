@@ -27,7 +27,7 @@ public class PostNewCommunityPresenter implements CommunityContract.IPostNewComm
 
     @Override
     public void sendCommunityItem(Community community) {
-        RequestManager.INSTANCE.addCommunityItem(new SimpleSubscriber<Response>(mContext, true,new SubscriberListener<Response>() {
+        RequestManager.INSTANCE.addCommunityItem(new SimpleSubscriber<Response>(mContext, true,false,new SubscriberListener<Response>() {
             @Override
             public void onNext(Response response) {
                 super.onNext(response);

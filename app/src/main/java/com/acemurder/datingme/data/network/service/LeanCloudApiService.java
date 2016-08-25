@@ -61,7 +61,7 @@ public interface LeanCloudApiService {
     Observable<ResultWrapper<List<Remark>>>getRemarkItems(@Query("where")String data,@Query("order") String order);
 
     @POST(Api.API_GET_Remark_ITEM)
-    Observable<Response>addRemarkItem(@Body RequestBody data);
+    Observable<Response>addRemarkItem(@Body RequestBody data,@Query("order")String order);
 
 }
 

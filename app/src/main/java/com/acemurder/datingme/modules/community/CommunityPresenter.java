@@ -37,7 +37,10 @@ public class CommunityPresenter implements CommunityContract.ICommunityPresenter
                     @Override
                     public void onNext(List<Community> communities) {
                         super.onNext(communities);
-                        mICommunityView.showCommunityItems(communities);
+                        if (communities.size() == 0)
+                            mICommunityView.showNoMore();
+                        else
+                            mICommunityView.showCommunityItems(communities);
                     }
                 }),size,page * size);
     }

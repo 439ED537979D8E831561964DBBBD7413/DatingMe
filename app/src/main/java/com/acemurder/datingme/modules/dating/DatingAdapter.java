@@ -2,6 +2,7 @@ package com.acemurder.datingme.modules.dating;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.CardView;
@@ -23,6 +24,8 @@ import com.acemurder.datingme.modules.im.guide.event.LeftChatItemClickEvent;
 import com.acemurder.datingme.util.TimeUtils;
 import com.bumptech.glide.Glide;
 
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
@@ -31,6 +34,8 @@ import butterknife.OnClick;
 import cn.leancloud.chatkit.activity.LCIMConversationActivity;
 import cn.leancloud.chatkit.utils.LCIMConstants;
 import de.greenrobot.event.EventBus;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 
 /**
@@ -61,9 +66,19 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
     @Override
     public void onBindViewHolder(DatingViewHolder holder, int position) {
         holder.mPhotoImage.setVisibility(View.VISIBLE);
+        holder.mChatText.setClickable(true);
+        holder.mDateText.setClickable(true);
+
 
         if (mDatingItemList != null) {
-            holder.mIsDateImage.setVisibility(mDatingItemList.get(position).hasDated() ? View.VISIBLE : View.GONE);
+            if (mDatingItemList.get(position).hasDated()){
+                holder.mIsDateImage.setVisibility(mDatingItemList.get(position).hasDated() ? View.VISIBLE : View.GONE);
+                holder.mChatText.setTextColor(Color.GRAY);
+                holder.mDateText.setTextColor(Color.GRAY);
+                holder.mChatText.setClickable(false);
+                holder.mDateText.setClickable(false);
+
+            }
             holder.setDatingItem(mDatingItemList.get(position));
             holder.mNameText.setText(mDatingItemList.get(position).getPromulgator());
             holder.mContentText.setText(mDatingItemList.get(position).getContent());
@@ -107,6 +122,8 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
         TextView mChatText;
         @BindView(R.id.dating_item_iv_is_date)
         ImageView mIsDateImage;
+        @BindView(R.id.dating_item_tv_date)
+        TextView mDateText;
 
         public void setDatingItem(DatingItem datingItem) {
             mDatingItem = datingItem;

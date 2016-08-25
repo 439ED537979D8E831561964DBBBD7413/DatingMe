@@ -10,13 +10,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.MainViewPager;
 import com.acemurder.datingme.component.widget.bottombar.BottomBar;
+import com.acemurder.datingme.modules.community.AddCommunityActivity;
 import com.acemurder.datingme.modules.community.CommunityFragment;
+import com.acemurder.datingme.modules.community.WritingActivity;
 import com.acemurder.datingme.modules.dating.DatingFragment;
 import com.acemurder.datingme.modules.im.ContactFragment;
 import com.acemurder.datingme.modules.login.LoginActivity;
@@ -36,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 
 
@@ -58,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
     Toolbar mToolbar;
 
     private Menu mMenu;
+
+
+
 
 
     @Override
@@ -83,8 +90,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initView() {
+
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
+        mToolbar.setOnMenuItemClickListener((menuItem) ->{
+            startActivity(new Intent(MainActivity.this,AddCommunityActivity.class));
+
+            return true;
+        });
 
 
         //mBottomBar.post(() -> hiddenMenu());
@@ -131,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     private void hiddenMenu() {
         if (null != mMenu) {

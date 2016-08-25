@@ -223,7 +223,7 @@ public enum RequestManager {
         final String key = "DatingMe/CommunityItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + "_"+new File(imagePath.get(0)).getName();
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath.get(0));
         List<String> list = new ArrayList<>();
-        list.add(Const.endpoint+"/"+key);
+        list.add("http://image.acemurder.com/"+key);
         community.setPhotoSrc(list);
 
         Observable<Response> observable = Observable.create(new Observable.OnSubscribe<Response>() {
@@ -267,7 +267,7 @@ public enum RequestManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Observable<Response> observable = mApiService.addRemarkItem(body);
+        Observable<Response> observable = mApiService.addRemarkItem(body,"-updatedAt");
         return emitObservable(observable, subscriber);
     }
 
