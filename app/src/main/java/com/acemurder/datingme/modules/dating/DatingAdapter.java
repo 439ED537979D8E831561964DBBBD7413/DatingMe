@@ -150,6 +150,15 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
 
         }
 
+
+        @OnClick(R.id.dating_item_iv_pic)
+        public void onImageClick(){
+            Intent i = new Intent(itemView.getContext(),ImageActivity.class);
+            i.putExtra("url",mDatingItem.getPhotoSrc());
+            itemView.getContext().startActivity(i);
+
+        }
+
         @OnClick({R.id.dating_item_tv_chat,R.id.dating_item_tv_date})
         public void onChatClick(View view) {
             /*Intent intent = new Intent(mChatText.getContext(), LCIMConversationActivity.class);

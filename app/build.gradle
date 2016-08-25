@@ -26,6 +26,11 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -59,4 +64,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:2.0.6'
+    compile 'com.github.chrisbanes:PhotoView:1.2.6'
+
 }

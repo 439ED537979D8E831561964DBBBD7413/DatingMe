@@ -73,6 +73,9 @@
         </activity>
         <activity android:name=".modules.me.DatedMeActivity">
         </activity>
+        <activity android:name=".modules.dating.ImageActivity"
+            android:theme="@style/AVActivity.FullScreen">
+        </activity>
     </application>
 
 </manifest>
