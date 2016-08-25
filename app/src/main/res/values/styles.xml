@@ -3,8 +3,12 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:listDivider">@drawable/divider</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
@@ -12,21 +16,29 @@
         <item name="colorAccent">@color/accent</item>
 
         <item name="android:windowBackground">@color/icons</item>
-
+        <item name="android:textColor">@color/primary_text</item>
         <item name="colorControlNormal">@color/iron</item>
         <item name="colorControlActivated">@color/white</item>
         <item name="colorControlHighlight">@color/white</item>
-        <item name="android:textColorHint">@color/iron</item>
+        <item name="android:textColorHint">@color/colorGrey</item>
 
         <item name="colorButtonNormal">@color/primary_dark</item>
-        <item name="android:colorButtonNormal">@color/primary_dark</item>
+    </style>
+
+    <style name="LCIMKitTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/lcim_common_blue</item>
+        <item name="actionBarTheme">@style/LCIMActionBarTheme</item>
     </style>
 
     <style name="AppTheme.Dark.Dialog" parent="Theme.AppCompat.Dialog">
         <item name="colorAccent">@color/white</item>
         <item name="android:textColorPrimary">@color/iron</item>
-        <item name="android:background">@color/primary_light</item>
+        <item name="android:background">@color/primary</item>
     </style>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="TextStyle" parent="AlertDialog.AppCompat.Light">
         <item name="android:layout_width">wrap_content</item>
@@ -79,6 +91,13 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:textSize">10sp</item>
     </style>
+
+    <style name="AVActivity" parent="AppTheme"/>
+
+    <style name="AVActivity.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="UserText" parent="AlertDialog.AppCompat.Light">
         <item name="android:textColor">@color/primary_text</item>
         <item name="android:textSize">20sp</item>
@@ -95,5 +114,79 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
+
+    <style name="BigFont">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">70dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginBottom">14dp</item>
+    </style>
+
+    <style name="SmallFont">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="AVTheme" parent="Theme.AppCompat.Light"/>
+
+    <style name="DividerLine">
+        <item name="android:background">@color/divider_line_color</item>
+    </style>
+
+    <style name="DividerLine.Horizontal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_line_height</item>
+    </style>
+
+    <style name="DividerLine.Vertical">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">@dimen/divider_line_height</item>
+    </style>
+
+    <style name="EditText"></style>
+
+    <style name="EditText.UserName">
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLength">30</item>
+    </style>
+
+    <style name="EditText.Password">
+        <item name="android:singleLine">true</item>
+        <item name="android:inputType">textPassword</item>
+    </style>
+
+    <style name="Button"></style>
+
+    <style name="Button.Normal"/>
+
+    <style name="Button.Larger"></style>
+
+    <style name="TextAppearance"/>
+
+    <style name="TextAppearance.Large">
+        <item name="android:textSize">@dimen/textsize_large</item>
+    </style>
+
+    <style name="TextAppearance.Large.Gray">
+        <item name="android:textColor">@color/common_gray</item>
+    </style>
+
+    <style name="TextAppearance.Normal">
+        <item name="android:textSize">@dimen/textsize_normal</item>
+    </style>
+
+    <style name="TextAppearance.Normal.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextAppearance.Normal.Gray">
+        <item name="android:textColor">@color/common_gray</item>
+    </style>
+
+    <style name="TextAppearance.small"></style>
 
 </resources>

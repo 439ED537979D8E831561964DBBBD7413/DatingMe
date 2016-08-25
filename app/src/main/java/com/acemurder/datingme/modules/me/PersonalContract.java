@@ -10,15 +10,22 @@ import java.util.List;
  * Created by fg on 2016/8/24.
  */
 public interface PersonalContract {
-    interface IConfigureView extends IBaseView<IConfigurePresenter>{
-        void showPersonalDetails();
+
+    interface IPersonalView extends IBaseView<IPersonalPresenter>{
+        void showPersonalDetails(User userList);
         void showGetPersonalDetailsError();
+    }
+
+    interface IPersonalPresenter extends IBasePresenter<IPersonalView>{
+        void getPersonalDetails(String objectId);
+    }
+
+    interface IConfigureView extends IBaseView<IConfigurePresenter>{
         void showSendError();
         void showSendSuccess();
     }
 
     interface IConfigurePresenter extends IBasePresenter<IConfigureView>{
-        void getPersonalDetails(String objectId);
         void sendDetailsItem(User user);
         void sendDetailsItem(User user,List<String> path);
     }

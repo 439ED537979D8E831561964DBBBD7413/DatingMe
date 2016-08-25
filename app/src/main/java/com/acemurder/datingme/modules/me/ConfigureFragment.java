@@ -12,14 +12,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.acemurder.datingme.R;
+import com.acemurder.datingme.data.bean.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by fg on 2016/8/25.
  */
 public class ConfigureFragment extends Fragment implements PersonalContract.IConfigureView{
+    private User mUser;
+    private Unbinder mUnbinder;
 
     @BindView(R.id.fragment_configure_portrait)ImageView portraitView;
     @BindView(R.id.fragment_configure_nickName)EditText nickNameView;
@@ -32,17 +36,13 @@ public class ConfigureFragment extends Fragment implements PersonalContract.ICon
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_configure,container,false);
-        ButterKnife.bind(this,view);
+        mUnbinder = ButterKnife.bind(this,view);
         return view;
     }
 
-    @Override
-    public void showPersonalDetails() {
-
-    }
 
     @Override
-    public void showGetPersonalDetailsError() {
+    public void showSendSuccess() {
 
     }
 
@@ -50,15 +50,14 @@ public class ConfigureFragment extends Fragment implements PersonalContract.ICon
     public void showSendError() {
 
     }
-
-    @Override
-    public void showSendSuccess() {
-
-    }
-
-
     @Override
     public void setPresenter(PersonalContract.IConfigurePresenter presenter) {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
     }
 }

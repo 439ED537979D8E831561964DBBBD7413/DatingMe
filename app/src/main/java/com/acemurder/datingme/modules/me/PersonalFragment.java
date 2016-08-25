@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.widget.CircleImageView;
+import com.acemurder.datingme.data.bean.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,9 +25,10 @@ import butterknife.Unbinder;
 /**
  * Created by fg on 2016/8/15.
  */
-public class PersonalFragment extends Fragment {
+public class PersonalFragment extends Fragment implements PersonalContract.IPersonalView{
     private Unbinder mUnbinder;
     private PersonalFragmentPagerAdapter mPagerAdapter;
+    private PersonalPresenter mPersonalPresenter;
 
     @BindView(R.id.toolbar)Toolbar mToolbar;
     @BindView(R.id.fragment_person_vPager)ViewPager mViewPager;
@@ -35,11 +38,7 @@ public class PersonalFragment extends Fragment {
     @BindView(R.id.fragment_person_tv_sex)TextView sexView;
     @BindView(R.id.fragment_person_signature_content)TextView signatureView;
     @BindView(R.id.app_bar)AppBarLayout mAppBarLayout;
-    /*@BindView(R.id.fragment_person_tv_publish)TextView publishView;
-    @BindView(R.id.fragment_person_tv_finished)TextView finishView;
-    @BindView(R.id.pia_chart)PieChart mPieChartView;
-    @BindView(R.id.fragment_person_configure)TextView configureView;
-    @BindView(R.id.fragment_person_about)TextView aboutView;*/
+
 
     @Nullable
     @Override
@@ -57,6 +56,23 @@ public class PersonalFragment extends Fragment {
         mTabLayout.setupWithViewPager(mViewPager);
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
 
+        mPersonalPresenter = new PersonalPresenter(getActivity(),this);
+        mPersonalPresenter.getPersonalDetails("");//假装有数据
+    }
+
+
+    @Override
+    public void showPersonalDetails(User userList) {
+
+    }
+
+    @Override
+    public void showGetPersonalDetailsError() {
+        Toast.makeText(getActivity(), "抱歉，拉取用户信息失败", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setPresenter(PersonalContract.IPersonalPresenter presenter) {
 
     }
 
@@ -65,4 +81,5 @@ public class PersonalFragment extends Fragment {
         super.onDestroyView();
         mUnbinder.unbind();
     }
+
 }

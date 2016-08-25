@@ -1,46 +1,30 @@
 package com.acemurder.datingme.modules.main;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
-import com.acemurder.datingme.component.MainViewPager;
 import com.acemurder.datingme.component.widget.bottombar.BottomBar;
 import com.acemurder.datingme.modules.community.AddCommunityActivity;
 import com.acemurder.datingme.modules.community.CommunityFragment;
-import com.acemurder.datingme.modules.community.WritingActivity;
 import com.acemurder.datingme.modules.dating.DatingFragment;
 import com.acemurder.datingme.modules.im.ContactFragment;
 import com.acemurder.datingme.modules.login.LoginActivity;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.acemurder.datingme.util.LogUtils;
-import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVRelation;
-import com.avos.avoscloud.SaveCallback;
-import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
-
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 
 
 
