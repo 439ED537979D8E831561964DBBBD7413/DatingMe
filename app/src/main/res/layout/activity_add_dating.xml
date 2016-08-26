@@ -100,7 +100,7 @@
                 android:background="@null"
                 android:gravity="top"
                 android:textColor="@color/primary_text"
-                android:hint="要输入你的内容哦"
+                android:hint="告诉我们时间,地点吧"
                 android:minLines="5" />
 
             <com.acemurder.datingme.component.ninelayout.NineGridlayout

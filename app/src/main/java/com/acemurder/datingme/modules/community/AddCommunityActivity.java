@@ -1,7 +1,9 @@
 package com.acemurder.datingme.modules.community;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.os.EnvironmentCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,9 +25,15 @@ import com.acemurder.datingme.data.bean.Image;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.community.event.CommunityInsertEvent;
+import com.acemurder.datingme.modules.dating.AddDatingActivity;
 import com.acemurder.datingme.modules.dating.DatingContract;
 import com.acemurder.datingme.modules.dating.EditPresenter;
+import com.acemurder.datingme.util.permission.AfterPermissionGranted;
+import com.acemurder.datingme.util.permission.EasyPermissions;
 import com.avos.avoscloud.AVUser;
+
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,13 +41,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 import rx.Observable;
 
 /**
  * Created by fg on 2016/8/18.
  */
-public class AddCommunityActivity extends AppCompatActivity implements CommunityContract.IPostNewCommunityView, View.OnClickListener {
+public class AddCommunityActivity extends AppCompatActivity implements CommunityContract.IPostNewCommunityView,
+        View.OnClickListener ,EasyPermissions.PermissionCallbacks{
 
 
     @BindView(R.id.toolbar_cancel)
@@ -106,7 +114,7 @@ public class AddCommunityActivity extends AppCompatActivity implements Community
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_dating);
         ButterKnife.bind(this);
-      //  EventBus.getDefault().register(this);
+      //EventBus.getDefault().register(this);
         mUser = APP.getAVUser();
         mIPostNewCommunityPresenter = new PostNewCommunityPresenter(this,this);
         init();
@@ -116,6 +124,10 @@ public class AddCommunityActivity extends AppCompatActivity implements Community
     }
 
     private void init() {
+
+        mThemeEditText.setHint("嗯,吐槽得有个标题");
+        mAddNewsEdit.setHint("没内容怎么吐槽~~");
+        mTitleText.setText("吐个槽");
 
         mImgList = new ArrayList<>();
         mImgList.add(new Image(ADD_IMG, Image.TYPE_ADD));
@@ -134,6 +146,22 @@ public class AddCommunityActivity extends AppCompatActivity implements Community
 
         mNineGridlayout.setOnAddImagItemClickListener((v, position) -> {
 
+           getPhoto();
+        });
+
+        mNineGridlayout.setOnClickDeletecteListener((v, position) -> {
+            mImgList.remove(position);
+            mNineGridlayout.setImagesData(mImgList);
+        });
+
+    }
+
+
+    @AfterPermissionGranted(123)
+    public void getPhoto() {
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(this, permissions)) {
             Intent intent = new Intent(AddCommunityActivity.this, MultiImageSelectorActivity.class);
             // 是否显示调用相机拍照
             intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
@@ -151,12 +179,9 @@ public class AddCommunityActivity extends AppCompatActivity implements Community
             if (mImgList.size() != 0)
                 intent.putStringArrayListExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, results);
             startActivityForResult(intent, REQUEST_IMAGE);
-        });
-
-        mNineGridlayout.setOnClickDeletecteListener((v, position) -> {
-            mImgList.remove(position);
-            mNineGridlayout.setImagesData(mImgList);
-        });
+        } else {
+            EasyPermissions.requestPermissions(this, "有约需要访问您的存储设备和相机哦",123, permissions);
+        }
 
     }
 
@@ -218,5 +243,24 @@ public class AddCommunityActivity extends AppCompatActivity implements Community
     protected void onDestroy() {
         super.onDestroy();
         this.mIPostNewCommunityPresenter.unBind();
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
     }
 }

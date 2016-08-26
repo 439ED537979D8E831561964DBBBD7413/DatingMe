@@ -43,12 +43,7 @@ public class AVSingleChatActivity extends AVBaseActivity {
 
     setSupportActionBar(toolbar);
     toolbar.setNavigationIcon(R.drawable.btn_navigation_back);
-    toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        onBackPressed();
-      }
-    });
+    toolbar.setNavigationOnClickListener((view -> onBackPressed()));
 
     String memberId = getIntent().getStringExtra(Constants.MEMBER_ID);
     setTitle(memberId);

@@ -26,17 +26,21 @@ public class EditPresenter implements DatingContract.IEditPresenter {
 
     @Override
     public void sendDatingItem(DatingItem datingItem) {
-        RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,
+        RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,true,false,
                 new SubscriberListener<Response>() {
                     @Override
                     public void onNext(Response response) {
                         super.onNext(response);
                         Log.e("EP","发送成功" + response);
+                        mIEditView.showAddSuccess();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
+                        mIEditView.showAddError();
+
+
                     }
                 }),datingItem.toString());
     }

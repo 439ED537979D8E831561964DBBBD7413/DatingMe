@@ -10,11 +10,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
+import com.acemurder.datingme.modules.im.guide.AVImClientManager;
 import com.acemurder.datingme.modules.main.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.util.LogUtils;
+import com.acemurder.datingme.util.Utils;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,11 +46,36 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
         mLoginPresenter = new LoginPresenter(this);
         mProgressDialog = new ProgressDialog(this, R.style.AppTheme_Dark_Dialog);
 
         mProgressDialog.setMessage("拼命登录中~");
         mProgressDialog.setTitle("登录中");
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        if (APP.hasLogin()){
+            nameText.setText(APP.getAVUser().getUsername());
+            passwordText.setText("**********");
+            mProgressDialog.show();
+            AVImClientManager.getInstance().open(APP.getAVUser().getUsername(), new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+
+                    if (e == null){
+                        mProgressDialog.dismiss();
+                        passwordText.clearFocus();
+                        nameText.clearFocus();
+
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        Utils.hideSoftInput(passwordText);
+                        Utils.hideSoftInput(nameText);
+                        LoginActivity.this.finish();
+                    }
+                }
+            });
+
+        }
+
     }
 
 
@@ -63,14 +93,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
         String password = passwordText.getText().toString();
 
         if (email.isEmpty()) {
-            nameText.setError("enter a valid email address");
+            nameText.setError("得输入你的名字呀");
             valid = false;
         } else {
             nameText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 4 || password.length() > 16) {
+            passwordText.setError("密码得4到16位哦");
             valid = false;
         } else {
             passwordText.setError(null);
@@ -122,6 +152,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
 
     @Override
     public void showLoginSuccess(AVUser user) {
+        Utils.hideSoftInput(passwordText);
+        Utils.hideSoftInput(nameText);
+
         LogUtils.LOGE("======>", user.getUsername());
         mProgressDialog.dismiss();
         APP.setUser(user);

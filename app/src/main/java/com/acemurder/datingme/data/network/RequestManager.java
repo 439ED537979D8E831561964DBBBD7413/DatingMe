@@ -16,6 +16,7 @@ import com.acemurder.datingme.data.bean.User;
 import com.acemurder.datingme.data.network.function.ResultWrapperFunc;
 import com.acemurder.datingme.data.network.interceptors.HeaderInterceptors;
 import com.acemurder.datingme.data.network.service.LeanCloudApiService;
+import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.alibaba.sdk.android.oss.ClientException;
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
@@ -31,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -38,7 +40,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.TimeUnit;
 
-import cn.leancloud.chatkit.LCChatKitUser;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
@@ -88,14 +89,12 @@ public enum RequestManager {
 
     }
 
-    public Subscription date(Subscriber<Response> subscriber, DatingItem item, AVUser user) {
-        if (item.getPromulgatorId().equals(user.getObjectId())) {
-            throw new IllegalArgumentException("Promulgator and Receiver cant't be a same one.");
-        } else {
+    public Subscription date(Subscriber<Response> subscriber, DatingItem item) {
+
             try {
                 DatingItem itemCopy = (DatingItem) item.clone();
-                itemCopy.setReceiver(user.getUsername());
-                itemCopy.setReceiverId(user.getObjectId());
+                itemCopy.setReceiver(APP.getAVUser().getUsername());
+                itemCopy.setReceiverId(APP.getAVUser().getObjectId());
                 itemCopy.setHasDated(true);
                 // itemCopy.setReceiverPhoto(user.getPhotoSrc());
                 RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new JSONObject(itemCopy.toString()).toString());
@@ -108,7 +107,7 @@ public enum RequestManager {
                 e.printStackTrace();
             }
             return null;
-        }
+
     }
 
 
@@ -116,6 +115,21 @@ public enum RequestManager {
         Observable<User> observable = mApiService.login(userName, password);
         return emitObservable(observable, subscriber);
 
+    }
+
+    public Subscription getDatingItemsWithName(SimpleSubscriber<List<DatingItem>>subscriber,String name){
+        String data = "{\""+"promulgator\":"+ "\""+name +"\"}";
+        Log.e(".........",data);
+        Observable<List<DatingItem>> observable = mApiService.getMyDatingItem(data,"-createdAt").map(new ResultWrapperFunc<>());
+        return emitObservable(observable,subscriber);
+
+    }
+
+    public Subscription getRecieveDatingItemsWithName(SimpleSubscriber<List<DatingItem>>subscriber,String name){
+        String data = "{\""+"receiver\":"+ "\""+name +"\"}";
+
+        Observable<List<DatingItem>> observable = mApiService.getMyDatingItem(data,"-createdAt").map(new ResultWrapperFunc<>());
+        return emitObservable(observable,subscriber);
     }
 
 
@@ -149,7 +163,7 @@ public enum RequestManager {
     }
 
 
-   
+
     public Subscription addDatingItem(Subscriber<Response> subscriber, DatingItem datingItem, final String imagePath) {
         final String key = "DatingMe/datingItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + new File(imagePath).getName();
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
@@ -275,4 +289,6 @@ public enum RequestManager {
 
         return builder.build();
     }
+
+
 }

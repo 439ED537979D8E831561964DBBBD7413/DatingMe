@@ -24,6 +24,8 @@ public class Const {
     public static final String SP_USER_NAME = "user_name";
     public static final String SP_USER_OBJECT_ID = "user_id";
     public static final String SP_USER_PHOTO_SRC = "user_photo";
+    public static final String SP_KEY_USER = "dating_me_user";
+
 
     public static final int UNKNOWN_WRONG = -1;
     public static final int HAS_SAME_NAME = 202;

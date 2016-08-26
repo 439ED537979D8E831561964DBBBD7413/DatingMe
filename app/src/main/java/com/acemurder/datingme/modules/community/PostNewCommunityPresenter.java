@@ -37,8 +37,6 @@ public class PostNewCommunityPresenter implements CommunityContract.IPostNewComm
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
-                e.printStackTrace();
-                Log.e("TAG",e.toString());
                 mView.showSendError();
             }
         }),community);

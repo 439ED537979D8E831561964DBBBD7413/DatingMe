@@ -42,6 +42,10 @@ public class CommunityViewHolder extends RecyclerView.ViewHolder{
         mCommunity = community;
     }
 
+    public Community getCommunity() {
+        return mCommunity;
+    }
+
     public CommunityViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);

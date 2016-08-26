@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
@@ -19,31 +21,23 @@ import com.acemurder.datingme.component.MainViewPager;
 import com.acemurder.datingme.component.widget.bottombar.BottomBar;
 import com.acemurder.datingme.modules.community.AddCommunityActivity;
 import com.acemurder.datingme.modules.community.CommunityFragment;
-import com.acemurder.datingme.modules.community.WritingActivity;
 import com.acemurder.datingme.modules.dating.DatingFragment;
 import com.acemurder.datingme.modules.im.ContactFragment;
-<<<<<<< HEAD
-=======
 import com.acemurder.datingme.modules.login.LoginActivity;
->>>>>>> ca15a169c1a9cf63ac170fca7f6072c7d424e97f
+import com.acemurder.datingme.modules.me.ExitEvent;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.acemurder.datingme.util.LogUtils;
-import com.alibaba.sdk.android.oss.model.PutObjectRequest;
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.AVRelation;
-import com.avos.avoscloud.SaveCallback;
-import com.gigamole.navigationtabbar.ntb.NavigationTabBar;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import cn.leancloud.chatkit.activity.LCIMConversationListFragment;
 
 
 
@@ -54,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private DatingFragment mDatingFragment;
     private CommunityFragment mCommunityFragment;
     private PersonalFragment mPersonalFragment;
-   // private LCIMConversationListFragment mLCIMConversationListFragment;
     private ContactFragment mContactFragment;
     List<Fragment> mFragmentList = new ArrayList<>();
 
@@ -73,39 +66,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-       setContentView(R.layout.activity_main);
-       ButterKnife.bind(this);
-=======
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         if (!APP.hasLogin()){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }
-
         ButterKnife.bind(this);
->>>>>>> ca15a169c1a9cf63ac170fca7f6072c7d424e97f
 
 
         initView();
         testData();
-<<<<<<< HEAD
-       // sendMessageToJerryFromTom();
-=======
     }
 
     private void testData() {
 
 
 
->>>>>>> ca15a169c1a9cf63ac170fca7f6072c7d424e97f
     }
-
-
-
-    private void testData() {
-
-    }
-
 
 
     private void initView() {
@@ -124,19 +101,15 @@ public class MainActivity extends AppCompatActivity {
         mDatingFragment = new DatingFragment();
         mCommunityFragment = new CommunityFragment();
         mPersonalFragment = new PersonalFragment();
-      //  mLCIMConversationListFragment = new LCIMConversationListFragment();
+        //  mLCIMConversationListFragment = new LCIMConversationListFragment();
         mContactFragment = new ContactFragment();
         mFragmentList.add(mDatingFragment);
         mFragmentList.add(mCommunityFragment);
-<<<<<<< HEAD
-        mFragmentList.add(new ContactFragment());
-=======
         mFragmentList.add(mContactFragment);
->>>>>>> ca15a169c1a9cf63ac170fca7f6072c7d424e97f
         mFragmentList.add(mPersonalFragment);
         TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),mFragmentList);
         mViewPager.setAdapter(tabPagerAdapter);
-       // mViewPager.setOffscreenPageLimit(4);
+        // mViewPager.setOffscreenPageLimit(4);
 
 
         mBottomBar.setOnBottomViewClickListener((view, position) -> {
@@ -145,18 +118,18 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     //hiddenMenu();
-                    mTitleTextView.setText("有约");
+                    mTitleTextView.setText("且约");
                     break;
                 case 1:
-                    mTitleTextView.setText("社区");
+                    mTitleTextView.setText("吐槽");
                     showMenu();
                     break;
                 case 2:
-                   // hiddenMenu();
+                    // hiddenMenu();
                     mTitleTextView.setText("广场");
                     break;
                 case 3:
-                   // hiddenMenu();
+                    // hiddenMenu();
                     mTitleTextView.setText("我的");
                     break;
 
@@ -195,4 +168,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onExitEvent(ExitEvent exitEvent){
+        onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

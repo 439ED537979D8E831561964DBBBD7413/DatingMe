@@ -11,7 +11,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.leancloud.chatkit.LCChatKitUser;
 
 /**
  * Created by zhengyuxuan on 16/8/19.
