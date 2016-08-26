@@ -1,0 +1,55 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fdf2e6"
+                android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar" />
+
+    <ImageView
+        android:id="@+id/about_logo"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="200dp"
+        android:src="@drawable/date" />
+
+    <TextView
+        android:id="@+id/about_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="有约"
+        android:layout_below="@id/about_logo"
+        android:textColor="@color/colorGrey"
+        android:layout_marginTop="32dp"
+        android:layout_centerInParent="true"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/about_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/about_name"
+        android:textColor="@color/colorGrey"
+
+        android:text="哈哈"
+        android:layout_marginTop="8dp"
+        android:layout_centerInParent="true"
+        android:textSize="14sp"/>
+
+
+
+    <TextView
+        android:id="@+id/tv_about_copyright"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="36dp"
+        android:text="CopyRight@2015-2016 All Rights Reserved" />
+
+</RelativeLayout>

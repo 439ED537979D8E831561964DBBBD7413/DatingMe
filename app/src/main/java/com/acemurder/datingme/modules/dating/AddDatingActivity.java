@@ -3,6 +3,7 @@ package com.acemurder.datingme.modules.dating;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,8 @@ import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
 import com.acemurder.datingme.util.Utils;
+import com.acemurder.datingme.util.permission.AfterPermissionGranted;
+import com.acemurder.datingme.util.permission.EasyPermissions;
 import com.avos.avoscloud.AVUser;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +43,8 @@ import rx.Observable;
 /**
  * Created by fg on 2016/8/18.
  */
-public class AddDatingActivity extends AppCompatActivity implements DatingContract.IEditView, View.OnClickListener {
+public class AddDatingActivity extends AppCompatActivity implements DatingContract.IEditView,
+        View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
 
     @BindView(R.id.toolbar_cancel)
@@ -72,18 +76,18 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
                 break;
             case R.id.toolbar_save:
                 view.setClickable(false);
-                if (APP.getAVUser() == null){
-                    Toast.makeText(APP.getContext(),"还没有登录哦",Toast.LENGTH_SHORT).show();
+                if (APP.getAVUser() == null) {
+                    Toast.makeText(APP.getContext(), "还没有登录哦", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 String theme = mThemeEditText.getText().toString();
                 String content = mAddNewsEdit.getText().toString();
-                if (theme.length() == 0 || content.length() == 0){
-                    Toast.makeText(APP.getContext(),"主题和内容不能为空哦",Toast.LENGTH_SHORT).show();
+                if (theme.length() == 0 || content.length() == 0) {
+                    Toast.makeText(APP.getContext(), "主题和内容不能为空哦", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (theme.contains("#")){
-                    Toast.makeText(APP.getContext(),"主题不能还有特殊字符哦",Toast.LENGTH_SHORT).show();
+                if (theme.contains("#")) {
+                    Toast.makeText(APP.getContext(), "主题不能还有特殊字符哦", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 DatingItem datingItem = new DatingItem();
@@ -91,11 +95,11 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
                 datingItem.setPromulgator(APP.getAVUser().getUsername());
                 datingItem.setPromulgatorId(APP.getAVUser().getObjectId());
                 datingItem.setTheme(theme);
-                if (mImgList.size() == 1){
+                if (mImgList.size() == 1) {
                     mIEditPresenter.sendDatingItem(datingItem);
-                }else{
-                    Log.e("xxxxxxxxxxxxx",mImgList.get(1).url);
-                    mIEditPresenter.sendDatingItem(datingItem,mImgList.get(1).url);
+                } else {
+                    Log.e("xxxxxxxxxxxxx", mImgList.get(1).url);
+                    mIEditPresenter.sendDatingItem(datingItem, mImgList.get(1).url);
                 }
 
                 break;
@@ -108,9 +112,8 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
         setContentView(R.layout.activity_add_dating);
         ButterKnife.bind(this);
         mUser = APP.getAVUser();
-        mIEditPresenter = new EditPresenter(this,this);
+        mIEditPresenter = new EditPresenter(this, this);
         init();
-
 
 
     }
@@ -132,7 +135,22 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
         });
 
         mNineGridlayout.setOnAddImagItemClickListener((v, position) -> {
+            getPhoto();
 
+        });
+
+        mNineGridlayout.setOnClickDeletecteListener((v, position) -> {
+            mImgList.remove(position);
+            mNineGridlayout.setImagesData(mImgList);
+        });
+
+    }
+
+    @AfterPermissionGranted(123)
+    public void getPhoto() {
+        String[] permissions = {Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
+        if (EasyPermissions.hasPermissions(this, permissions)) {
             Intent intent = new Intent(AddDatingActivity.this, MultiImageSelectorActivity.class);
             // 是否显示调用相机拍照
             intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
@@ -150,12 +168,9 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
             if (mImgList.size() != 0)
                 intent.putStringArrayListExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, results);
             startActivityForResult(intent, REQUEST_IMAGE);
-        });
-
-        mNineGridlayout.setOnClickDeletecteListener((v, position) -> {
-            mImgList.remove(position);
-            mNineGridlayout.setImagesData(mImgList);
-        });
+        } else {
+            EasyPermissions.requestPermissions(this, "有约需要访问您的存储设备和相机哦", 123, permissions);
+        }
 
     }
 
@@ -174,7 +189,7 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
                 }
                 // 处理你自己的逻辑 ....
                 if (mImgList.size() + pathList.size() > 2) {
-                    Toast.makeText(APP.getContext(),"只能选1张图哦",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(APP.getContext(), "只能选1张图哦", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 Observable.from(pathList)
@@ -205,7 +220,7 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
         Utils.hideSoftInput(mAddNewsEdit);
         Utils.hideSoftInput(mThemeEditText);
         mSaveText.setClickable(true);
-        Log.e("showAddSuccess","showAddSuccess");
+        Log.e("showAddSuccess", "showAddSuccess");
         EventBus.getDefault().post(new InsertDatingEvent());
         onBackPressed();
 
@@ -220,10 +235,28 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
     public void showAddError() {
         Utils.hideSoftInput(mAddNewsEdit);
         Utils.hideSoftInput(mThemeEditText);
-       // onBackPressed();
+        // onBackPressed();
         mSaveText.setClickable(true);
-        Log.e("showAddError","showAddError");
+        Log.e("showAddError", "showAddError");
 
-        Snackbar.make(mNineGridlayout,"未知错误",Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mNineGridlayout, "未知错误", Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        // EasyPermissions handles the request result.
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+
     }
 }

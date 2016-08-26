@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".APP"
@@ -72,6 +72,10 @@
             android:theme="@style/AVActivity.FullScreen">
         </activity>
         <activity android:name=".modules.dating.PersonDatingActivity">
+        </activity>
+        <activity android:name=".modules.me.SettingActivity">
+        </activity>
+        <activity android:name=".modules.me.AboutActivity">
         </activity>
     </application>
 

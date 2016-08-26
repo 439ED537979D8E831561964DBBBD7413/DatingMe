@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
                     if (e == null){
                         mProgressDialog.dismiss();
                         Utils.hideSoftInput(passwordText);
-
+                        Utils.hideSoftInput(nameText);
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
                         LoginActivity.this.finish();
                     }

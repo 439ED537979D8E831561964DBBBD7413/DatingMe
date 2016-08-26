@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
@@ -22,10 +24,14 @@ import com.acemurder.datingme.modules.community.CommunityFragment;
 import com.acemurder.datingme.modules.dating.DatingFragment;
 import com.acemurder.datingme.modules.im.ContactFragment;
 import com.acemurder.datingme.modules.login.LoginActivity;
+import com.acemurder.datingme.modules.me.ExitEvent;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.acemurder.datingme.util.LogUtils;
 
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -63,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
         if (!APP.hasLogin()){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }
-
         ButterKnife.bind(this);
 
 
@@ -164,4 +171,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onExitEvent(ExitEvent exitEvent){
+        onBackPressed();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

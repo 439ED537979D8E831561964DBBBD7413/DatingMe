@@ -56,8 +56,7 @@ public class PersonalFragment extends Fragment {
     @BindView(R.id.my_page_grade_layout)
     RelativeLayout  mContact;
 
-    @BindView(R.id.my_page_setting_layout)
-    RelativeLayout  myPageSettingLayout;
+
     @BindView(R.id.my_page_avatar)
     ImageView myPageAvatar;
     @BindView(R.id.my_page_nick_name)
@@ -65,6 +64,13 @@ public class PersonalFragment extends Fragment {
 
     @BindView(R.id.my_page_introduce)
     TextView        myPageIntroduce;
+
+
+
+    @OnClick(R.id.my_page_no_course_layout)
+    public void onSettingClick(){
+        startActivity(new Intent(getActivity(),SettingActivity.class));
+    }
 
 
     @OnClick(R.id.my_page_grade_layout)
@@ -94,34 +100,7 @@ public class PersonalFragment extends Fragment {
                 }).show());
     }
 
-    @OnClick(R.id.my_page_setting_layout)
-    public void onQuiteClick(){
-        Handler handler = new Handler(getMainLooper());
-        handler.post(() -> new MaterialDialog.Builder(getActivity())
-                .title("退出当前账号?")
-                .content("真的要退出当前账号吗?")
-                .titleColor(Color.parseColor("#F7C282"))
-                .contentColor(Color.parseColor("#F7C282"))
-                .positiveText("退出登录")
-                .negativeText("我在看看")
-                .callback(new MaterialDialog.ButtonCallback() {
-                    @Override
-                    public void onPositive(MaterialDialog dialog) {
-                        super.onPositive(dialog);
-                        SPUtils.set(getActivity(), Const.SP_USER_OBJECT_ID,"");
-                        SPUtils.set(getActivity(), Const.SP_USER_NAME,"");
-                        APP.setHasLogined(false);
-                        getActivity().startActivity(new Intent(getActivity(), LoginActivity.class));
-                        getActivity().onBackPressed();
-                    }
 
-                    @Override
-                    public void onNegative(MaterialDialog dialog) {
-                        super.onNegative(dialog);
-                        dialog.dismiss();
-                    }
-                }).show());
-    }
 
     @OnClick(R.id.my_page_relate_layout)
     public void onMyDateClick(){
