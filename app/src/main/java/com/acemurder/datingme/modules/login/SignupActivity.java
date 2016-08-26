@@ -64,15 +64,15 @@ public class SignupActivity extends AppCompatActivity implements LoginContract.I
         String name = nameText.getText().toString();
         String password = passwordText.getText().toString();
 
-        if (name.isEmpty() || name.length() < 3) {
-            nameText.setError("at least 3 characters");
+        if (name.isEmpty() || name.length() < 3 || name.length() > 16) {
+            nameText.setError("名字的长度不太对哦");
             valid = false;
         } else {
             nameText.setError(null);
         }
 
         if (password.isEmpty() || password.length() < 4 || password.length() > 16) {
-            passwordText.setError("between 4 and 16 alphanumeric characters");
+            passwordText.setError("密码需要4到16位哦");
             valid = false;
         } else {
             passwordText.setError(null);

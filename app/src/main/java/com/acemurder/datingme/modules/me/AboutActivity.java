@@ -23,7 +23,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
         ButterKnife.bind(this);
-        mToolbar.setTitle("关于有约");
+        mToolbar.setTitle("关于且约");
 
         setSupportActionBar(mToolbar);
 

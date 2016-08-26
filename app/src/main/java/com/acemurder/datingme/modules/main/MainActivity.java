@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private DatingFragment mDatingFragment;
     private CommunityFragment mCommunityFragment;
     private PersonalFragment mPersonalFragment;
-   // private LCIMConversationListFragment mLCIMConversationListFragment;
     private ContactFragment mContactFragment;
     List<Fragment> mFragmentList = new ArrayList<>();
 
@@ -121,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     //hiddenMenu();
-                    mTitleTextView.setText("有约");
+                    mTitleTextView.setText("且约");
                     break;
                 case 1:
                     mTitleTextView.setText("吐槽");

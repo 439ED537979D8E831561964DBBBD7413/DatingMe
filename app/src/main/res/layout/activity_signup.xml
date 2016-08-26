@@ -56,14 +56,17 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             android:text="@string/register"/>
 
         <TextView android:id="@+id/link_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:text="Already a member? Login"
+            android:text="有账号了?去登录吧"
             android:gravity="center"
+                  android:textColor="@color/white"
             android:textSize="16dip"/>
 
     </LinearLayout>

@@ -20,8 +20,6 @@ import com.acemurder.datingme.component.image_selector.MultiImageSelectorActivit
 import com.acemurder.datingme.component.ninelayout.NineGridlayout;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Image;
-import com.acemurder.datingme.data.bean.User;
-import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
@@ -246,7 +244,6 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 

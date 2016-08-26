@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">有约</string>
+    <string name="app_name">且约</string>
 
     <string name="login_success">login success</string>
     <string name="login">登录</string>

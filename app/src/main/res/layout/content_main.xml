@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:gravity="center"
             app:button_image_normal="@drawable/ic_main_data"
-            app:button_text="有约"
+            app:button_text="且约"
             app:color_choose="@color/primary"
             app:color_normal="@color/tabText"/>
 

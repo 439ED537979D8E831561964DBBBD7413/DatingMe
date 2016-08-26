@@ -45,7 +45,6 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.fab)
     FloatingActionButton fab;
-    // @BindView(R.id.search_view) MaterialSearchView mMaterialSearchView;
     private Unbinder mUnbinder;
     private DatingAdapter mDatingAdapter;
     private DatingPresenter mDatingPresenter;
