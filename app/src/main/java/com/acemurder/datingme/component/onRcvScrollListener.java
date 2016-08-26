@@ -28,7 +28,7 @@ public class onRcvScrollListener extends RecyclerView.OnScrollListener implement
                 lastPosition = findMax(lastPositions);
             }
 
-            if (lastPosition == recyclerView.getLayoutManager().getItemCount() - 1) {
+            if (lastPosition >= recyclerView.getLayoutManager().getItemCount() - 4) {
                 onBottom();
             }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.acemurder.datingme.config.Const;
+
 import com.acemurder.datingme.modules.im.CustomUserProvider;
 import com.acemurder.datingme.util.SPUtils;
 import com.avos.avoscloud.AVOSCloud;
@@ -16,9 +17,9 @@ import com.avos.avoscloud.im.v2.AVIMMessageHandler;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 
-import cn.leancloud.chatkit.LCChatKit;
-
 import static com.acemurder.datingme.config.Const.APP_KEY;
+
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 
 /**
  * Created by zhengyuxuan on 16/8/4.
@@ -28,6 +29,7 @@ public class APP extends Application {
 
     private static AVUser mAVUser;
     private static Context sContext;
+    private static boolean  hasLogined = false;
 
 
     public static class MessageHandler extends AVIMMessageHandler {
@@ -50,18 +52,30 @@ public class APP extends Application {
         sContext = getApplicationContext();
         AVOSCloud.initialize(this, Const.APP_ID, APP_KEY);
         AVOSCloud.useAVCloudCN();
-        LCChatKit.getInstance().setProfileProvider(CustomUserProvider.getInstance());
-        LCChatKit.getInstance().init(getApplicationContext(), Const.APP_ID, Const.APP_KEY);
+
      //   AVIMMessageManager.registerDefaultMessageHandler(new MessageHandler());
 
+
+        // 必须在启动的时候注册 MessageHandler
+        // 应用一启动就会重连，服务器会推送离线消息过来，需要 MessageHandler 来处理
+        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler(this));
 
     }
 
 
     public static void setUser(AVUser user) {
-        mAVUser = user;
-        SPUtils.set(getContext(), Const.SP_USER_NAME, user.getUsername());
-        SPUtils.set(getContext(), Const.SP_USER_NAME, user.getObjectId());
+        if (user != null){
+            mAVUser = user;
+            SPUtils.set(getContext(), Const.SP_USER_NAME, user.getUsername());
+            SPUtils.set(getContext(), Const.SP_USER_NAME, user.getObjectId());
+            hasLogined = true;
+        }else
+            hasLogined = false;
+
+    }
+
+    public static boolean hasLogin(){
+        return hasLogined;
     }
 
     public static AVUser getAVUser() {

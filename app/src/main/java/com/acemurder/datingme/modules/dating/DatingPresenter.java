@@ -2,6 +2,7 @@ package com.acemurder.datingme.modules.dating;
 
 import android.content.Context;
 
+import com.acemurder.datingme.APP;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
@@ -46,32 +47,9 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
         }), size, page * size);
     }
 
-    @Override
-    public void sendDatingItem(DatingItem datingItem, String path) {
-        File file = new File(path);
-        if (!file.exists()) {
-            sendDatingItem(datingItem);
-        } else {
-            RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,
-                    new SubscriberListener<Response>() {
-                        @Override
-                        public void onNext(Response response) {
-                            super.onNext(response);
-                            mIDatingView.showAddSuccess();
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            super.onError(e);
-                            mIDatingView.showAddError();
-                        }
-                    }), datingItem, path);
-        }
 
 
-    }
-
-    @Override
+   /* @Override
     public void sendDatingItem(DatingItem datingItem) {
         RequestManager.INSTANCE.addDatingItem(new SimpleSubscriber<Response>(mContext,
                 new SubscriberListener<Response>() {
@@ -87,12 +65,24 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
                         mIDatingView.showAddError();
                     }
                 }), datingItem.toString());
-    }
+    }*/
 
     @Override
-    public AVUser getUserInfo(String id) {
-        return null;
+    public void date(DatingItem datingItem) {
+
+        RequestManager.INSTANCE.date(new SimpleSubscriber<Response>(mContext, new SubscriberListener<Response>() {
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+
+            @Override
+            public void onNext(Response response) {
+                super.onNext(response);
+            }
+        }),datingItem, APP.getAVUser());
     }
+
 
     @Override
     public void bind(DatingContract.IDatingView view) {

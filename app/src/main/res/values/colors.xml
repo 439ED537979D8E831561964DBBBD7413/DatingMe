@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="primary_shade">#2E7D32</color>
-    <color name="primary_Light">#66BB6A</color>
-    <color name="primary_dark">#1B5E20</color>
-    <color name="accent_shade">#C6FF00</color>
-    <color name="accent_light">#EEFF41</color>
+    <color name="primary">#F7C282</color>
+    <color name="primary_dark">#DEAE75</color>
+    <color name="primary_light">#FFCCBC</color>
+    <color name="accent">#00BCD4</color>
+    <color name="primary_text">#212121</color>
+    <color name="secondary_text">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
 
+
+    <color name="tabText">#66000000</color>
     <color name="black">#000000</color>
     <color name="jet">#222222</color>
     <color name="oil">#333333</color>
@@ -21,4 +26,15 @@
     <dimen name="image_size">120dp</dimen>
     <dimen name="space_size">2dp</dimen>
     <dimen name="folder_cover_size">72dp</dimen>
+
+    <color name="common_blue">#2c97e8</color>
+    <color name="common_gray">#898989</color>
+
+    <color name="divider_line_color">#afafaf</color>
+
+    <color name="login_activity_bg">#efefef</color>
+
+
+    <color name="crop__button_bar">#f3f3f3</color>
+    <color name="crop__button_text">#666666</color>
 </resources>

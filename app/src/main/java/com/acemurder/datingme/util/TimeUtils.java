@@ -103,7 +103,7 @@ public class TimeUtils {
      * @return
      */
     public static String convertTimeToFormat(Date date, long timeStamp) {
-        long curTime = System.currentTimeMillis();
+        long curTime = System.currentTimeMillis() - 8 * 60 * 60 * 1000;
         long time = (curTime - timeStamp) / 1000;
 
         if (time < 60 && time >= 0) {

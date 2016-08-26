@@ -9,10 +9,11 @@ import android.widget.TextView;
 
 import com.acemurder.datingme.modules.im.MemberLetterEvent;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
 
 
 /**

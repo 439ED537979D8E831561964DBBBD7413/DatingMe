@@ -1,6 +1,14 @@
 package com.acemurder.datingme.modules.login;
 
+
+import com.acemurder.datingme.config.Const;
+import com.acemurder.datingme.modules.im.guide.AVImClientManager;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+
+import cn.leancloud.chatkit.LCChatKit;
 
 /**
  * Created by zhengyuxuan on 16/8/7.
@@ -19,12 +27,52 @@ public class LoginPresenter implements LoginContract.ILoginCallBack, LoginContra
 
     @Override
     public void onLoginSuccess(AVUser user) {
-        mView.showLoginSuccess(user);
+
+        /*LCChatKit.getInstance().open(user.getObjectId(), new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (null == e) {
+                    mView.showLoginSuccess(user);
+                } else {
+                    mView.showLoginError(Const.UNKNOWN_WRONG);
+                }
+            }
+        });*/
+
+        AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+               if (e == null)
+                   mView.showLoginSuccess(user);
+                else
+                   mView.showLoginError(Const.UNKNOWN_WRONG);
+            }
+        });
     }
 
     @Override
     public void onSignInSuccess(AVUser user) {
-        mView.showSignInSuccess(user);
+
+        AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (e == null)
+                    mView.showSignInSuccess(user);
+                else
+                    mView.showSignInError(Const.UNKNOWN_WRONG);
+            }
+        });
+
+        /*LCChatKit.getInstance().open(user.getObjectId(), new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (null == e) {
+                    mView.showSignInSuccess(user);
+                } else {
+                    mView.showSignInError(Const.UNKNOWN_WRONG);
+                }
+            }
+        });*/
     }
 
     @Override

@@ -1,13 +1,13 @@
 package com.acemurder.datingme.modules.community;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
-import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class PostNewCommunityPresenter implements CommunityContract.IPostNewComm
 
     @Override
     public void sendCommunityItem(Community community) {
-        RequestManager.INSTANCE.addCommunityItem(new SimpleSubscriber<Response>(mContext, true,new SubscriberListener<Response>() {
+        RequestManager.INSTANCE.addCommunityItem(new SimpleSubscriber<Response>(mContext, true,false,new SubscriberListener<Response>() {
             @Override
             public void onNext(Response response) {
                 super.onNext(response);
@@ -37,6 +37,8 @@ public class PostNewCommunityPresenter implements CommunityContract.IPostNewComm
             @Override
             public void onError(Throwable e) {
                 super.onError(e);
+                e.printStackTrace();
+                Log.e("TAG",e.toString());
                 mView.showSendError();
             }
         }),community);

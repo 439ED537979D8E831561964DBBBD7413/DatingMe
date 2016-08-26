@@ -23,9 +23,17 @@ allprojects {
         jcenter()
         maven {
             url "http://mvn.leancloud.cn/nexus/content/repositories/releases"
+
         }
     }
 }
+
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+
 
 task clean(type: Delete) {
     delete rootProject.buildDir

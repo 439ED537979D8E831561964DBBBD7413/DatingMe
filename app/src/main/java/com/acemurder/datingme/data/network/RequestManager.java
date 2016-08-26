@@ -68,7 +68,7 @@ public enum RequestManager {
     private LeanCloudApiService mApiService;
     private OkHttpClient mOkHttpClient;
     private static final int DEFAULT_TIMEOUT = 30;
-    OSS oss;
+    private OSSClient oss;
 //    private OSSClient ossClient;
 
 
@@ -149,26 +149,11 @@ public enum RequestManager {
     }
 
 
-    public Subscription getAllLCChatKitUser(Subscriber<List<LCChatKitUser>>subscriber){
-        Observable<List<LCChatKitUser>> observable = mApiService
-                .getAlluser().map(new ResultWrapperFunc<>())
-                .map(new Func1<List<User>, List<LCChatKitUser>>() {
-                    @Override
-                    public List<LCChatKitUser> call(List<User> users) {
-                        List<LCChatKitUser> newUsers = new ArrayList<LCChatKitUser>();
-                        for (User user:users){
-                            newUsers.add(new LCChatKitUser(user.getObjectId(),user.getUsername(),user.getPhotoSrc()));
-                        }
-                        return newUsers;
-                    }
-                });
-        return emitObservable(observable,subscriber);
-    }
-
+   
     public Subscription addDatingItem(Subscriber<Response> subscriber, DatingItem datingItem, final String imagePath) {
         final String key = "DatingMe/datingItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + new File(imagePath).getName();
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
-        datingItem.setPhotoSrc("image.acemurder.com/" + key);
+        datingItem.setPhotoSrc("http://image.acemurder.com/" + key);
 
         Observable<Response> observable = Observable.create(new Observable.OnSubscribe<Response>() {
             @Override
@@ -221,7 +206,7 @@ public enum RequestManager {
         final String key = "DatingMe/CommunityItem/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + "_"+new File(imagePath.get(0)).getName();
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath.get(0));
         List<String> list = new ArrayList<>();
-        list.add(Const.endpoint+"/"+key);
+        list.add("http://image.acemurder.com/"+key);
         community.setPhotoSrc(list);
 
         Observable<Response> observable = Observable.create(new Observable.OnSubscribe<Response>() {
@@ -265,7 +250,7 @@ public enum RequestManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Observable<Response> observable = mApiService.addRemarkItem(body);
+        Observable<Response> observable = mApiService.addRemarkItem(body,"-updatedAt");
         return emitObservable(observable, subscriber);
     }
 

@@ -126,6 +126,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
         mProgressDialog.dismiss();
         APP.setUser(user);
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        this.finish();
 
     }
 
