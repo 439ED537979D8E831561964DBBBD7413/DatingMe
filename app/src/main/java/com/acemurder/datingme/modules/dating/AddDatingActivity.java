@@ -2,13 +2,13 @@ package com.acemurder.datingme.modules.dating;
 
 import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,6 +20,7 @@ import com.acemurder.datingme.component.image_selector.MultiImageSelectorActivit
 import com.acemurder.datingme.component.ninelayout.NineGridlayout;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Image;
+import com.acemurder.datingme.data.bean.User;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
@@ -89,6 +90,8 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
                     return;
                 }
                 DatingItem datingItem = new DatingItem();
+                datingItem.getMaster().setObjectId(APP.getAVUser().getObjectId());
+
                 datingItem.setContent(content);
                 datingItem.setPromulgator(APP.getAVUser().getUsername());
                 datingItem.setPromulgatorId(APP.getAVUser().getObjectId());
@@ -233,11 +236,14 @@ public class AddDatingActivity extends AppCompatActivity implements DatingContra
     public void showAddError() {
         Utils.hideSoftInput(mAddNewsEdit);
         Utils.hideSoftInput(mThemeEditText);
-        // onBackPressed();
-        mSaveText.setClickable(true);
-        Log.e("showAddError", "showAddError");
 
-        Snackbar.make(mNineGridlayout, "未知错误", Snackbar.LENGTH_SHORT).show();
+        mSaveText.setClickable(true);
+        Snackbar sBar = Snackbar.make(mNineGridlayout, "网络有点小问题", Snackbar.LENGTH_SHORT);
+        Snackbar.SnackbarLayout ve = (Snackbar.SnackbarLayout)sBar.getView();
+        ve.setBackgroundColor(Color.parseColor("#DEAE75"));
+        ve.setAlpha(0.5f);
+        ((TextView) ve.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#FFFFFF"));
+        sBar.show();
     }
 
     @Override

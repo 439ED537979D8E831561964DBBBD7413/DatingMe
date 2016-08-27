@@ -40,6 +40,15 @@ public class Community implements Cloneable ,Serializable{
     private String createdAt;
     private String updatedAt;
     private String authorPhoto;
+    private User master = new User();
+
+    public User getMaster() {
+        return master;
+    }
+
+    public void setMaster(User master) {
+        this.master = master;
+    }
 
     public String getAuthorPhoto() {
         return authorPhoto;
@@ -180,6 +189,7 @@ public class Community implements Cloneable ,Serializable{
                 "\"" + "authorName" + "\"" + ":" + "\"" + authorName + "\","+
                 "\"" + "authorId" + "\"" + ":" + "\"" + authorId + "\","+
                 "\"" + "content" + "\"" + ":" + "\"" + content + "\","+
+                "\"" + "master" + "\"" + ":" +  master.toString() + "," +
                 "\"" + "title" + "\"" + ":" + "\"" + title + "\","+
                 "\"" + "photoSrc" + "\"" + ":" +  photos.toString() + "}";
     }

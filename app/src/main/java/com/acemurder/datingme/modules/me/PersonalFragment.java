@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,23 @@ import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.widget.CircleImageView;
 import com.acemurder.datingme.config.Const;
+import com.acemurder.datingme.data.bean.User;
+import com.acemurder.datingme.data.network.RequestManager;
+import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
+import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
+import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
 import com.acemurder.datingme.modules.im.guide.Constants;
 import com.acemurder.datingme.modules.im.guide.activity.AVSingleChatActivity;
 import com.acemurder.datingme.modules.login.LoginActivity;
 import com.acemurder.datingme.modules.main.MainActivity;
+import com.acemurder.datingme.modules.me.event.UserInfoChangeEvent;
 import com.acemurder.datingme.util.SPUtils;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.bumptech.glide.Glide;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,12 +51,14 @@ import butterknife.Unbinder;
 
 import static android.os.Build.VERSION_CODES.M;
 import static android.os.Looper.getMainLooper;
+import static com.acemurder.datingme.R.id.my_page_edit_layout;
+import static com.acemurder.datingme.R.id.tabMode;
 
 /**
  * Created by fg on 2016/8/15.
  */
 public class PersonalFragment extends Fragment {
-    @BindView(R.id.my_page_edit_layout)
+    @BindView(my_page_edit_layout)
     LinearLayout myPageEditLayout;
     @BindView(R.id.my_page_relate_layout)
     RelativeLayout myPageRelateLayout;
@@ -57,12 +71,19 @@ public class PersonalFragment extends Fragment {
 
 
     @BindView(R.id.my_page_avatar)
-    ImageView myPageAvatar;
+    CircleImageView myPageAvatar;
     @BindView(R.id.my_page_nick_name)
     TextView        myPageNickName;
 
     @BindView(R.id.my_page_introduce)
     TextView        myPageIntroduce;
+
+
+    @OnClick(my_page_edit_layout)
+    public void onEditClick(){
+        Intent intent = new Intent(getActivity(),EditInfoActivity.class);
+        startActivity(intent);
+    }
 
 
 
@@ -116,7 +137,6 @@ public class PersonalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_person, container, false);
         ButterKnife.bind(this, view);
-        initView();
         return view;
     }
 
@@ -124,13 +144,63 @@ public class PersonalFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         myPageNickName.setText(APP.getAVUser().getUsername());
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        initView();
+
+
     }
 
     private void initView() {
+        RequestManager.INSTANCE.getUserInfo(new SimpleSubscriber<User>(getActivity(), new SubscriberListener<User>() {
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+
+            @Override
+            public void onNext(User user) {
+                super.onNext(user);
+                APP.setUser(user);
+            }
+
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+        }),APP.getAVUser().getObjectId());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setInfo();
+
+    }
+
+    private void setInfo() {
+        if (APP.getUser().getPhotoSrc() != null && !APP.getUser().getPhotoSrc().equals("null"))
+            Glide.with(getActivity()).load(APP.getUser().getPhotoSrc()).asBitmap().into(myPageAvatar);
+        myPageNickName.setText(APP.getUser().getUsername());
+        myPageIntroduce.setText(APP.getUser().getDescription());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onUserInfoChangeEvent(UserInfoChangeEvent userInfoChangeEvent){
+        Log.e("=========","mmmmmmmmmmmmmmmmm");
+        initView();
+        setInfo();
+        //  mDatingItemList.clear();
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
     }
 }

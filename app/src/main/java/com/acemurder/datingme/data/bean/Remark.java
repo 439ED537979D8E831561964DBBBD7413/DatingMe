@@ -35,6 +35,15 @@ public class Remark {
     private String objectId;
     private String createdAt;
     private String updatedAt;
+    private User master = new User();
+
+    public User getMaster() {
+        return master;
+    }
+
+    public void setMaster(User master) {
+        this.master = master;
+    }
 
     public static Remark objectFromData(String str) {
 
@@ -149,6 +158,7 @@ public class Remark {
         return   "{" +
                 "\"" + "authorName" + "\"" + ":" + "\"" + authorName + "\","+
                 "\"" + "authorId" + "\"" + ":" + "\"" + authorId + "\","+
+                "\"" + "master" + "\"" + ":" +  master.toString() + "," +
                 "\"" + "communityId" + "\"" + ":" + "\"" + communityId + "\","+
                 "\"" + "content" + "\"" + ":" + "\"" + content + "\","+
                 "\"" + "authorPhotoSrc" + "\"" + ":" + "\"" + authorPhotoSrc + "\"}";

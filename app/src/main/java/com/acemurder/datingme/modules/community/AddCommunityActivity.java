@@ -22,6 +22,7 @@ import com.acemurder.datingme.component.ninelayout.NineGridlayout;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
 import com.acemurder.datingme.data.bean.Image;
+import com.acemurder.datingme.data.bean.User;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
 import com.acemurder.datingme.modules.community.event.CommunityInsertEvent;
@@ -93,7 +94,9 @@ public class AddCommunityActivity extends AppCompatActivity implements Community
                 community.setAuthorName(APP.getAVUser().getUsername());
                 community.setTitle(theme);
                 community.setContent(content);
+
                 community.setAuthorId(APP.getAVUser().getObjectId());
+                community.getMaster().setObjectId(APP.getAVUser().getObjectId());
 
                 if (mImgList.size() == 1){
                     mIPostNewCommunityPresenter.sendCommunityItem(community);

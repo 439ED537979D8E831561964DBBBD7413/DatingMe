@@ -16,6 +16,7 @@ import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.Remark;
+import com.acemurder.datingme.data.bean.User;
 import com.acemurder.datingme.modules.community.adapter.DetailsAdapter;
 import com.acemurder.datingme.util.Utils;
 
@@ -86,7 +87,9 @@ public class DetailsActivity extends AppCompatActivity implements CommunityContr
             remark.setAuthorId(APP.getAVUser().getObjectId());
             remark.setAuthorName(APP.getAVUser().getUsername());
             remark.setCommunityId(objectId);
+
             if (!TextUtils.isEmpty(mEditText.getText())) {
+                remark.getMaster().setObjectId(APP.getAVUser().getObjectId());
                 remark.setContent(mEditText.getText().toString());
                 Log.e("DetailsActivity", mEditText.getText().toString());
                 mRemarkPresenter.sendRemarkItem(remark);

@@ -1,14 +1,14 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="#fdf2e6">
+              android:background="@color/background_grey"
+    >
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fdf2e6">
+        android:background="@color/background_grey">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,19 +19,19 @@
                 android:id="@+id/my_page_edit_layout"
                 android:layout_width="match_parent"
                 android:layout_height="90dp"
-                android:background="#fdf2e6"
                 android:orientation="horizontal"
+                android:background="@drawable/bg_layout"
                 android:paddingBottom="5dp"
                 android:paddingEnd="5dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="15dp"
-                android:paddingStart="20dp"
-                android:paddingTop="20dp">
+                android:paddingStart="15dp"
+                android:paddingTop="15dp">
 
                 <com.acemurder.datingme.component.widget.CircleImageView
                     android:id="@+id/my_page_avatar"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/moiling"/>
 
@@ -67,16 +67,6 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="2dp"
-                            android:text="这个人好懒"
-                            android:textColor="@color/secondary_text"
-                            android:textSize="12sp"/>
-
-                        <TextView
                             android:id="@+id/my_page_introduce"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -93,18 +83,12 @@
 
 
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="20dp"
-
-                android:background="@color/divider"/>
             <RelativeLayout
                 android:id="@+id/my_page_relate_layout"
                 android:layout_width="match_parent"
+                android:background="@drawable/bg_layout"
                 android:layout_height="42dp"
-                android:background="#fdf2e6"
+                android:layout_marginTop="30dp"
                 android:paddingLeft="24dp"
                 android:paddingStart="24dp">
 
@@ -139,7 +123,8 @@
                 android:id="@+id/my_page_trend_layout"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:background="#fdf2e6"
+                android:background="@drawable/bg_layout"
+
                 android:paddingLeft="24dp"
                 android:paddingStart="24dp">
 
@@ -175,8 +160,9 @@
                 android:id="@+id/my_page_grade_layout"
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
-                android:background="#fdf2e6"
                 android:paddingLeft="24dp"
+                android:background="@drawable/bg_layout"
+
                 android:paddingStart="24dp">
 
                 <ImageView
@@ -211,8 +197,9 @@
                 android:id="@+id/my_page_no_course_layout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:background="#fdf2e6"
                 android:paddingLeft="24dp"
+                android:background="@drawable/bg_layout"
+
                 android:paddingStart="24dp">
 
 
@@ -242,11 +229,6 @@
                     android:background="@color/divider_light"/>
 
             </RelativeLayout>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="15dp"
-                android:background="@color/divider"/>
 
         </LinearLayout>
 

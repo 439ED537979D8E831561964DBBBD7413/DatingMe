@@ -3,9 +3,13 @@ package com.acemurder.datingme.util;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
+import com.acemurder.datingme.R;
 import com.acemurder.datingme.data.bean.User;
 import com.alibaba.fastjson.util.UTF8Decoder;
 
@@ -36,5 +40,14 @@ public class Utils {
         } catch (PackageManager.NameNotFoundException e) {
             return null;
         }
+    }
+
+    public static void showSnackbar(View view,String data){
+        Snackbar sBar = Snackbar.make(view, data, Snackbar.LENGTH_SHORT);
+        Snackbar.SnackbarLayout ve = (Snackbar.SnackbarLayout)sBar.getView();
+        ve.setBackgroundColor(Color.parseColor("#DEAE75"));
+        ve.setAlpha(0.5f);
+        ((TextView) ve.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#FFFFFF"));
+        sBar.show();
     }
 }

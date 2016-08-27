@@ -11,13 +11,17 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 public class Const {
 
     public static final String endpoint = "image.acemurder.com";
-    // accessKey请登录https://ak-console.aliyun.com/#/查看
-    public static final String accessKeyId = "0rGiins1DWdpWOuc";
-    public static final String accessKeySecret = "bVm4Fy0IyFCulScJWdHtO0Vy9H6HAT";
+   public static final String accessKeyId = "0rGiins1DWdpWOuc";
+   public static final String accessKeySecret = "bVm4Fy0IyFCulScJWdHtO0Vy9H6HAT";
 
 
-    public static final String APP_ID = "vnRdeLMsUKJJFBOK4u4MtqBv-gzGzoHsz";
-    public static final String APP_KEY = "9qxFgPgPvDiKfTdjloLJbJG5";
+
+
+    //public static final String APP_ID = "vnRdeLMsUKJJFBOK4u4MtqBv-gzGzoHsz";
+    //public static final String APP_KEY = "9qxFgPgPvDiKfTdjloLJbJG5";
+
+    public static final String APP_ID = "lDpwsLMUytrYKTpcfhWfXt6S-gzGzoHsz";
+    public static final String APP_KEY = "oq27wJHTd84eAoFfq4BhuW4C";
 
     public static final String DATING_ITEM = "DatingItem";
 
@@ -34,5 +38,11 @@ public class Const {
 
     public static final int TAKE_PHOTO = 1;
     public static final int CROP_PHOTO = 2;
+
+ public static final class Requests {
+  public static final int SELECT_PICTURE = 1;
+  public static final int SELECT_CAMERA = 2;
+
+ }
 
 }

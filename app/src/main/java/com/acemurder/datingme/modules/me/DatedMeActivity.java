@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.TextView;
 
 import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
@@ -72,8 +73,12 @@ public class DatedMeActivity extends AppCompatActivity {
             public void onError(Throwable e) {
                 super.onError(e);
                 mSwipeRefreshLayout.setRefreshing(false);
-                Snackbar.make(mRecyclerView,"网络遇到掉小问题",Snackbar.LENGTH_SHORT).show();
-
+                Snackbar sBar = Snackbar.make(mRecyclerView, "网络有点小问题", Snackbar.LENGTH_SHORT);
+                Snackbar.SnackbarLayout ve = (Snackbar.SnackbarLayout)sBar.getView();
+                ve.setBackgroundColor(Color.parseColor("#DEAE75"));
+                ve.setAlpha(0.5f);
+                ((TextView) ve.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#FFFFFF"));
+                sBar.show();
             }
 
             @Override

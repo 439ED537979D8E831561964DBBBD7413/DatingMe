@@ -49,7 +49,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityViewHolder> 
     public void onBindViewHolder(CommunityViewHolder holder, int position) {
         Community c = mCommunityItems.get(position);
         holder.setCommunity(c);
-        if (!c.getAuthorPhoto().equals("null")){
+        if (c.getAuthorPhoto() != null && !c.getAuthorPhoto().equals("null")){
             Glide.with(mContext).load(c.getAuthorPhoto()).centerCrop().placeholder(R.drawable.back).into(holder.mCircleImageView);
         }
         if (c.getPhotoSrc() != null && c.getPhotoSrc().size() != 0 && !c.getPhotoSrc().get(0).equals("null")){

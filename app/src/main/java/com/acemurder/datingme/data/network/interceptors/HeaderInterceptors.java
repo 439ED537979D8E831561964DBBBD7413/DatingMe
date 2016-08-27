@@ -4,6 +4,8 @@ package com.acemurder.datingme.data.network.interceptors;
 
 import android.util.Log;
 
+import com.acemurder.datingme.APP;
+import com.acemurder.datingme.config.Api;
 import com.acemurder.datingme.config.Const;
 
 import java.io.IOException;
@@ -26,7 +28,7 @@ public class HeaderInterceptors implements Interceptor {
         Request.Builder requestBuilder = original.newBuilder()
                 .addHeader("X-LC-Id", Const.APP_ID)
                 .addHeader("X-LC-Key", Const.APP_KEY);
-        Log.e("HeaderInterceptors",original.url().toString());
+
 
         Request request = requestBuilder.build();
         return chain.proceed(request);

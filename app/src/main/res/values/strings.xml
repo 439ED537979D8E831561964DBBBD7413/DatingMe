@@ -69,7 +69,8 @@
     <string name="unspport_message_type">暂不支持此消息类型</string>
     <string name="message_is_null">消息不能为空</string>
 
-
+    <string name="edit_info_avatar">头像修改</string>
+    <string name="edit_info_introduce">简介</string>
 
 
 </resources>

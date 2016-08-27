@@ -1,6 +1,7 @@
 package com.acemurder.datingme.modules.dating;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acemurder.datingme.R;
@@ -140,15 +142,26 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     public void showLoadError() {
         mSwipeRefreshLayout.setRefreshing(false);
         // Toast.makeText(APP.getContext(), "抱歉，加载数据失败", Toast.LENGTH_SHORT).show();
-        Snackbar.make(mRecyclerView, "网络有点小问题", Snackbar.LENGTH_SHORT).show();
+      //  Snackbar.make(mRecyclerView, "网络有点小问题", Snackbar.LENGTH_SHORT).show();
+
+        Snackbar sBar = Snackbar.make(mRecyclerView, "网络有点小问题", Snackbar.LENGTH_SHORT);
+        Snackbar.SnackbarLayout ve = (Snackbar.SnackbarLayout)sBar.getView();
+        ve.setBackgroundColor(Color.parseColor("#DEAE75"));
+        ve.setAlpha(0.5f);
+        ((TextView) ve.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#FFFFFF"));
+        sBar.show();
     }
 
     @Override
     public void showNoMore() {
        // Toast.makeText(getActivity(), "已是最新数据", Toast.LENGTH_SHORT).show();
         hasMore = false;
-        Snackbar.make(mRecyclerView,"没有更多了哦",Snackbar.LENGTH_SHORT).show();
-        mSwipeRefreshLayout.setRefreshing(false);
+        Snackbar sBar = Snackbar.make(mRecyclerView, "没有更多了哦", Snackbar.LENGTH_SHORT);
+        Snackbar.SnackbarLayout ve = (Snackbar.SnackbarLayout)sBar.getView();
+        ve.setBackgroundColor(Color.parseColor("#DEAE75"));
+        ve.setAlpha(0.5f);
+        ((TextView) ve.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#FFFFFF"));
+        sBar.show();        mSwipeRefreshLayout.setRefreshing(false);
     }
 
 

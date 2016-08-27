@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,31 +17,28 @@ import java.util.List;
  * Created by zhengyuxuan on 16/8/19.
  */
 
-public class User  {
+public class User implements Serializable{
+
 
     /**
      * description : 这个人很懒，什么都没有留下！
-     * sessionToken : ykd3f7dunv57sj8x1nz579gqd
-     * updatedAt : 2016-08-08T05:04:49.351Z
-     * objectId : 57a812f1a341310063428249
-     * photoSrc : null
-     * username : acemurder
-     * createdAt : 2016-08-08T05:04:49.351Z
+     * photoSrc : http://image.acemurder.com/DatingMe/moiling.jpg
+     * username : HW7yqh  A OZqy.,t  Bx s. Rn
      * emailVerified : false
      * mobilePhoneVerified : false
+     * objectId : 57bf85776be3ff005820808b
+     * createdAt : 2016-08-25T23:55:35.198Z
+     * updatedAt : 2016-08-25T23:55:35.198Z
      */
 
     private String description;
-    private String sessionToken;
-    private String updatedAt;
-    private String objectId;
     private String photoSrc;
     private String username;
-    private String createdAt;
     private boolean emailVerified;
     private boolean mobilePhoneVerified;
-
-
+    private String objectId;
+    private String createdAt;
+    private String updatedAt;
 
     public static User objectFromData(String str) {
 
@@ -94,30 +92,6 @@ public class User  {
         this.description = description;
     }
 
-    public String getSessionToken() {
-        return sessionToken;
-    }
-
-    public void setSessionToken(String sessionToken) {
-        this.sessionToken = sessionToken;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public String getObjectId() {
-        return objectId;
-    }
-
-    public void setObjectId(String objectId) {
-        this.objectId = objectId;
-    }
-
     public String getPhotoSrc() {
         return photoSrc;
     }
@@ -134,14 +108,6 @@ public class User  {
         this.username = username;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
     public boolean isEmailVerified() {
         return emailVerified;
     }
@@ -156,5 +122,36 @@ public class User  {
 
     public void setMobilePhoneVerified(boolean mobilePhoneVerified) {
         this.mobilePhoneVerified = mobilePhoneVerified;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
+
+    public void setObjectId(String objectId) {
+        this.objectId = objectId;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+
+        String data = "{\"__type\":\"Pointer\",\"className\":\"_User\",\"objectId\":" + "\""+objectId + "\""+ "}";
+        return data;
     }
 }

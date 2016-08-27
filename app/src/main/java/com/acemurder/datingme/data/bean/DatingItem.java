@@ -26,6 +26,15 @@ public class DatingItem implements Serializable, Cloneable {
     private String promulgator;
     private String promulgatorPhoto;
     private String localImagePath;
+    private User master = new User();
+
+    public User getMaster() {
+        return master;
+    }
+
+    public void setMaster(User master) {
+        this.master = master;
+    }
 
     public String getLocalImagePath() {
         return localImagePath;
@@ -62,6 +71,7 @@ public class DatingItem implements Serializable, Cloneable {
     private String receiverId;
     private String photoSrc;
     private String title;
+    private User recipietn = new User();
 
     public String getPhotoSrc() {
         return photoSrc;
@@ -178,6 +188,8 @@ public class DatingItem implements Serializable, Cloneable {
                 "\"" + "content" + "\"" + ":" + "\"" + content + "\"," +
                 "\"" + "hasDated" + "\"" + ":" +  hasDated + "," +
                 "\"" + "theme" + "\"" + ":" + "\"" + theme + "\"," +
+                "\"" + "master" + "\"" + ":" +  master.toString() + "," +
+                "\"" + "recipietn" + "\"" + ":" +  recipietn.toString() + "," +
                 "\"" + "promulgatorId" + "\"" + ":" + "\"" + promulgatorId + "\"," +
                 "\"" + "receiverId" + "\"" + ":" + "\"" + receiverId + "\"," +
                 "\"" + "receiver" + "\"" + ":" + "\"" + receiver + "\"," +
@@ -189,5 +201,13 @@ public class DatingItem implements Serializable, Cloneable {
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public User getRecipietn() {
+        return recipietn;
+    }
+
+    public void setRecipietn(User recipietn) {
+        this.recipietn = recipietn;
     }
 }

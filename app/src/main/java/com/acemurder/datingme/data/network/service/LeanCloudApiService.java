@@ -18,6 +18,7 @@ import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -40,10 +41,25 @@ public interface LeanCloudApiService {
                                                                @Query("skip") String page,
                                                                @Query("order") String order);
 
+    @GET(Api.API_GET_DATING_ITEM)
+    Observable<ResultWrapper<List<DatingItem>>> getDatingItems(@Query("limit")String size,
+                                                               @Query("skip") String page,
+                                                               @Query("order") String order,
+                                                               @Query("include")String include);
+
+    @GET(Api.API_GET_ALL_USER + "/"+"{PATH}")
+    Observable<ResultWrapper<User>>getUserInfo(@Path("PATH")String id);
+
+
+
+
+
     @GET(Api.API_GET_COMMUNITY)
     Observable<ResultWrapper<List<Community>>> getCommunityItems(@Query("limit")String size,
                                                                  @Query("skip")String page,
                                                                  @Query("order") String order);
+    @PUT(Api.API_GET_ALL_USER+"/"+"{PATH}")
+    Observable<Response>updateUser(@Path("PATH")String id, @Body RequestBody body, @Header("X-LC-Session")String s);
 
     @GET(Api.API_GET_ALL_USER)
     Observable<ResultWrapper<List<User>>> getAlluser();

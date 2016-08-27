@@ -20,4 +20,5 @@ public class Api {
     public static final String API_GET_Remark_ITEM ="1.1/classes/Remark";
     public static final String API_LOGIN = "1.1/login";
     public static final String API_GET_ALL_USER = "1.1/classes/_user";
+    public static final String API_PUT_USER = "1.1/users";
 }
