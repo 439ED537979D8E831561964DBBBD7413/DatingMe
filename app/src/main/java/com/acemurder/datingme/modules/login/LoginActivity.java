@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -16,6 +15,7 @@ import com.acemurder.datingme.modules.main.MainActivity;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.util.LogUtils;
+import com.acemurder.datingme.util.Utils;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
@@ -63,7 +63,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
 
                     if (e == null){
                         mProgressDialog.dismiss();
+                        passwordText.clearFocus();
+                        nameText.clearFocus();
+
                         startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        Utils.hideSoftInput(passwordText);
+                        Utils.hideSoftInput(nameText);
                         LoginActivity.this.finish();
                     }
                 }
@@ -88,14 +93,14 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
         String password = passwordText.getText().toString();
 
         if (email.isEmpty()) {
-            nameText.setError("enter a valid email address");
+            nameText.setError("得输入你的名字呀");
             valid = false;
         } else {
             nameText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password.isEmpty() || password.length() < 4 || password.length() > 16) {
+            passwordText.setError("密码得4到16位哦");
             valid = false;
         } else {
             passwordText.setError(null);
@@ -147,6 +152,9 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
 
     @Override
     public void showLoginSuccess(AVUser user) {
+        Utils.hideSoftInput(passwordText);
+        Utils.hideSoftInput(nameText);
+
         LogUtils.LOGE("======>", user.getUsername());
         mProgressDialog.dismiss();
         APP.setUser(user);

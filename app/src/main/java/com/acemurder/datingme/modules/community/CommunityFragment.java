@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.acemurder.datingme.component.onRcvScrollListener;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.modules.community.adapter.CommunityAdapter;
 import com.acemurder.datingme.modules.community.event.CommunityInsertEvent;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,7 +49,6 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -59,36 +60,30 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        EventBus.getDefault().register(this);
+
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         mCommunityPresenter = new CommunityPresenter(this, getActivity());
-        mCommunityPresenter.getCommunityItems(0, 10);        //   mCommunityPresenter.getCommunityItems(page, 4);
         initView();
+        mCommunityPresenter.getCommunityItems(0, 10);        //   mCommunityPresenter.getCommunityItems(page, 4);
+
     }
 
     private void initView() {
-        // mToolbar.setTitle("社区");
-        //   mToolbar.setTitleTextColor(Color.WHITE);
 
-        // ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
-        /*mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Log.e("CommunityFragment","此处是否被执行");
-                if (item.getItemId() == R.id.action_edit){
-                    Intent intent = new Intent(getActivity(), WritingActivity.class);
-                    startActivity(intent);
-                }
-                return true;
-            }
-        });
-*/
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             // mSwipeRefreshLayout.setRefreshing(true);
-            page = 0;
-            getItem(0);
+            getItem(page = 0);
+            hasMore = true;
+
 
         });
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -97,62 +92,54 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
         mRecyclerView.addOnScrollListener(new onRcvScrollListener() {
             @Override
             public void onBottom() {
-
-                getItem(++page);
+                if (!mSwipeRefreshLayout.isRefreshing() && hasMore)
+                    getItem(++page);
             }
         });
     }
 
 
     public void getItem(int page) {
-        if (hasMore && !mSwipeRefreshLayout.isRefreshing()) {
-           // mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
 
-            mCommunityPresenter.getCommunityItems(page, 10);
-        }
+        // mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(true));
+
+        mSwipeRefreshLayout.setRefreshing(true);
+        // mDatingPresenter.getDatingItems(page, 10);
+        mCommunityPresenter.getCommunityItems(page, 10);
+
 
     }
 
-    /*@Subscribe
-    public void onCommunuity(CommunityEvent communityEvent) {
-        Log.e("Community", communityEvent.mCommunity.getTitle());
-        Log.e("Community", communityEvent.mCommunity.getContent());
-        mCommunityPresenter.getCommunityItems(0, 3);
-        mCommunityAdapter.notifyDataSetChanged();
-    }*/
+
 
     @Override
     public void showCommunityItems(List<Community> communities) {
+        mSwipeRefreshLayout.setRefreshing(false);
+
         //   Log.e("CommunityFragment", communities.get(0).getContent());
         if (page == 0)
             mCommunityList.clear();
-        int count = communities.size();
         mCommunityList.addAll(communities);
-        mCommunityAdapter.notifyItemRangeInserted(count, communities.size());
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+        mCommunityAdapter.notifyDataSetChanged();
 
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void communityInserEvent(CommunityInsertEvent event){
-        Handler handler  = new Handler(Looper.getMainLooper());
-        handler.post(() ->{
-            page = 0;
-            mCommunityList.clear();
-            getItem(page);
-        });
+        Log.e("communityInserEvent","communityInserEvent");
+        getItem(page = 0);
     }
 
     @Override
     public void showGetCommunityItemsError() {
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
+        mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void showNoMore() {
+        mSwipeRefreshLayout.setRefreshing(false);
         hasMore = false;
-        mSwipeRefreshLayout.post(() -> mSwipeRefreshLayout.setRefreshing(false));
     }
 
 
@@ -165,11 +152,13 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
     public void onDestroyView() {
         super.onDestroyView();
         mUnbinder.unbind();
+        EventBus.getDefault().unregister(this);
+
     }
 
     @Override
     public void onDestroy() {
-        EventBus.getDefault().unregister(this);
         super.onDestroy();
     }
 }
+

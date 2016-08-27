@@ -11,12 +11,13 @@ import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.SimpleDateFormat;
 
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/8/13.

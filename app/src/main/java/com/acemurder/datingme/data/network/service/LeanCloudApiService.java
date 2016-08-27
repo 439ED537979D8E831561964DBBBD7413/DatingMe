@@ -1,5 +1,7 @@
 package com.acemurder.datingme.data.network.service;
 
+import android.support.design.widget.Snackbar;
+
 import com.acemurder.datingme.config.Api;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.DatingItem;
@@ -10,6 +12,7 @@ import com.acemurder.datingme.data.bean.User;
 import com.avos.avoscloud.AVUser;
 
 import java.util.List;
+import java.util.SplittableRandom;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -62,6 +65,11 @@ public interface LeanCloudApiService {
 
     @POST(Api.API_GET_Remark_ITEM)
     Observable<Response>addRemarkItem(@Body RequestBody data,@Query("order")String order);
+
+    @GET(Api.API_GET_DATING_ITEM)
+    Observable<ResultWrapper<List<DatingItem>>>getMyDatingItem(@Query("where")String where,@Query("order") String order);
+
+
 
 }
 

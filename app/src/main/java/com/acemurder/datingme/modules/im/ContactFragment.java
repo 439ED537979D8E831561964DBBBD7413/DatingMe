@@ -1,5 +1,31 @@
 package com.acemurder.datingme.modules.im;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import retrofit2.http.HEAD;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.acemurder.datingme.R;
+import com.acemurder.datingme.modules.im.guide.Constants;
+import com.acemurder.datingme.modules.im.guide.activity.AVSquareActivity;
+
+import org.greenrobot.eventbus.EventBus;
+
+
+/**
+ * Created by wli on 15/12/4.
+=======
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,16 +38,19 @@ import com.acemurder.datingme.R;
 import com.acemurder.datingme.modules.im.guide.Constants;
 import com.acemurder.datingme.modules.im.guide.activity.AVSquareActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by zhengyuxuan on 15/12/4.
+>>>>>>> ca15a169c1a9cf63ac170fca7f6072c7d424e97f
  * 联系人页面
  */
 public class ContactFragment extends Fragment {
+
 
   @BindView(R.id.chatting_tv_go_square)
   TextView mGoText;
@@ -41,6 +70,7 @@ public class ContactFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.contact_fragment, container, false);
+
     ButterKnife.bind(this,view);
     return view;
   }
@@ -54,13 +84,6 @@ public class ContactFragment extends Fragment {
   @Override
   public void onResume() {
     super.onResume();
-    refreshMembers();
   }
-
-  private void refreshMembers() {
-
-  }
-
-
 
 }

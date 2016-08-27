@@ -32,11 +32,15 @@ public class EditPresenter implements DatingContract.IEditPresenter {
                     public void onNext(Response response) {
                         super.onNext(response);
                         Log.e("EP","发送成功" + response);
+                        mIEditView.showAddSuccess();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
+                        mIEditView.showAddError();
+
+
                     }
                 }),datingItem.toString());
     }

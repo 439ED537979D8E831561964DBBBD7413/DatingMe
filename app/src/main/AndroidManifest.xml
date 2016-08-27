@@ -3,17 +3,12 @@
           package="com.acemurder.datingme">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-
-    、
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:name=".APP"
@@ -42,13 +37,8 @@
         <activity
             android:name=".modules.dating.AddDatingActivity"
             android:theme="@style/AppTheme.Dark">
-
         </activity>
-        <activity
-            android:name=".modules.community.WritingActivity"
-            android:theme="@style/AppTheme.Dark"/>
         <activity android:name=".modules.community.DetailsActivity"/>
-
         <activity
             android:name=".component.image_selector.MultiImageSelectorActivity"
             android:configChanges="orientation|screenSize"/>
@@ -57,18 +47,15 @@
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Dark"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
-
         <activity
             android:name=".modules.im.guide.activity.AVSingleChatActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
         <activity android:name=".modules.community.AddCommunityActivity"/>
 
-
         <service android:name="com.avos.avoscloud.PushService"/>
 
         <receiver android:name=".modules.im.guide.NotificationBroadcastReceiver"/>
-
         <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -76,6 +63,20 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".modules.me.MyDateActivity">
+        </activity>
+        <activity android:name=".modules.me.DatedMeActivity">
+        </activity>
+        <activity
+            android:name=".modules.dating.ImageActivity"
+            android:theme="@style/AVActivity.FullScreen">
+        </activity>
+        <activity android:name=".modules.dating.PersonDatingActivity">
+        </activity>
+        <activity android:name=".modules.me.SettingActivity">
+        </activity>
+        <activity android:name=".modules.me.AboutActivity">
+        </activity>
     </application>
 
 </manifest>

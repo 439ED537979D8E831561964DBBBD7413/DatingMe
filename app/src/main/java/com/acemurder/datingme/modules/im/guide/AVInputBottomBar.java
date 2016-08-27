@@ -16,7 +16,7 @@ import com.acemurder.datingme.R;
 import com.acemurder.datingme.modules.im.guide.event.InputBottomBarEvent;
 import com.acemurder.datingme.modules.im.guide.event.InputBottomBarTextEvent;
 
-import de.greenrobot.event.EventBus;
+import org.greenrobot.eventbus.EventBus;
 
 
 /**

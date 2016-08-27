@@ -8,7 +8,6 @@ import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 
-import cn.leancloud.chatkit.LCChatKit;
 
 /**
  * Created by zhengyuxuan on 16/8/7.

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_dating_cardview_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginLeft="-1dp"
+    app:cardBackgroundColor="#f5e6d5"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_marginRight="-1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_margin="4dp">
+            <com.acemurder.datingme.component.widget.CircleImageView
+                android:id="@+id/dating_item_civ_photo"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/moiling"
+                android:scaleType="fitCenter"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:adjustViewBounds="true"/>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                >
+                <TextView
+                    android:id="@+id/dating_item_tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="acemurder"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="#5890f0"
+
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_toRightOf="@id/dating_item_tv_name"
+                    android:layout_toEndOf="@id/dating_item_tv_name"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondary_text"
+                    android:text="发布了一个约"/>
+                <TextView
+                    android:id="@+id/dating_item_tv_time"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dating_item_tv_name"
+                    android:textColor="@color/secondary_text"
+                    android:text="2016-8-16"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#打篮球#"
+                android:textColor="#5890f0"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:id="@+id/dating_item_tv_theme"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今晚八点,五栋约篮球啊"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/primary_text"
+                android:id="@+id/dating_item_tv_content"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/dating_item_iv_pic"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_margin="8dp"/>
+    </LinearLayout>
+    <ImageView
+        android:id="@+id/dating_item_iv_is_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:src="@drawable/has_date"/>
+
+</android.support.v7.widget.CardView>

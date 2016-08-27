@@ -15,6 +15,7 @@ import com.acemurder.datingme.component.widget.CircleImageView;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.data.bean.Remark;
 import com.acemurder.datingme.modules.community.DetailsActivity;
+import com.acemurder.datingme.modules.dating.ImageActivity;
 import com.acemurder.datingme.util.TimeUtils;
 import com.bumptech.glide.Glide;
 
@@ -126,7 +127,15 @@ public class DetailsAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onCardClick() {
+            if (getCommunity().getPhotoSrc() != null
+                    && getCommunity().getPhotoSrc().size() != 0
+                    && !getCommunity().getPhotoSrc().get(0).equals("null") ){
+                Intent i = new Intent(itemView.getContext(),ImageActivity.class);
+                i.putExtra("url",getCommunity().getPhotoSrc().get(0));
+                itemView.getContext().startActivity(i);
+            }
             //super.onCardClick();
+
         }
     }
 

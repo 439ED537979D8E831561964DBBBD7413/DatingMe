@@ -9,8 +9,11 @@ import android.widget.Toast;
 
 import com.acemurder.datingme.modules.im.guide.event.EmptyEvent;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.ButterKnife;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by wli on 15/8/13.
@@ -96,5 +99,6 @@ public class AVBaseActivity extends AppCompatActivity {
     startActivity(intent);
   }
 
+  @Subscribe(threadMode = ThreadMode.MAIN)
   public void onEvent(EmptyEvent event) {}
 }
