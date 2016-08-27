@@ -1,6 +1,7 @@
 package com.acemurder.datingme.data.network;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.util.Log;
 
 import com.acemurder.datingme.APP;
@@ -126,7 +127,7 @@ public enum RequestManager {
     public Subscription getDatingItemsWithName(SimpleSubscriber<List<DatingItem>>subscriber,String name){
         String data = "{\""+"promulgator\":"+ "\""+name +"\"}";
         Log.e(".........",data);
-        Observable<List<DatingItem>> observable = mApiService.getMyDatingItem(data,"-createdAt").map(new DatingItemFunc());
+        Observable<List<DatingItem>> observable = mApiService.getMyDatingItem(data,"-createdAt","master,recipietn").map(new DatingItemFunc());
         return emitObservable(observable,subscriber);
 
     }
@@ -134,7 +135,7 @@ public enum RequestManager {
     public Subscription getRecieveDatingItemsWithName(SimpleSubscriber<List<DatingItem>>subscriber,String name){
         String data = "{\""+"receiver\":"+ "\""+name +"\"}";
 
-        Observable<List<DatingItem>> observable = mApiService.getMyDatingItem(data,"-createdAt").map(new DatingItemFunc());
+        Observable<List<DatingItem>> observable = mApiService.getMyDatingItem(data,"-createdAt","master,recipietn").map(new DatingItemFunc());
         return emitObservable(observable,subscriber);
     }
 
@@ -154,12 +155,12 @@ public enum RequestManager {
 
     public Subscription getCommunityItems(Subscriber<List<Community>> subscriber, int page, int count) {
 
-        Observable<List<Community>> observable = mApiService.getCommunityItems(page + "", count + "", "-updatedAt").map(new CommunityFunc());
+        Observable<List<Community>> observable = mApiService.getCommunityItems(page + "", count + "", "-updatedAt","master").map(new CommunityFunc());
         return emitObservable(observable, subscriber);
 
     }
 
-    public Subscription updateUser(Subscriber<Response>subscriber, String id,String introduction,String token){
+    public Subscription updateUser(Subscriber<Response>subscriber, String id,String introduction){
         String data = "{\"description\":\""+introduction+"\"}";
         RequestBody body = null;
         try {
@@ -168,12 +169,12 @@ public enum RequestManager {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Observable<Response>observable = mApiService.updateUser(id,body, token);
+        Observable<Response>observable = mApiService.updateUser(id,body);
         return emitObservable(observable,subscriber);
     }
 
     public Subscription updateUser(Subscriber<Response>subscriber, String id,
-                                   String introduction,String imagePath,String token){
+                                   String introduction,String imagePath){
         final String key = "DatingMe/face/" + APP.getAVUser().getObjectId() + "_" + System.currentTimeMillis() + new File(imagePath).getName();
 
         PutObjectRequest put = new PutObjectRequest("acemurder", key, imagePath);
@@ -202,7 +203,7 @@ public enum RequestManager {
         });
         try {
             return emitObservable(observable
-                    .zipWith(mApiService.updateUser(id,RequestBody.create(MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString()),token),
+                    .zipWith(mApiService.updateUser(id,RequestBody.create(MediaType.parse("application/json; charset=utf-8"), (new JSONObject(data)).toString())),
                             Response::cloneFromResult), subscriber);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -213,7 +214,7 @@ public enum RequestManager {
     }
 
     public Subscription getUserInfo(Subscriber<User>subscriber,String id){
-        Observable<User>observable = mApiService.getUserInfo(id).map(new ResultWrapperFunc<>());
+        Observable<User>observable = mApiService.getUserInfo(id);
         return emitObservable(observable,subscriber);
     }
 
@@ -327,7 +328,7 @@ public enum RequestManager {
     public Subscription getRemarkItems(Subscriber<List<Remark>> subscriber, String communityId) {
         //{"objectId":"57b02f507db2a20054238cb3"}
         String data = "{\"communityId\":\"" + communityId + "\"}";
-        Observable<List<Remark>> observable = mApiService.getRemarkItems(data, "-updatedAt").map(new RemarkFunc());
+        Observable<List<Remark>> observable = mApiService.getRemarkItems(data, "-updatedAt","master").map(new RemarkFunc());
         return emitObservable(observable, subscriber);
     }
 

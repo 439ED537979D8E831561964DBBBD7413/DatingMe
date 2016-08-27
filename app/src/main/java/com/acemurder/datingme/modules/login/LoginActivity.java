@@ -1,11 +1,13 @@
 package com.acemurder.datingme.modules.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.acemurder.datingme.R;
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.modules.me.SettingActivity;
 import com.acemurder.datingme.util.LogUtils;
+import com.acemurder.datingme.util.SPUtils;
 import com.acemurder.datingme.util.Utils;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.im.v2.AVIMClient;
@@ -50,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
 
     private LoginContract.ILoginPresenter mLoginPresenter;
     private ProgressDialog mProgressDialog;
+    private String pass;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,29 +106,16 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
         mProgressDialog.setMessage("拼命登录中~");
         mProgressDialog.setTitle("登录中");
         mProgressDialog.setCanceledOnTouchOutside(false);
-        if (APP.hasLogin()){
-            nameText.setText(APP.getAVUser().getUsername());
-            passwordText.setText("**********");
-            mProgressDialog.show();
-            AVImClientManager.getInstance().open(APP.getAVUser().getUsername(), new AVIMClientCallback() {
-                @Override
-                public void done(AVIMClient avimClient, AVIMException e) {
+        if (APP.hasLogin()) {
+            pass  = (String) SPUtils.get(this,Const.SP_USER_PASS,"");
 
-                    if (e == null){
-                        mProgressDialog.dismiss();
-                        passwordText.clearFocus();
-                        nameText.clearFocus();
+            if (!pass.isEmpty()){
+                mProgressDialog.show();
+                mLoginPresenter.startLogin(APP.getUser().getUsername(),pass);
 
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                        Utils.hideSoftInput(passwordText);
-                        Utils.hideSoftInput(nameText);
-                        LoginActivity.this.finish();
-                    }
-                }
-            });
+            }
 
         }
-
     }
 
 
@@ -163,7 +154,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
     public void onLoginClick() {
         if (validate()) {
             mProgressDialog.show();
-            mLoginPresenter.startLogin(nameText.getText().toString(), passwordText.getText().toString());
+            pass = passwordText.getText().toString();
+            mLoginPresenter.startLogin(nameText.getText().toString(),passwordText.getText().toString());
         }
     }
 
@@ -203,11 +195,16 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.IL
     public void showLoginSuccess(AVUser user) {
         Utils.hideSoftInput(passwordText);
         Utils.hideSoftInput(nameText);
-
+        Log.e("showLoginSuccess",user.getSessionToken());
         LogUtils.LOGE("======>", user.getUsername());
         mProgressDialog.dismiss();
+        SPUtils.set(this,Const.SP_USER_PASS,pass);
         APP.setUser(user);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive())
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
         this.finish();
 
     }

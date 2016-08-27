@@ -11,10 +11,8 @@ import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 public class Const {
 
     public static final String endpoint = "image.acemurder.com";
-   public static final String accessKeyId = "0rGiins1DWdpWOuc";
-   public static final String accessKeySecret = "bVm4Fy0IyFCulScJWdHtO0Vy9H6HAT";
-
-
+    public static final String accessKeyId = "0rGiins1DWdpWOuc";
+    public static final String accessKeySecret = "bVm4Fy0IyFCulScJWdHtO0Vy9H6HAT";
 
 
     //public static final String APP_ID = "vnRdeLMsUKJJFBOK4u4MtqBv-gzGzoHsz";
@@ -26,6 +24,8 @@ public class Const {
     public static final String DATING_ITEM = "DatingItem";
 
     public static final String SP_USER_NAME = "user_name";
+    public static final String SP_USER_PASS = "user_pass";
+
     public static final String SP_USER_OBJECT_ID = "user_id";
     public static final String SP_USER_PHOTO_SRC = "user_photo";
     public static final String SP_KEY_USER = "dating_me_user";
@@ -39,10 +39,10 @@ public class Const {
     public static final int TAKE_PHOTO = 1;
     public static final int CROP_PHOTO = 2;
 
- public static final class Requests {
-  public static final int SELECT_PICTURE = 1;
-  public static final int SELECT_CAMERA = 2;
+    public static final class Requests {
+        public static final int SELECT_PICTURE = 1;
+        public static final int SELECT_CAMERA = 2;
 
- }
+    }
 
 }

@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.ForwardingListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import com.acemurder.datingme.data.bean.Response;
 import com.acemurder.datingme.data.network.RequestManager;
 import com.acemurder.datingme.data.network.subscriber.SimpleSubscriber;
 import com.acemurder.datingme.data.network.subscriber.SubscriberListener;
+import com.acemurder.datingme.modules.community.adapter.DetailsAdapter;
 import com.acemurder.datingme.modules.me.event.UserInfoChangeEvent;
 import com.acemurder.datingme.util.DialogUtil;
 import com.acemurder.datingme.util.Utils;
@@ -32,6 +34,8 @@ import com.acemurder.datingme.util.permission.AfterPermissionGranted;
 import com.acemurder.datingme.util.permission.EasyPermissions;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.bumptech.glide.Glide;
+import com.jude.library.imageprovider.ImageProvider;
+import com.jude.library.imageprovider.OnImageSelectListener;
 import com.yalantis.ucrop.UCrop;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,13 +49,17 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.http.Body;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 import static com.acemurder.datingme.R.id.edit_introduce_et;
+import static com.acemurder.datingme.R.id.image_view_crop;
+import static com.avos.avoscloud.AVExceptionHolder.exists;
+import static com.jude.library.imageprovider.ImageProvider.readImageWithSize;
 
-public class EditInfoActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
+public class EditInfoActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks ,OnImageSelectListener{
 
     private static final String PATH_CROP_PICTURES = Environment.getExternalStorageDirectory() + "/datingMe/" + "Pictures";
 
@@ -65,11 +73,11 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
 
     private CharSequence[] dialogItems = {"拍照", "从相册中选择"};
 
-    private File dir;
-    private Uri mDestinationUri, cameraImageUri;
+
     private String imageParh = "";
     private boolean isChoosePic = false;
-    private String token;
+    private ImageProvider provider;
+    private Subscription mSubscription;
 
 
     @Override
@@ -78,8 +86,17 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
         setContentView(R.layout.activity_edit_info);
         ButterKnife.bind(this);
         init();
-        token = APP.getAVUser().getSessionToken();
+        provider = new ImageProvider(this);
+
     }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        provider.onActivityResult(requestCode, resultCode, data);
+    }
+
 
 
     @OnClick(R.id.edit_info_avatar_layout)
@@ -100,12 +117,13 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
     }
 
     private void saveInfo() {
+         showProgress();
+
         if (isChoosePic){
-            RequestManager.INSTANCE.updateUser(new SimpleSubscriber<Response>(this, new SubscriberListener<Response>() {
+            mSubscription = RequestManager.INSTANCE.updateUser(new SimpleSubscriber<Response>(this, new SubscriberListener<Response>() {
                 @Override
                 public void onStart() {
                     super.onStart();
-                    showProgress();
                 }
 
                 @Override
@@ -120,6 +138,7 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
                 public void onNext(Response response) {
                     super.onNext(response);
                     Utils.hideSoftInput(mIntroductionEdit);
+                    dismissProgress();
                     Utils.showSnackbar(mIntroductionEdit,"更新成功");
                     EventBus.getDefault().post(new UserInfoChangeEvent());
                     onBackPressed();
@@ -130,9 +149,9 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
                 public void onCompleted() {
                     super.onCompleted();
                 }
-            }),APP.getAVUser().getObjectId(),mIntroductionEdit.getText().toString(),imageParh,token);
+            }),APP.getAVUser().getObjectId(),mIntroductionEdit.getText().toString(),imageParh);
         }else{
-            RequestManager.INSTANCE.updateUser(new SimpleSubscriber<Response>(this, new SubscriberListener<Response>() {
+            mSubscription = RequestManager.INSTANCE.updateUser(new SimpleSubscriber<Response>(this, new SubscriberListener<Response>() {
                 @Override
                 public void onError(Throwable e) {
                     super.onError(e);
@@ -144,53 +163,22 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
                 @Override
                 public void onNext(Response response) {
                     super.onNext(response);
+                    dismissProgress();
                     Utils.hideSoftInput(mIntroductionEdit);
                     Utils.showSnackbar(mIntroductionEdit,"更新成功");
                     EventBus.getDefault().post(new UserInfoChangeEvent());
                     onBackPressed();
                 }
-            }),APP.getAVUser().getObjectId(),mIntroductionEdit.getText().toString(),token);
+            }),APP.getAVUser().getObjectId(),mIntroductionEdit.getText().toString());
         }
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case Const.Requests.SELECT_PICTURE:
-                    Uri selectedUri = data.getData();
-                    if (selectedUri != null) {
-                        startuCropActivity(selectedUri);
-                    } else {
-                        Toast.makeText(this, "无法识别该图像", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case UCrop.REQUEST_CROP:
-                    handleCropResult(data);
-                    break;
 
-                case Const.Requests.SELECT_CAMERA:
-                    startuCropActivity(cameraImageUri);
-                    break;
-                default:
-                    break;
-            }
-        }
-        if (resultCode == UCrop.RESULT_ERROR) {
-            handleCropError(data);
-        }
-    }
 
     private void init() {
+        Glide.with(this).load(APP.getUser().getPhotoSrc()).asBitmap().fitCenter().into(mCircleImageView);
         mIntroductionEdit.setText(APP.getUser().getDescription());
-        dir = new File(PATH_CROP_PICTURES);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        cameraImageUri = Uri.fromFile(
-                new File(dir, System.currentTimeMillis() + ".png"));
-        mDestinationUri = Uri.fromFile(new File(dir, APP.getAVUser().getObjectId() + ".png"));
     }
 
 
@@ -211,41 +199,7 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
     }
 
 
-    private void startuCropActivity(@NonNull Uri uri) {
-        UCrop uCrop = UCrop.of(uri, mDestinationUri);
-        UCrop.Options options = new UCrop.Options();
-        options.setCompressionFormat(Bitmap.CompressFormat.PNG);
-        options.setCompressionQuality(90);
-        options.setToolbarColor(
-                ContextCompat.getColor(this, R.color.primary));
-        options.setStatusBarColor(
-                ContextCompat.getColor(this, R.color.primary_dark));
-        uCrop.withOptions(options);
-        uCrop.start(this);
-    }
 
-
-    private void handleCropResult(Intent result) {
-        Uri resultUri = UCrop.getOutput(result);
-        if (resultUri != null) {
-            //showProgress();
-            Log.e("handleCropResult", resultUri.getPath());
-            Glide.with(this).load(new File(resultUri.getPath())).asBitmap().centerCrop().into(mCircleImageView);
-            imageParh = resultUri.getPath();
-            isChoosePic = true;
-
-        }
-    }
-
-    private void handleCropError(Intent result) {
-        Throwable cropError = UCrop.getError(result);
-        if (cropError != null) {
-            Toast.makeText(this, cropError.getMessage(), Toast.LENGTH_SHORT)
-                    .show();
-        } else {
-            Toast.makeText(this, "Unexpected error", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 
     @AfterPermissionGranted(1)
@@ -255,10 +209,11 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
                 Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         if (EasyPermissions.hasPermissions(this, permissions)) {
-            Intent intent = new Intent(Intent.ACTION_PICK);
+           /* Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI,
-                    "image/*");
-            startActivityForResult(intent, Const.Requests.SELECT_PICTURE);
+                    "image*//*");
+            startActivityForResult(intent, Const.Requests.SELECT_PICTURE);*/
+            provider.getImageFromAlbum(this);
         } else {
             EasyPermissions.requestPermissions(this, "读取图片需要访问您的存储空间哦~",
                     1, permissions);
@@ -272,9 +227,7 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
         String[] permissions = {Manifest.permission.CAMERA};
 
         if (EasyPermissions.hasPermissions(this, permissions)) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
-            startActivityForResult(intent, Const.Requests.SELECT_CAMERA);
+           provider.getImageFromCamera(this);
         } else {
             EasyPermissions.requestPermissions(this, "拍照需要访问你的相机哦~",
                     2, permissions);
@@ -282,6 +235,12 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mSubscription != null)
+            mSubscription.unsubscribe();
+    }
 
     private void showProgress() {
         DialogUtil.showLoadingDiaolog(this, "上传中");
@@ -308,5 +267,39 @@ public class EditInfoActivity extends AppCompatActivity implements EasyPermissio
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
+    }
+
+    @Override
+    public void onImageSelect() {
+
+    }
+
+    @Override
+    public void onImageLoaded(Uri uri) {
+        provider.corpImage(uri, 40, 40, new OnImageSelectListener() {
+            @Override
+            public void onImageSelect() {
+
+            }
+
+            @Override
+            public void onImageLoaded(Uri uri) {
+                Log.e("onImageLoaded",uri.getPath());
+                imageParh = uri.getPath();
+                isChoosePic = true;
+                Glide.with(EditInfoActivity.this).load(new File(uri.getPath())).asBitmap().centerCrop().into(mCircleImageView);
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void onError() {
+
     }
 }

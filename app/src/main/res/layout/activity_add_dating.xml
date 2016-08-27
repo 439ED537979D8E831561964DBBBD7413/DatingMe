@@ -22,7 +22,7 @@
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
+            android:theme="@style/AppTheme.PopupOverlay"
             app:elevation="0dp">
 
             <android.support.v7.widget.Toolbar
@@ -88,6 +88,7 @@
                 android:layout_marginTop="12dp"
                 android:textColor="@color/primary_text"
                 android:gravity="top"
+                android:textCursorDrawable="@null"
                 android:hint="得写一个主题哦"
                 android:minLines="1" />
             <EditText

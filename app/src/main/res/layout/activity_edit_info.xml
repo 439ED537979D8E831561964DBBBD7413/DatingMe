@@ -106,7 +106,7 @@
             android:layout_height="153dp"
             android:background="@null"
             android:gravity="top"
-            android:hint="向大家秀出自己吧"
+            android:hint="说出你的故事"
             android:paddingLeft="15dp"
             android:paddingTop="14dp"
             android:textCursorDrawable="@null"
@@ -115,15 +115,6 @@
             android:textColorHint="@color/text_light_2"
             android:textSize="14sp"/>
 
-        <TextView
-            android:id="@+id/edit_introduce_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="15dp"
-            android:layout_marginRight="15dp"
-            android:textColor="@color/text_light_2"
-            android:textSize="13sp"/>
 
     </FrameLayout>
 

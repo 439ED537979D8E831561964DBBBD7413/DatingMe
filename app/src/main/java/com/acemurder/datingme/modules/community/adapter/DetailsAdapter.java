@@ -59,13 +59,8 @@ public class DetailsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof DetailsViewHolder) {
             if (mRemarkList != null) {
-                try {
-                    Glide.with(mContext).load(mRemarkList.get(position).getAuthorPhotoSrc())
-                            .centerCrop().placeholder(R.drawable.ic_proxy).crossFade().into(((DetailsViewHolder) holder).portraitView);
-                } catch (IndexOutOfBoundsException e) {
-                    e.printStackTrace();
-                }
-
+                Glide.with(mContext).load(mRemarkList.get(position-1).getAuthorPhotoSrc()).asBitmap()
+                        .centerCrop().into(((DetailsViewHolder) holder).portraitView);
                 ((DetailsViewHolder) holder).nameView.setText(mRemarkList.get(position - 1).getAuthorName());
                 ((DetailsViewHolder) holder).dateView.setText(TimeUtils.getTimeDetail(mRemarkList.get(position - 1).getUpdatedAt()
                         .replace("T", " ").substring(0, 19)));
@@ -74,8 +69,8 @@ public class DetailsAdapter extends RecyclerView.Adapter {
         } else {
             Community c = mCommunity;
             ((SingleCommunityHolder) holder).setCommunity(c);
-            if (!c.getAuthorPhoto().equals("null")) {
-                Glide.with(mContext).load(c.getAuthorPhoto()).centerCrop().placeholder(R.drawable.back).into(((SingleCommunityHolder) holder).mCircleImageView);
+            if (c.getAuthorPhoto() != null && !c.getAuthorPhoto().equals("null")) {
+                Glide.with(mContext).load(c.getAuthorPhoto()).asBitmap().centerCrop().into(((SingleCommunityHolder) holder).mCircleImageView);
             }
             if (c.getPhotoSrc() != null && c.getPhotoSrc().size() != 0 && !c.getPhotoSrc().get(0).equals("null")) {
                 Glide.with(mContext).load(c.getPhotoSrc().get(0)).into(((SingleCommunityHolder) holder).imageView);
@@ -129,9 +124,9 @@ public class DetailsAdapter extends RecyclerView.Adapter {
         public void onCardClick() {
             if (getCommunity().getPhotoSrc() != null
                     && getCommunity().getPhotoSrc().size() != 0
-                    && !getCommunity().getPhotoSrc().get(0).equals("null") ){
-                Intent i = new Intent(itemView.getContext(),ImageActivity.class);
-                i.putExtra("url",getCommunity().getPhotoSrc().get(0));
+                    && !getCommunity().getPhotoSrc().get(0).equals("null")) {
+                Intent i = new Intent(itemView.getContext(), ImageActivity.class);
+                i.putExtra("url", getCommunity().getPhotoSrc().get(0));
                 itemView.getContext().startActivity(i);
             }
             //super.onCardClick();

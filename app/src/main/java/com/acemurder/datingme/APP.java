@@ -2,6 +2,7 @@ package com.acemurder.datingme;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.acemurder.datingme.config.Const;
 import com.acemurder.datingme.data.bean.User;
@@ -35,6 +36,15 @@ public class APP extends Application {
 
     private static User sUser;
     private static Context sContext;
+
+    public static String getToken() {
+        return token;
+    }
+
+    public static void setToken(String token) {
+        APP.token = token;
+    }
+
     private static String token;
 
     public static void setHasLogined(boolean hasLogined) {
@@ -65,7 +75,8 @@ public class APP extends Application {
             sUser.setUsername(user.getUsername());
             sUser.setDescription("这个人好懒,什么都没有留下");
             sUser.setPhotoSrc("null");
-            token = mAVUser.getSessionToken();
+            token = user.getSessionToken();
+            Log.e("setUser",token);
             SPUtils.set(getContext(), Const.SP_USER_NAME, user.getUsername());
             SPUtils.set(getContext(), Const.SP_USER_OBJECT_ID, user.getObjectId());
             hasLogined = true;
@@ -78,10 +89,8 @@ public class APP extends Application {
         if (!hasLogined){
             String name = (String) SPUtils.get(getContext(), Const.SP_USER_NAME, "");
             String id = (String) SPUtils.get(getContext(), Const.SP_USER_OBJECT_ID, "");
-            if (!name.equals("") && !id.equals("")){
-                mAVUser = new AVUser();
-                mAVUser.setUsername(name);
-                mAVUser.setObjectId(id);
+            String pass = (String) SPUtils.get(getContext(), Const.SP_USER_PASS, "");
+            if (!name.equals("") && !id.equals("") && !pass.equals("")){
                 sUser = new User();
                 sUser.setObjectId(id);
                 sUser.setUsername(name);

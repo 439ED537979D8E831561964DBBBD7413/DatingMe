@@ -28,7 +28,12 @@ public class HeaderInterceptors implements Interceptor {
         Request.Builder requestBuilder = original.newBuilder()
                 .addHeader("X-LC-Id", Const.APP_ID)
                 .addHeader("X-LC-Key", Const.APP_KEY);
+        if (original.url().toString().startsWith(Api.BASE_URL+Api.API_GET_ALL_USER)) {
+            Log.e("HeaderInterceptors",original.url().toString());
+            Log.e("HeaderInterceptors",APP.getToken());
+            requestBuilder.addHeader("X-LC-Session", APP.getToken());
 
+        }
 
         Request request = requestBuilder.build();
         return chain.proceed(request);

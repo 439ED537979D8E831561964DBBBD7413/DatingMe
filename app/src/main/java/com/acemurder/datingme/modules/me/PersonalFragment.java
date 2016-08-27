@@ -52,6 +52,7 @@ import butterknife.Unbinder;
 import static android.os.Build.VERSION_CODES.M;
 import static android.os.Looper.getMainLooper;
 import static com.acemurder.datingme.R.id.my_page_edit_layout;
+import static com.acemurder.datingme.R.id.radio;
 import static com.acemurder.datingme.R.id.tabMode;
 
 /**
@@ -99,8 +100,8 @@ public class PersonalFragment extends Fragment {
         handler.post(() -> new MaterialDialog.Builder(getActivity())
                 .title("吐槽一下?")
                 .content("向程序猿吐槽一下吗?")
-                .titleColor(Color.parseColor("#F7C282"))
-                .contentColor(Color.parseColor("#F7C282"))
+                .titleColor(Color.parseColor("#212121"))
+                .contentColor(Color.parseColor("#212121"))
                 .positiveText("吐槽")
                 .negativeText("忍一下")
                 .callback(new MaterialDialog.ButtonCallback() {
@@ -137,14 +138,14 @@ public class PersonalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_person, container, false);
         ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        myPageNickName.setText(APP.getAVUser().getUsername());
-        EventBus.getDefault().register(this);
+
     }
 
     @Override
@@ -166,6 +167,9 @@ public class PersonalFragment extends Fragment {
             public void onNext(User user) {
                 super.onNext(user);
                 APP.setUser(user);
+                myPageNickName.setText(APP.getAVUser().getUsername());
+                Glide.with(APP.getContext()).load(APP.getUser().getPhotoSrc()).asBitmap().centerCrop().into(myPageAvatar);
+                setInfo();
             }
 
             @Override
@@ -191,9 +195,8 @@ public class PersonalFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onUserInfoChangeEvent(UserInfoChangeEvent userInfoChangeEvent){
-        Log.e("=========","mmmmmmmmmmmmmmmmm");
         initView();
-        setInfo();
+
         //  mDatingItemList.clear();
 
     }

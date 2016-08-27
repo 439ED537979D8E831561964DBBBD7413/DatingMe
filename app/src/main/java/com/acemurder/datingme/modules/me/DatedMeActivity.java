@@ -96,8 +96,8 @@ public class DatedMeActivity extends AppCompatActivity {
                             .title("还没有被约过哦")
                             .content("居然还没有约过,快去广场吼两声吧")
                             .canceledOnTouchOutside(false)
-                            .titleColor(Color.parseColor("#F7C282"))
-                            .contentColor(Color.parseColor("#F7C282"))
+                            .titleColor(Color.parseColor("#212121"))
+                            .contentColor(Color.parseColor("#212121"))
                             // .positiveText("吐槽")
                             .negativeText("知道了")
                             .callback(new MaterialDialog.ButtonCallback() {

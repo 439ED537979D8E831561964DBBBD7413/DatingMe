@@ -1,5 +1,6 @@
 package com.acemurder.datingme.modules.main;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ import com.acemurder.datingme.modules.login.LoginActivity;
 import com.acemurder.datingme.modules.me.ExitEvent;
 import com.acemurder.datingme.modules.me.PersonalFragment;
 import com.acemurder.datingme.util.LogUtils;
+import com.acemurder.datingme.util.Utils;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -71,9 +74,9 @@ public class MainActivity extends AppCompatActivity {
         if (!APP.hasLogin()){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }
+
         ButterKnife.bind(this);
-
-
+        Utils.hideSoftInput(mBottomBar);
         initView();
         testData();
     }
@@ -109,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         mFragmentList.add(mPersonalFragment);
         TabPagerAdapter tabPagerAdapter = new TabPagerAdapter(getSupportFragmentManager(),mFragmentList);
         mViewPager.setAdapter(tabPagerAdapter);
+        mViewPager.setOffscreenPageLimit(4);
         // mViewPager.setOffscreenPageLimit(4);
 
 

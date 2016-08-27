@@ -48,7 +48,7 @@ public interface LeanCloudApiService {
                                                                @Query("include")String include);
 
     @GET(Api.API_GET_ALL_USER + "/"+"{PATH}")
-    Observable<ResultWrapper<User>>getUserInfo(@Path("PATH")String id);
+    Observable<User>getUserInfo(@Path("PATH")String id);
 
 
 
@@ -57,9 +57,10 @@ public interface LeanCloudApiService {
     @GET(Api.API_GET_COMMUNITY)
     Observable<ResultWrapper<List<Community>>> getCommunityItems(@Query("limit")String size,
                                                                  @Query("skip")String page,
-                                                                 @Query("order") String order);
+                                                                 @Query("order") String order,
+                                                                 @Query("include") String include);
     @PUT(Api.API_GET_ALL_USER+"/"+"{PATH}")
-    Observable<Response>updateUser(@Path("PATH")String id, @Body RequestBody body, @Header("X-LC-Session")String s);
+    Observable<Response>updateUser(@Path("PATH")String id, @Body RequestBody body);
 
     @GET(Api.API_GET_ALL_USER)
     Observable<ResultWrapper<List<User>>> getAlluser();
@@ -77,13 +78,17 @@ public interface LeanCloudApiService {
     Observable<Response>addCommunityItem(@Body RequestBody data);
 
     @GET(Api.API_GET_Remark_ITEM)
-    Observable<ResultWrapper<List<Remark>>>getRemarkItems(@Query("where")String data,@Query("order") String order);
+    Observable<ResultWrapper<List<Remark>>>getRemarkItems(@Query("where")String data,
+                                                          @Query("order") String order,
+                                                          @Query("include")String include);
 
     @POST(Api.API_GET_Remark_ITEM)
     Observable<Response>addRemarkItem(@Body RequestBody data,@Query("order")String order);
 
     @GET(Api.API_GET_DATING_ITEM)
-    Observable<ResultWrapper<List<DatingItem>>>getMyDatingItem(@Query("where")String where,@Query("order") String order);
+    Observable<ResultWrapper<List<DatingItem>>>getMyDatingItem(@Query("where")String where,
+                                                               @Query("order") String order,
+                                                               @Query("include")String include);
 
 
 

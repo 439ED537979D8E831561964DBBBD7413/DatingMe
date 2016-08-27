@@ -76,12 +76,16 @@ public class MyDateAdapter extends RecyclerView.Adapter<MyDateAdapter.MyDateView
         holder.mThemeText.setText("#" + mDatingItemList.get(position).getTheme() + "#");
         holder.mTimeText.setText(TimeUtils.getTimeDetail(mDatingItemList.get(position).getCreatedAt()
                 .replace("T", " ").substring(0, 19)));
-        if (!mDatingItemList.get(position).getPromulgatorPhoto().equals("null"))
-            Glide.with(mContext).load(mDatingItemList.get(position).getPromulgatorPhoto()).into(holder.mCircleImageView);
+
+        if (!mDatingItemList.get(position).getPromulgatorPhoto().equals("null")){
+            Log.e("MyDate_onBindViewHolder",mDatingItemList.get(position).getPromulgatorPhoto());
+            Glide.with(APP.getContext()).load(mDatingItemList.get(position).getPromulgatorPhoto()).asBitmap().centerCrop().into(holder.mCircleImageView);
+
+        }
 
         if (!mDatingItemList.get(position).getPhotoSrc().equals("null") && !mDatingItemList.get(position).getPhotoSrc().isEmpty()) {
             Log.e("onBindViewHolder", position + "     " + mDatingItemList.get(position).getPhotoSrc());
-            Glide.with(mContext).load(mDatingItemList.get(position).getPhotoSrc()).centerCrop().into(holder.mPhotoImage);
+            Glide.with(mContext).load(mDatingItemList.get(position).getPhotoSrc()).asBitmap().centerCrop().into(holder.mPhotoImage);
         } else
             holder.mPhotoImage.setVisibility(View.GONE);
     }

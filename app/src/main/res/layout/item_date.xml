@@ -25,12 +25,10 @@
             <com.acemurder.datingme.component.widget.CircleImageView
                 android:id="@+id/dating_item_civ_photo"
                 android:layout_width="40dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:src="@drawable/moiling"
-                android:scaleType="fitCenter"
                 android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:adjustViewBounds="true"/>
+                android:layout_marginStart="10dp"/>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

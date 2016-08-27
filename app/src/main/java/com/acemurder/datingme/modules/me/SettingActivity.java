@@ -51,8 +51,8 @@ public class SettingActivity extends AppCompatActivity {
         handler.post(() -> new MaterialDialog.Builder(this)
                 .title("退出当前账号?")
                 .content("真的要退出当前账号吗?")
-                .titleColor(Color.parseColor("#F7C282"))
-                .contentColor(Color.parseColor("#F7C282"))
+                .titleColor(Color.parseColor("#212121"))
+                .contentColor(Color.parseColor("#212121"))
                 .positiveText("退出登录")
                 .negativeText("我在看看")
                 .callback(new MaterialDialog.ButtonCallback() {

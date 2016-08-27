@@ -105,8 +105,8 @@ public class MyDateActivity extends AppCompatActivity {
                             .title("还没有发布过约哦")
                             .content("居然还没有约过,快去发布一条约吧?")
                             .canceledOnTouchOutside(false)
-                            .titleColor(Color.parseColor("#F7C282"))
-                            .contentColor(Color.parseColor("#F7C282"))
+                            .titleColor(Color.parseColor("#212121"))
+                            .contentColor(Color.parseColor("#212121"))
                            // .positiveText("吐槽")
                             .negativeText("好的")
                             .callback(new MaterialDialog.ButtonCallback() {

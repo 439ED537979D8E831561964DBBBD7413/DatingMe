@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.acemurder.datingme.APP;
 import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.widget.CircleImageView;
 import com.acemurder.datingme.data.bean.Community;
@@ -50,12 +52,13 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityViewHolder> 
         Community c = mCommunityItems.get(position);
         holder.setCommunity(c);
         if (c.getAuthorPhoto() != null && !c.getAuthorPhoto().equals("null")){
-            Glide.with(mContext).load(c.getAuthorPhoto()).centerCrop().placeholder(R.drawable.back).into(holder.mCircleImageView);
+            Log.e("CommunityAdapter",c.getAuthorPhoto());
+            Glide.with(APP.getContext()).load(c.getAuthorPhoto()).asBitmap().centerCrop().into(holder.mCircleImageView);
         }
         if (c.getPhotoSrc() != null && c.getPhotoSrc().size() != 0 && !c.getPhotoSrc().get(0).equals("null")){
-            Glide.with(mContext).load(c.getPhotoSrc().get(0)).into(holder.imageView);
+            Glide.with(APP.getContext()).load(c.getPhotoSrc().get(0)).into(holder.imageView);
         }else{
-            Glide.with(mContext).load(R.drawable.back).centerCrop().placeholder(R.drawable.back).into(holder.imageView);
+            Glide.with(APP.getContext()).load(R.drawable.back).centerCrop().placeholder(R.drawable.back).into(holder.imageView);
         }
         holder.mNameText.setText(c.getAuthorName());
         holder.mTimeText.setText(TimeUtils.getTimeDetail(c.getUpdatedAt()

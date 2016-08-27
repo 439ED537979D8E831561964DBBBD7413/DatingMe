@@ -103,11 +103,10 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
                 .replace("T", " ").substring(0, 19)));
         if (!mDatingItemList.get(position).getPromulgatorPhoto().equals("null") &&
                 mDatingItemList.get(position).getPromulgatorPhoto().startsWith("http"))
-            Glide.with(mContext).load(mDatingItemList.get(position).getPromulgatorPhoto()).asBitmap().centerCrop().into(holder.mCircleImageView);
+            Glide.with(APP.getContext()).load(mDatingItemList.get(position).getPromulgatorPhoto()).asBitmap().centerCrop().into(holder.mCircleImageView);
 
         if (!mDatingItemList.get(position).getPhotoSrc().equals("null") && !mDatingItemList.get(position).getPhotoSrc().isEmpty()) {
-            Log.e("onBindViewHolder", position + "     " + mDatingItemList.get(position).getPhotoSrc());
-            Glide.with(mContext).load(mDatingItemList.get(position).getPhotoSrc()).centerCrop().into(holder.mPhotoImage);
+            Glide.with(APP.getContext()).load(mDatingItemList.get(position).getPhotoSrc()).asBitmap().centerCrop().into(holder.mPhotoImage);
         } else
             holder.mPhotoImage.setVisibility(View.GONE);
 
