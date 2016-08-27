@@ -153,6 +153,11 @@ public enum RequestManager {
         return emitObservable(observable, subscriber);
     }
 
+    public Subscription getDatingItems(Subscriber<List<DatingItem>> subscriber, int page, int count,boolean is) {
+        Observable<List<DatingItem>> observable = mApiService.getDatingItems(page + "", count + "", "-createdAt","master,recipietn","{\"hasDated\":false}").map(new DatingItemFunc());
+        return emitObservable(observable, subscriber);
+    }
+
     public Subscription getCommunityItems(Subscriber<List<Community>> subscriber, int page, int count) {
 
         Observable<List<Community>> observable = mApiService.getCommunityItems(page + "", count + "", "-updatedAt","master").map(new CommunityFunc());

@@ -46,7 +46,7 @@ public class Utils {
         Snackbar sBar = Snackbar.make(view, data, Snackbar.LENGTH_SHORT);
         Snackbar.SnackbarLayout ve = (Snackbar.SnackbarLayout)sBar.getView();
         ve.setBackgroundColor(Color.parseColor("#DEAE75"));
-        ve.setAlpha(0.5f);
+      //  ve.setAlpha(0.5f);
         ((TextView) ve.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#FFFFFF"));
         sBar.show();
     }

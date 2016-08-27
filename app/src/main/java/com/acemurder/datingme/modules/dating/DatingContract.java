@@ -15,7 +15,9 @@ import java.util.List;
 public interface DatingContract {
     interface IDatingPresenter extends IBasePresenter<IDatingView>{
         void getDatingItems(int page,int size);
-     //   void sendDatingItem(DatingItem datingItem);
+        void getDatingItems(int page,int size,boolean is);
+
+        //   void sendDatingItem(DatingItem datingItem);
         void date(DatingItem datingItem);
 
     }

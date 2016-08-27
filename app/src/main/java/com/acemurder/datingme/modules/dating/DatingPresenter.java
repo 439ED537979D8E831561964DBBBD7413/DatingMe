@@ -47,6 +47,26 @@ public class DatingPresenter implements DatingContract.IDatingPresenter {
         }), size, page * size);
     }
 
+    @Override
+    public void getDatingItems(int page, int size, boolean is) {
+        RequestManager.INSTANCE.getDatingItems(new SimpleSubscriber<List<DatingItem>>(mContext, new SubscriberListener<List<DatingItem>>() {
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                mIDatingView.showLoadError();
+            }
+
+            @Override
+            public void onNext(List<DatingItem> datingItems) {
+                super.onNext(datingItems);
+                if (datingItems.size() == 0)
+                    mIDatingView.showNoMore();
+                else
+                    mIDatingView.showData(datingItems);
+            }
+        }), size, page * size,true);
+    }
+
 
 
    /* @Override

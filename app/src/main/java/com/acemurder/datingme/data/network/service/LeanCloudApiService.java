@@ -46,6 +46,12 @@ public interface LeanCloudApiService {
                                                                @Query("skip") String page,
                                                                @Query("order") String order,
                                                                @Query("include")String include);
+    @GET(Api.API_GET_DATING_ITEM)
+    Observable<ResultWrapper<List<DatingItem>>> getDatingItems(@Query("limit")String size,
+                                                               @Query("skip") String page,
+                                                               @Query("order") String order,
+                                                               @Query("include")String include,
+                                                               @Query("where")String where);
 
     @GET(Api.API_GET_ALL_USER + "/"+"{PATH}")
     Observable<User>getUserInfo(@Path("PATH")String id);

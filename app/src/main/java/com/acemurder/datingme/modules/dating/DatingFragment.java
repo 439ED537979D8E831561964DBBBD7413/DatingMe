@@ -21,6 +21,7 @@ import com.acemurder.datingme.R;
 import com.acemurder.datingme.component.onRcvScrollListener;
 import com.acemurder.datingme.component.widget.DividerItemDecoration;
 import com.acemurder.datingme.data.bean.DatingItem;
+import com.acemurder.datingme.modules.dating.event.DatingItemTypeChangeEvent;
 import com.acemurder.datingme.modules.dating.event.InsertDatingEvent;
 import com.acemurder.datingme.util.AnimationUtils;
 
@@ -37,6 +38,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+import static com.avos.avoscloud.Messages.StatusType.on;
+
 /**
  * Created by fg on 2016/8/16.
  */
@@ -52,6 +55,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     private DatingPresenter mDatingPresenter;
     private int page = 0;
     private boolean hasMore = true;
+    private boolean isOnlyNotDating = false;
     private List<DatingItem> mDatingItemList = new ArrayList<>();
 
 
@@ -120,7 +124,10 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
 
     public void getItem(int page) {
         mSwipeRefreshLayout.setRefreshing(true);
-        mDatingPresenter.getDatingItems(page, 10);
+        if (isOnlyNotDating)
+            mDatingPresenter.getDatingItems(page, 10,true);
+        else
+            mDatingPresenter.getDatingItems(page,10);
     }
 
     @Override
@@ -159,7 +166,7 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
         Snackbar sBar = Snackbar.make(mRecyclerView, "没有更多了哦", Snackbar.LENGTH_SHORT);
         Snackbar.SnackbarLayout ve = (Snackbar.SnackbarLayout)sBar.getView();
         ve.setBackgroundColor(Color.parseColor("#DEAE75"));
-        ve.setAlpha(0.5f);
+     //   ve.setAlpha(0.5f);
         ((TextView) ve.findViewById(R.id.snackbar_text)).setTextColor(Color.parseColor("#FFFFFF"));
         sBar.show();        mSwipeRefreshLayout.setRefreshing(false);
     }
@@ -191,6 +198,17 @@ public class DatingFragment extends Fragment implements DatingContract.IDatingVi
     public void onDestroy() {
         super.onDestroy();
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDatingItemTypeChangeEvent(DatingItemTypeChangeEvent event){
+        if (event.isOnlyNotDating()){
+            isOnlyNotDating = true;
+            getItem(page = 0);
+        }else {
+            isOnlyNotDating = false;
+            getItem(page = 0);
+        }
     }
 
 }

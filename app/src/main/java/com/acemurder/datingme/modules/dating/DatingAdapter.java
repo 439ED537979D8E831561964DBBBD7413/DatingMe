@@ -28,6 +28,7 @@ import com.acemurder.datingme.modules.im.guide.event.LeftChatItemClickEvent;
 import com.acemurder.datingme.modules.login.LoginActivity;
 import com.acemurder.datingme.modules.me.MyDateActivity;
 import com.acemurder.datingme.util.TimeUtils;
+import com.acemurder.datingme.util.Utils;
 import com.bumptech.glide.Glide;
 
 import org.greenrobot.eventbus.ThreadMode;
@@ -196,7 +197,7 @@ public class DatingAdapter extends RecyclerView.Adapter<DatingAdapter.DatingView
                 return;
             }
             if (mDatingItem.getPromulgator().equals(APP.getAVUser().getUsername())) {
-                Snackbar.make(itemView, "您要和自己约吗?找不到人?去广场逛逛吧", Snackbar.LENGTH_SHORT).show();
+                Utils.showSnackbar(itemView, "您要和自己约吗?找不到人?去广场逛逛吧");
                 return;
             }
 

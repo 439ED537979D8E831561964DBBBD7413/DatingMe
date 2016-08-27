@@ -24,6 +24,7 @@ import com.acemurder.datingme.component.widget.bottombar.BottomBar;
 import com.acemurder.datingme.modules.community.AddCommunityActivity;
 import com.acemurder.datingme.modules.community.CommunityFragment;
 import com.acemurder.datingme.modules.dating.DatingFragment;
+import com.acemurder.datingme.modules.dating.event.DatingItemTypeChangeEvent;
 import com.acemurder.datingme.modules.im.ContactFragment;
 import com.acemurder.datingme.modules.login.LoginActivity;
 import com.acemurder.datingme.modules.me.ExitEvent;
@@ -52,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private CommunityFragment mCommunityFragment;
     private PersonalFragment mPersonalFragment;
     private ContactFragment mContactFragment;
+    private boolean isOnlyNotDating = false;
     List<Fragment> mFragmentList = new ArrayList<>();
 
     @BindView(R.id.bottom_bar) BottomBar mBottomBar;
@@ -93,14 +95,24 @@ public class MainActivity extends AppCompatActivity {
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         mToolbar.setOnMenuItemClickListener((menuItem) ->{
-            startActivity(new Intent(MainActivity.this,AddCommunityActivity.class));
+            //startActivity(new Intent(MainActivity.this,AddCommunityActivity.class));
+            if (!isOnlyNotDating){
+                menuItem.setIcon(R.drawable.ic_eye);
+                EventBus.getDefault().post(new DatingItemTypeChangeEvent(true));
+                isOnlyNotDating = true;
+            }else {
+                menuItem.setIcon(R.drawable.ic_remove_eye);
+                EventBus.getDefault().post(new DatingItemTypeChangeEvent(false));
+                isOnlyNotDating = false;
+            }
+
 
             return true;
         });
 
 
         //mBottomBar.post(() -> hiddenMenu());
-        hiddenMenu();
+       showMenu();
         mDatingFragment = new DatingFragment();
         mCommunityFragment = new CommunityFragment();
         mPersonalFragment = new PersonalFragment();
@@ -122,11 +134,12 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
                     //hiddenMenu();
+                    showMenu();
                     mTitleTextView.setText("且约");
                     break;
                 case 1:
                     mTitleTextView.setText("吐槽");
-                    showMenu();
+
                     break;
                 case 2:
                     // hiddenMenu();
@@ -168,7 +181,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         mMenu = menu;
         getMenuInflater().inflate(R.menu.menu_edit, menu);
-        hiddenMenu();
         return super.onCreateOptionsMenu(menu);
     }
 

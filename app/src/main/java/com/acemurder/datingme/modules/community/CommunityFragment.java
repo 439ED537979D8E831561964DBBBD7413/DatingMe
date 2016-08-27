@@ -1,9 +1,11 @@
 package com.acemurder.datingme.modules.community;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +20,8 @@ import com.acemurder.datingme.component.onRcvScrollListener;
 import com.acemurder.datingme.data.bean.Community;
 import com.acemurder.datingme.modules.community.adapter.CommunityAdapter;
 import com.acemurder.datingme.modules.community.event.CommunityInsertEvent;
+import com.acemurder.datingme.util.AnimationUtils;
+import com.acemurder.datingme.util.Utils;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,6 +33,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -44,11 +49,18 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
     RecyclerView mRecyclerView;
     @BindView(R.id.community_sr_swipe)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
     private boolean hasMore = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @OnClick(R.id.fab)
+    public void onFabClick(){
+        startActivity(new Intent(getActivity(),AddCommunityActivity.class));
     }
 
     @Nullable
@@ -65,12 +77,13 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
         super.onViewCreated(view, savedInstanceState);
         EventBus.getDefault().register(this);
 
+
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
+        AnimationUtils.hideFabInRecyclerView(mRecyclerView,fab);
         mCommunityPresenter = new CommunityPresenter(this, getActivity());
         initView();
         mCommunityPresenter.getCommunityItems(0, 10);        //   mCommunityPresenter.getCommunityItems(page, 4);
@@ -139,6 +152,7 @@ public class CommunityFragment extends Fragment implements CommunityContract.ICo
     @Override
     public void showNoMore() {
         mSwipeRefreshLayout.setRefreshing(false);
+        Utils.showSnackbar(mRecyclerView,"没有更多了哦");
         hasMore = false;
     }
 
